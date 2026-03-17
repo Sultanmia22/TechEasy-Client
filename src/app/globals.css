@@ -1,26 +1,96 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@plugin "daisyui";
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@plugin "daisyui/theme" {
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+  name: "light";
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
+  --color-primary: #06b6d4;
+
+  /* Secondary: Emerald Green - Fresh & Natural */
+
+  --color-secondary: #32ff7e;
+
+  /* Accent: Coral Orange - Energetic & Fun */
+
+  --color-accent: #f97316;
+
+  /* Neutral: Charcoal for text */
+
+  --color-neutral: #78716C;
+
+ 
+
+  /* Base: Pure White */
+
+  --color-base-100: #ffffff;
+  --color-primary-content: #ffffff;
+  --color-secondary-content: #ffffff;
+  --color-accent-content: #ffffff;
+
+  --color-base-200: #FAFAFA;
+
+  --color-base-300: #F4F4F5;
+
+  --color-base-content: #18181B;
+
+};
+
+
+
+@plugin "daisyui/theme" {
+
+  name: "dark";
+
+ 
+
+  /* Primary: Vivid Purple - Modern Dark */
+
+  --color-primary: #0891b2;
+
+ 
+
+  /* Secondary: Bright Emerald - Pop in dark */
+
+  --color-secondary: #26de6b;
+
+ 
+
+  /* Accent: Warm Coral - Vibrant accent */
+
+  --color-accent: #FB923C;
+
+ 
+
+  /* Neutral: Soft White text */
+
+  --color-neutral: #A8A29E;
+
+ 
+
+  /* Base: Rich Black */
+
+  --color-base-100: #09090B;
+
+ 
+
+  --color-primary-content: #09090B;
+
+  --color-secondary-content: #09090B;
+
+  --color-accent-content: #09090B;
+
+  --color-base-200: #18181B;
+
+  --color-base-300: #27272A;
+
+  --color-base-content: #FAFAFA;
+
+};
+
+
+
+
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
