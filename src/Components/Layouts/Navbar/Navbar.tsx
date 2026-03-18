@@ -19,7 +19,7 @@ const Navbar = () => {
 
 
   // dummy auth state
-  const isAuthenticate: boolean = true;
+  const isAuthenticate: boolean = false;
 
   // dummy user
   const user = {
