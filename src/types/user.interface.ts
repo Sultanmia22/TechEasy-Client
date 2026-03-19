@@ -4,6 +4,6 @@ export interface IUser {
     email: string,
     password: string,
     date: Date,
-    image?: string,
-    role: 'admin' | 'customer' | 'seller'
+    image?:any,
+    role: 'admin' | 'customer',
 }

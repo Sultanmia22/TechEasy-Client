@@ -26,25 +26,32 @@ const Navbar = () => {
     name: "John Doe",
     email: "john@example.com",
     image: "https://www.w3schools.com/howto/img_avatar.png",
-    role: 'admin'
+    role: 'customer'
   }
 
   const getNavLink = (role:string): NavLinkType[] => {
-    const baseLinks = [
+    const adminLink = [
       { name: 'Home', path: '/' },
       { name: 'All Products', path: '/all-products' },
       { name: 'About', path: '/about' },
       { name: 'Contact', path: '/contact' },
     ];
 
-    if (role === 'user') {
-      return [
-        ...baseLinks,
-        {name : 'Cart',path: '/cart'}
-      ]
+     const CustomerLinks = [
+      { name: 'Home', path: '/' },
+      { name: 'All Products', path: '/all-products' },
+      { name: 'Cart', path: '/cart' },
+      { name: 'About', path: '/about' },
+      { name: 'Contact', path: '/contact' },
+    ];
+
+    if (role === 'admin') {
+      return adminLink
     };
 
-    return baseLinks
+    return CustomerLinks;
+
+   
   }
 
  

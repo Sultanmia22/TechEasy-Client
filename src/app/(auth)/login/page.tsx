@@ -1,3 +1,4 @@
+import LoginForm from "@/Components/Auth/LoginForm";
 
 export default function LoginPage() {
   return (
@@ -10,6 +11,7 @@ export default function LoginPage() {
         <div className="absolute -bottom-52 -right-52 w-[500px] h-[500px] rounded-full bg-accent/10 blur-[100px]" />
       </div>
 
+      <LoginForm />
      
     </main>
   );

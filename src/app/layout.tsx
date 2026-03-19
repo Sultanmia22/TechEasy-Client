@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/Components/Layouts/Navbar/Navbar";
+import { ToastContainer } from "react-toastify";
 
 
 
@@ -23,6 +24,7 @@ export default function RootLayout({
       <Navbar />
 
         {children}
+        <ToastContainer />
       </body>
     </html>
   );
