@@ -7,3 +7,9 @@ export interface IUser {
     image?:any,
     role: 'admin' | 'customer',
 }
+
+export interface ILoginData {
+    email: string,
+    password: string,
+    rememberMe: boolean
+}

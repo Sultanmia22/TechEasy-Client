@@ -8,12 +8,16 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { uploadImage } from '@/lib/imageUpload';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 const RegisterForm = () => {
-  // 1. Hook Form initialize করা
+  
+  const router = useRouter()
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<IUser>();
 
@@ -36,11 +40,15 @@ const RegisterForm = () => {
 
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users`,userInfo)
 
-      
+      if(response?.data?.message){
+        toast.success(response.data.message)
+        router.push('/login')
+        reset()
+      }
    }
    catch(er:any){
-    toast.error('Something Went Wrong! Please Try Again')
-    console.log(er.message)
+     const errorMessage = er.response?.data?.message
+     toast.error(errorMessage)
    }
   };
 

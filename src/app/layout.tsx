@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/Components/Layouts/Navbar/Navbar";
 import { ToastContainer } from "react-toastify";
+import NextAuthProviders from "@/Providers/NextAuthProviders";
 
 
 
@@ -17,14 +18,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme='light'>
+      
       <body
         className={`antialiased`}
       >
 
-      <Navbar />
-
+        <NextAuthProviders>
+          <Navbar />
+          
         {children}
+
         <ToastContainer />
+        
+        </NextAuthProviders>
+
       </body>
     </html>
   );
