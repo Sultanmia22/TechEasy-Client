@@ -1,6 +1,8 @@
 
+import CategoriesSection from "@/Components/Home/CategoriesSection/CategoriesSection";
 import FeatureSection from "@/Components/Home/Feature/FeatureSection";
 import HeroSection from "@/Components/Home/HeroSection/HeroSection";
+import ServicesSection from "@/Components/Home/ServiceSection/ServiceSection";
 
 export default function Home() {
   return (
@@ -11,6 +13,14 @@ export default function Home() {
 
      <section>
       <FeatureSection />
+     </section>
+
+     <section>
+      <ServicesSection />
+     </section>
+
+     <section>
+      <CategoriesSection />
      </section>
     </div>
   );
