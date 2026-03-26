@@ -1,7 +1,10 @@
 'use client'
+import LogOut from '@/Components/Auth/LogOut'
 import Logo from '@/Components/Logo/Logo'
 import NavLink from '@/Components/NavLink/DesktopNavlink'
 import MobileNavLink from '@/Components/NavLink/MobileNavlink'
+
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { FaBars } from 'react-icons/fa'
@@ -16,16 +19,21 @@ const Navbar = () => {
 
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
   const [openProfileMenu, setOpenProfileMenu] = useState<boolean>(false)
+  
+  
+   const {data,status} = useSession()
 
+  //  console.log(data)
 
-  // dummy auth state
-  const isAuthenticate: boolean = false;
+  const isAuthenticate: boolean = status === 'authenticated';
 
-  // dummy user
+  // console.log(data)
+
+ 
   const user = {
-    name: "John Doe",
-    email: "john@example.com",
-    image: "https://www.w3schools.com/howto/img_avatar.png",
+    name: data?.user?.name,
+    email: data?.user?.email,
+    image: data?.user?.image,
     role: 'customer'
   }
 
@@ -62,8 +70,6 @@ const Navbar = () => {
     e.stopPropagation()
     setIsMenuOpen(!isMenuOpen)
   }
-
-
 
 
 
@@ -171,9 +177,7 @@ const Navbar = () => {
                     <div className="my-1 border-t-2 border-base-300"></div>
 
                     <li>
-                      <button className='flex items-center px-3 py-2 rounded-lg text-red-500 hover:bg-red-50 transition-all duration-200 w-full'>
-                        Logout
-                      </button>
+                      <LogOut />
                     </li>
 
                   </ul>

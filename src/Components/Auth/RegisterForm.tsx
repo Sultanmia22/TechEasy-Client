@@ -1,5 +1,5 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import Logo from '../Logo/Logo';
@@ -9,10 +9,14 @@ import { toast } from 'react-toastify';
 import { uploadImage } from '@/lib/imageUpload';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import GoogleSignIn from './GoogleSignIn';
+import TextLoader from '../TextLoader';
 
 const RegisterForm = () => {
   
   const router = useRouter()
+
+  const [loading,setLoading] = useState<Boolean>(false)
 
   const {
     register,
@@ -23,6 +27,9 @@ const RegisterForm = () => {
 
   
   const onSubmit: SubmitHandler<IUser> = async (data) => {
+
+    setLoading(true)
+
    try{
 
       const imageFile = data.image?.[0]
@@ -41,16 +48,22 @@ const RegisterForm = () => {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users`,userInfo)
 
       if(response?.data?.message){
+        setLoading(false)
         toast.success(response.data.message)
         router.push('/login')
         reset()
       }
    }
    catch(er:any){
+     setLoading(false)
      const errorMessage = er.response?.data?.message
      toast.error(errorMessage)
    }
   };
+
+  if(loading){
+    return <TextLoader />
+  }
 
   return (
     <div className="w-full max-w-105 relative z-10">
@@ -66,10 +79,7 @@ const RegisterForm = () => {
           <h1 className="text-xl font-bold text-base-content mb-1">Create an account</h1>
           <p className="text-sm text-neutral mb-6">Join our growing community of tech lovers</p>
 
-          <button className="btn btn-outline w-full h-12 gap-3 text-base font-semibold hover:bg-base-200 hover:border-base-content/20 transition-all mb-6">
-            <FcGoogle size={24} />
-            Continue with Google
-          </button>
+          <GoogleSignIn />
 
           <div className="flex items-center gap-3 mb-6">
             <div className="flex-1 h-px bg-base-300" />

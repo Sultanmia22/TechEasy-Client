@@ -7,10 +7,15 @@ import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-toastify";
 import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation";
+import GoogleSignIn from "./GoogleSignIn";
+import { useState } from "react";
+import TextLoader from "../TextLoader";
 
 const LoginForm = () => {
 
   const router = useRouter()
+
+  const [loading,setLoading] = useState<Boolean>(false)
 
   const {
     register,
@@ -22,7 +27,7 @@ const LoginForm = () => {
 
   // Login Function
   const onSubmit: SubmitHandler<ILoginData> = async (data) => {
-
+    setLoading(true)
     try {
 
       const result = await signIn("credentials", {
@@ -37,15 +42,21 @@ const LoginForm = () => {
         router.push("/");
         router.refresh()
       } else {
+        setLoading(false)
         toast.error(result?.error || "Invalid Credentials");
       }
     }
 
     catch (er: any) {
+      setLoading(false)
       toast.error(er.message)
     }
 
   };
+
+  if(loading){
+    return <TextLoader />
+  }
 
   return (
     <div className="w-full max-w-105 relative z-10">
@@ -68,13 +79,7 @@ const LoginForm = () => {
           <p className="text-sm text-neutral mb-6">Sign in to your account to continue</p>
 
           {/* Google Button */}
-          <button
-            type="button" // Form submit jeno na hoy tai type button
-            className="btn btn-outline w-full h-12 gap-3 text-base font-semibold hover:bg-base-200 transition-all mb-6"
-          >
-            <FcGoogle size={24} />
-            Continue with Google
-          </button>
+          <GoogleSignIn />
 
           {/* Divider */}
           <div className="flex items-center gap-3 mb-6">
