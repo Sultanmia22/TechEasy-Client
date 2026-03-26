@@ -26,7 +26,9 @@ export default function RootLayout({
         <NextAuthProviders>
           <Navbar />
           
-        {children}
+        <main className="pt-5 md:pt-24">
+          {children}
+        </main>
 
         <ToastContainer />
         

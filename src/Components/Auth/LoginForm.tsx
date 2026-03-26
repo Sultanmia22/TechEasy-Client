@@ -9,7 +9,7 @@ import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation";
 import GoogleSignIn from "./GoogleSignIn";
 import { useState } from "react";
-import TextLoader from "../TextLoader";
+import TextLoader from "../Loading/TextLoader";
 
 const LoginForm = () => {
 

@@ -3,7 +3,7 @@ import { signIn, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { FcGoogle } from 'react-icons/fc'
 
-import TextLoader from '../TextLoader'
+import TextLoader from '../Loading/TextLoader'
 import { toast } from 'react-toastify'
 import { useState } from 'react'
 

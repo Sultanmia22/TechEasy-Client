@@ -10,7 +10,7 @@ import { uploadImage } from '@/lib/imageUpload';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import GoogleSignIn from './GoogleSignIn';
-import TextLoader from '../TextLoader';
+import TextLoader from '../Loading/TextLoader';
 
 const RegisterForm = () => {
   

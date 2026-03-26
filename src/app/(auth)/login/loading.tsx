@@ -1,5 +1,5 @@
 'use client'
-import TextLoader from '@/Components/TextLoader'
+import TextLoader from '@/Components/Loading/TextLoader'
 
 const loading = () => {
   return (
