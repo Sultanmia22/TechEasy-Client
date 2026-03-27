@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/Components/Layouts/Navbar/Navbar";
 import { ToastContainer } from "react-toastify";
 import NextAuthProviders from "@/Providers/NextAuthProviders";
+import Footer from "@/Components/Layouts/Footer/Footer";
 
 
 
@@ -29,6 +30,8 @@ export default function RootLayout({
         <main className="pt-5 md:pt-24">
           {children}
         </main>
+
+        <Footer />
 
         <ToastContainer />
         
