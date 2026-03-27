@@ -1,5 +1,8 @@
 
+import BlogSection from "@/Components/Home/Blog/BlogSection";
 import CategoriesSection from "@/Components/Home/CategoriesSection/CategoriesSection";
+import FaqSection from "@/Components/Home/FaqSection/FaqSection";
+
 import FeatureSection from "@/Components/Home/Feature/FeatureSection";
 import HeroSection from "@/Components/Home/HeroSection/HeroSection";
 import PopularProducts from "@/Components/Home/PopularItemSection/PopularItemSection";
@@ -36,6 +39,14 @@ export default function Home() {
 
      <section>
       <Testimonials />
+     </section>
+
+     <section>
+      <BlogSection />
+     </section>
+
+     <section>
+      <FaqSection />
      </section>
     </div>
   );
