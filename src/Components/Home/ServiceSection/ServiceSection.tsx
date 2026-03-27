@@ -35,8 +35,7 @@ const ServicesSection = () => {
             Our <span className="text-primary">Services</span>
           </h2>
           <p className="text-neutral mt-2 text-sm md:text-base">
-            TechEasy শুধু product না — complete solution দিচ্ছে ⚡
-          </p>
+            TechEasy isn't just a product — it's a complete solution.          </p>
         </div>
 
         {/* Grid */}

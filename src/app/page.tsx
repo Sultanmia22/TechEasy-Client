@@ -2,7 +2,10 @@
 import CategoriesSection from "@/Components/Home/CategoriesSection/CategoriesSection";
 import FeatureSection from "@/Components/Home/Feature/FeatureSection";
 import HeroSection from "@/Components/Home/HeroSection/HeroSection";
+import PopularProducts from "@/Components/Home/PopularItemSection/PopularItemSection";
 import ServicesSection from "@/Components/Home/ServiceSection/ServiceSection";
+import Statistics from "@/Components/Home/Statistics/Statistics";
+import Testimonials from "@/Components/Home/Testimonials/Testimonials";
 
 export default function Home() {
   return (
@@ -21,6 +24,18 @@ export default function Home() {
 
      <section>
       <CategoriesSection />
+     </section>
+
+     <section>
+      <PopularProducts />
+     </section>
+
+     <section>
+      <Statistics/>
+     </section>
+
+     <section>
+      <Testimonials />
      </section>
     </div>
   );
