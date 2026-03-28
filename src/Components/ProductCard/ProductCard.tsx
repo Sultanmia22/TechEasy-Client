@@ -5,7 +5,7 @@ interface ProductCardProps {
   product: IProduct;
 }
 
-const ProductCard : React.FC<ProductCardProps> = async ({product}) => {
+const ProductCard : React.FC<ProductCardProps> =  ({product}) => {
 
   return (
     <div className="bg-base-100 dark:bg-base-200 shadow-lg rounded-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300">

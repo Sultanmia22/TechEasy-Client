@@ -14,7 +14,7 @@ import Testimonials from "@/Components/Home/Testimonials/Testimonials";
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-20 w-11/12 md:w-10/12 mx-5 md:mx-auto">
+    <div className="">
      <section>
       <HeroSection />
      </section>

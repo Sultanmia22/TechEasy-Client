@@ -5,7 +5,7 @@ import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/f
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-base-200 dark:bg-base-300 text-base-content dark:text-base-100 py-12 mt-16">
+    <footer className="bg-base-100  text-neutral py-12 mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
         
         {/* Navigation Links */}

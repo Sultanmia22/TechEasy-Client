@@ -47,7 +47,7 @@ const Navbar = () => {
 
      const CustomerLinks = [
       { name: 'Home', path: '/' },
-      { name: 'All Products', path: '/all-products' },
+      { name: 'All Products', path: '/all-product' },
       { name: 'Cart', path: '/cart' },
       { name: 'About', path: '/about' },
       { name: 'Contact', path: '/contact' },
