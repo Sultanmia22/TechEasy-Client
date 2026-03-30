@@ -3,6 +3,7 @@ export interface ProductSpecs {
 }
 
 export interface IProduct {
+  _id:string;
   id: number;
   name: string;
   brand: string;
@@ -15,8 +16,32 @@ export interface IProduct {
   specs?: ProductSpecs;
 }
 
-export interface IResponse {
-  success: boolean;
-  message: string;
-  data: IProduct[];
+
+export interface IFilters {
+  brands: string[];
+  categories: string[];
+}
+
+
+export interface ISearchParams {
+  category?: string;
+  brand?: string;
+  name?: string;
+  price?: 'low' | 'high';
+}
+
+ export interface IProductResponse {
+  products: IProduct[];
+  total: number;
+  page: number;
+  limit: number;
+}
+
+export interface IAllProductsClientProps {
+  products: IProduct[];
+  brands: string[];
+  categories: string[];
+  total: number;
+  page: number;
+  limit: number;
 }

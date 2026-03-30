@@ -1,4 +1,5 @@
 import { IProduct } from '@/types/products.interface'
+import Link from 'next/link';
 import React from 'react'
 
 interface ProductCardProps {
@@ -23,9 +24,9 @@ const ProductCard : React.FC<ProductCardProps> =  ({product}) => {
           <span className="ml-2 text-gray-400 dark:text-neutral">({product.stock} in stock)</span>
         </div>
         {/* View Details Button */}
-        <button className="mt-4 w-full py-2 rounded-lg bg-accent text-accent-content hover:bg-accent/90 transition-colors duration-200">
+        <Link href={`all-product/${product?._id}`} className="btn btn-accent w-full mt-4 transition-colors duration-200">
           View Details
-        </button>
+        </Link>
       </div>
     </div>
   )

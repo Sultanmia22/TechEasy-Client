@@ -27,7 +27,7 @@ export default function RootLayout({
         <NextAuthProviders>
           <Navbar />
           
-        <main className="flex flex-col gap-20 w-11/12 md:w-10/12 mx-5 md:mx-auto pt-5 md:pt-24">
+        <main className="flex flex-col gap-20 w-11/12 md:w-10/12 mx-5 md:mx-auto py-5 md:py-24">
           {children}
         </main>
 
