@@ -1,3 +1,4 @@
+// All Product Interfaces 
 export interface ProductSpecs {
   [key: string]: string | number;
 }
@@ -44,4 +45,10 @@ export interface IAllProductsClientProps {
   total: number;
   page: number;
   limit: number;
+}
+
+// Product Details Interfaces
+
+export interface IProps {
+  id:string;
 }

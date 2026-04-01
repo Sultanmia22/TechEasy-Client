@@ -1,18 +1,32 @@
+import NoProductsFound from "@/Components/AllProducts/NoProductsFound";
 import ProductCard from "@/Components/ProductCard/ProductCard";
-import {IResponse } from "@/types/products.interface";
+import { IProduct } from "@/types/products.interface";
 import React from "react";
+
+const getPopularProducts = async (): Promise<IProduct[]>  => {
+  try{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/product/popularProduct`, {
+    cache: 'no-store' 
+  });
+
+  const data = await res.json();
+
+  return data.data || [];
+
+  }
+  catch(er:any){
+    console.log(er.message)
+    return []
+  }
+}
 
 const PopularProducts = async () => {
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/product/popularProduct`, {
-    cache: 'no-store' // always fresh data
-  });
+    const productData = await getPopularProducts();
 
-  const data :IResponse =  await res.json();
-
-  const productData = data.data;
-
-  console.log(productData)
+    if(!productData || productData.length === 0){
+      return <NoProductsFound />
+    }
 
   return (
     <section className="py-12 bg-base-100 dark:bg-base-200">

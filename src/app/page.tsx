@@ -11,6 +11,8 @@ import PopularProducts from "@/Components/Home/PopularItemSection/PopularItemSec
 import ServicesSection from "@/Components/Home/ServiceSection/ServiceSection";
 import Statistics from "@/Components/Home/Statistics/Statistics";
 import Testimonials from "@/Components/Home/Testimonials/Testimonials";
+import TextLoader from "@/Components/Loading/TextLoader";
+import { Suspense } from "react";
 
 export default function Home() {
   return (
@@ -32,7 +34,9 @@ export default function Home() {
      </section>
 
      <section>
-      <PopularProducts />
+     <Suspense fallback={<TextLoader />}>
+          <PopularProducts />
+        </Suspense>
      </section>
 
      <section>

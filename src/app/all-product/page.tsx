@@ -70,6 +70,8 @@ const AllProductPage = async ({ searchParams }: { searchParams: Promise<ISearchP
 
   const { products, total, page, limit } = productsData;
 
+  console.log(products)
+
   return (
     <div className="">
       <AllProductsClient
