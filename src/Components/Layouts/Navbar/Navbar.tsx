@@ -7,7 +7,7 @@ import MobileNavLink from '@/Components/NavLink/MobileNavlink'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
-import { FaBars } from 'react-icons/fa'
+import { FaBars, FaShoppingCart } from 'react-icons/fa'
 import { RxCross1 } from 'react-icons/rx'
 
 type NavLinkType = {
@@ -19,9 +19,9 @@ const Navbar = () => {
 
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
   const [openProfileMenu, setOpenProfileMenu] = useState<boolean>(false)
-  
-  
-   const {data,status} = useSession()
+
+
+  const { data, status } = useSession()
 
   //  console.log(data)
 
@@ -29,7 +29,7 @@ const Navbar = () => {
 
   // console.log(data)
 
- 
+
   const user = {
     name: data?.user?.name,
     email: data?.user?.email,
@@ -37,7 +37,7 @@ const Navbar = () => {
     role: 'customer'
   }
 
-  const getNavLink = (role:string): NavLinkType[] => {
+  const getNavLink = (role: string): NavLinkType[] => {
     const adminLink = [
       { name: 'Home', path: '/' },
       { name: 'All Products', path: '/all-products' },
@@ -45,7 +45,7 @@ const Navbar = () => {
       { name: 'Contact', path: '/contact' },
     ];
 
-     const CustomerLinks = [
+    const CustomerLinks = [
       { name: 'Home', path: '/' },
       { name: 'All Products', path: '/all-product' },
       { name: 'Cart', path: '/cart' },
@@ -59,12 +59,12 @@ const Navbar = () => {
 
     return CustomerLinks;
 
-   
+
   }
 
- 
 
- const navLinks = getNavLink(user.role)
+
+  const navLinks = getNavLink(user.role)
 
   const toggleMenu = (e: React.MouseEvent<HTMLDivElement | HTMLAnchorElement>) => {
     e.stopPropagation()
@@ -104,141 +104,150 @@ const Navbar = () => {
           ))}
         </ul>
 
-        {/* Profile / Auth */}
-        <div className='flex items-center gap-5'>
+        <div className='flex items-center gap-6'>
 
-          {isAuthenticate ? (
-            <div className='relative'>
-              <div
-                onClick={() => setOpenProfileMenu(!openProfileMenu)}
-                className="cursor-pointer border-2 border-primary rounded-full p-0.5 hover:shadow-lg transition-all"
-              >
-                <img
-                  src={user.image}
-                  alt='profile-picture'
-                  className='rounded-full object-cover w-11 h-11'
-                />
+          <div>
+            <Link href={''}> <FaShoppingCart size={24} className='text-accent' /> </Link>
+          </div>
 
-              </div>
+          {/* Profile / Auth */}
+          <div className='flex items-center gap-5'>
 
-              {openProfileMenu && (
-
-                <div className='absolute right-0 mt-6 z-50 w-56 bg-base-100 rounded-2xl shadow-2xl border border-base-200 overflow-hidden'>
-
-                  {/* profile header */}
-                  <div className='flex items-center gap-3 px-4 py-3 bg-primary/5 border-b border-base-200'>
-
-                    <img
-                      src={user.image}
-                      alt="profile"
-                      className="w-10 h-10 rounded-full object-cover border border-transparent bg-linear-to-r from-primary to-secondary bg-clip-border"
-                    />
-
-                    <div className="flex flex-col">
-                      <p className='text-sm font-semibold text-neutral'>
-                        {user.name}
-                      </p>
-                      <p className='text-xs opacity-60 truncate'>
-                        {user.email}
-                      </p>
-                    </div>
-
-                  </div>
-
-                  <ul className='flex flex-col p-2 text-sm'>
-
-                      <li>
-                      <Link
-                        href="/dashboard"
-                        className='flex items-center px-3 py-2 rounded-lg hover:bg-primary hover:text-white transition-all duration-200'
-                      >
-                       Dashboard
-                      </Link>
-                    </li>
-
-                    <li>
-                      <Link
-                        href="/profile"
-                        className='flex items-center px-3 py-2 rounded-lg hover:bg-primary hover:text-white transition-all duration-200'
-                      >
-                        My Profile
-                      </Link>
-                    </li>
-
-                    <li>
-                      <Link
-                        href="/settings"
-                        className='flex items-center px-3 py-2 rounded-lg hover:bg-primary hover:text-white transition-all duration-200'
-                      >
-                        Settings
-                      </Link>
-                    </li>
-
-                    <div className="my-1 border-t-2 border-base-300"></div>
-
-                    <li>
-                      <LogOut />
-                    </li>
-
-                  </ul>
+            {isAuthenticate ? (
+              <div className='relative'>
+                <div
+                  onClick={() => setOpenProfileMenu(!openProfileMenu)}
+                  className="cursor-pointer border-2 border-primary rounded-full p-0.5 hover:shadow-lg transition-all"
+                >
+                  <img
+                    src={user?.image}
+                    alt='profile-picture'
+                    className='rounded-full object-cover w-11 h-11'
+                  />
 
                 </div>
 
-              )}
+                {openProfileMenu && (
 
-            </div>
+                  <div className='absolute right-0 mt-6 z-50 w-56 bg-base-100 rounded-2xl shadow-2xl border border-base-200 overflow-hidden'>
 
-          ) : (
+                    {/* profile header */}
+                    <div className='flex items-center gap-3 px-4 py-3 bg-primary/5 border-b border-base-200'>
 
-            <Link
-              href='/login'
-              className="px-4 py-2 rounded-lg bg-primary text-base-100 font-semibold shadow-lg hover:scale-105 transition-transform duration-200"
-            >
-              Login
-            </Link>
+                      <img
+                        src={user.image}
+                        alt="profile"
+                        className="w-10 h-10 rounded-full object-cover border border-transparent bg-linear-to-r from-primary to-secondary bg-clip-border"
+                      />
 
-          )}
+                      <div className="flex flex-col">
+                        <p className='text-sm font-semibold text-neutral'>
+                          {user.name}
+                        </p>
+                        <p className='text-xs opacity-60 truncate'>
+                          {user.email}
+                        </p>
+                      </div>
+
+                    </div>
+
+                    <ul className='flex flex-col p-2 text-sm'>
+
+                      <li>
+                        <Link
+                          href="/dashboard"
+                          className='flex items-center px-3 py-2 rounded-lg hover:bg-primary hover:text-white transition-all duration-200'
+                        >
+                          Dashboard
+                        </Link>
+                      </li>
+
+                      <li>
+                        <Link
+                          href="/profile"
+                          className='flex items-center px-3 py-2 rounded-lg hover:bg-primary hover:text-white transition-all duration-200'
+                        >
+                          My Profile
+                        </Link>
+                      </li>
+
+                      <li>
+                        <Link
+                          href="/settings"
+                          className='flex items-center px-3 py-2 rounded-lg hover:bg-primary hover:text-white transition-all duration-200'
+                        >
+                          Settings
+                        </Link>
+                      </li>
+
+                      <div className="my-1 border-t-2 border-base-300"></div>
+
+                      <li>
+                        <LogOut />
+                      </li>
+
+                    </ul>
+
+                  </div>
+
+                )}
+
+              </div>
+
+            ) : (
+
+              <Link
+                href='/login'
+                className="px-4 py-2 rounded-lg bg-primary text-base-100 font-semibold shadow-lg hover:scale-105 transition-transform duration-200"
+              >
+                Login
+              </Link>
+
+            )}
+
+          </div>
 
         </div>
 
 
+
         {/* --- Mobile Sidebar --- */}
-      <div 
-        className={`fixed inset-0 z-[100] transition-visibility duration-300 md:hidden ${isMenuOpen ? 'visible' : 'invisible'}`}
-      >
-        {/* Overlay */}
-        <div 
-          className={`absolute inset-0 bg-neutral/40 backdrop-blur-sm transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`}
-          onClick={() => setIsMenuOpen(false)}
-        />
-
-        {/* Sidebar Content */}
-        <aside 
-          className={`absolute left-0 top-0 h-full w-[280px] bg-base-100 p-6 shadow-2xl transition-transform duration-300 ease-out ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        <div
+          className={`fixed inset-0 z-[100] transition-visibility duration-300 md:hidden ${isMenuOpen ? 'visible' : 'invisible'}`}
         >
-          <div className="flex items-center justify-between border-b pb-6">
-            <Link href="/" onClick={() => setIsMenuOpen(false)} className="text-xl font-black">
-              <span className="text-neutral">Tech</span><span className="text-primary">Easy</span>
-            </Link>
-            <button onClick={() => setIsMenuOpen(false)} className="rounded-full bg-base-200 p-2">
-              <RxCross1 size={18} />
-            </button>
-          </div>
+          {/* Overlay */}
+          <div
+            className={`absolute inset-0 bg-neutral/40 backdrop-blur-sm transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`}
+            onClick={() => setIsMenuOpen(false)}
+          />
 
-          <nav className="mt-8 flex flex-col gap-3">
-            {navLinks.map((link) => (
-              <MobileNavLink 
-                onClick={() => setIsMenuOpen(false)} 
-                key={link.path} 
-                href={link.path}
-              >
-                {link.name}
-              </MobileNavLink>
-            ))}
-          </nav>
-        </aside>
-      </div>
-          
+          {/* Sidebar Content */}
+          <aside
+            className={`absolute left-0 top-0 h-full w-[280px] bg-base-100 p-6 shadow-2xl transition-transform duration-300 ease-out ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}
+          >
+            <div className="flex items-center justify-between border-b pb-6">
+              <Link href="/" onClick={() => setIsMenuOpen(false)} className="text-xl font-black">
+                <span className="text-neutral">Tech</span><span className="text-primary">Easy</span>
+              </Link>
+              <button onClick={() => setIsMenuOpen(false)} className="rounded-full bg-base-200 p-2">
+                <RxCross1 size={18} />
+              </button>
+            </div>
+
+            <nav className="mt-8 flex flex-col gap-3">
+              {navLinks.map((link) => (
+                <MobileNavLink
+                  onClick={() => setIsMenuOpen(false)}
+                  key={link.path}
+                  href={link.path}
+                >
+                  {link.name}
+                </MobileNavLink>
+              ))}
+            </nav>
+          </aside>
+        </div>
+
 
       </nav>
 
