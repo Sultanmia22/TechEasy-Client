@@ -1,37 +1,38 @@
 'use client'
 import CartItem from '@/Components/CartComponent/CartItem';
+import NoCartAvailable from '@/Components/CartComponent/NoCartAvailable';
 import OrderSummary from '@/Components/CartComponent/OrderSummary';
+import TextLoader from '@/Components/Loading/TextLoader';
 import useAuth from '@/hook/useAuth';
 import useAxiosSecure from '@/hook/useAxiosSecure';
-import type { ICartItem} from '@/types/cart.interface';
-import { useEffect, useState } from 'react';
+import type { ICartItem } from '@/types/cart.interface';
+import { FaChessKing } from 'react-icons/fa';
+import useSWR from 'swr';
 
 
 const CartPage = () => {
   const axiosSecure = useAxiosSecure();
   const {user} = useAuth()
+
  
-  const [cartItems,setCartItems] = useState<ICartItem[]>([])
-  const [totalPrice,setTotalPrice] = useState<number>(0)
-
-  useEffect(() => {
-    const getItemByEmail = async () => {
-      if (!user?.email) return;
-      try{
-        const res = await axiosSecure.get(`/cart/getCart/${user.email}`)
-        const data = res.data.data.cart[0].items 
-        setCartItems(data)
-        setTotalPrice(res.data.data.subTotal)
-      }
-      catch(er:any){
-        console.log(er.response?.data?.message || er.message)
-      }
-    }
-    getItemByEmail()
-  },[axiosSecure,user])
+  const fetcher = (url: string) => axiosSecure.get(url).then(res => res.data);
 
 
+  const { data, mutate, isLoading } = useSWR(
+    user?.email ? `/cart/getCart/${user.email}` : null,
+    fetcher
+  );
 
+
+  const cartItems: ICartItem[] = data?.data?.cart[0]?.items || [];
+  const totalPrice = data?.data?.subTotal || 0;
+
+  if (isLoading) return <TextLoader />
+
+  if(cartItems.length === 0){
+    return <NoCartAvailable />
+  }
+  
 
   return (
     <div>
@@ -41,7 +42,7 @@ const CartPage = () => {
             <div className='w-full flex-1 min-h-24 p-4'>
                  <div className='flex flex-col'>
                 {
-                   cartItems?.map((cartItem) => <CartItem key={cartItem.productId._id} item={cartItem}></CartItem>)
+                   cartItems?.map((cartItem) => <CartItem key={cartItem.productId._id}  item={cartItem}  mutate={mutate}></CartItem>)
                 }
                 </div> 
             </div>

@@ -1,12 +1,30 @@
 'use client';
 
+import useAxiosSecure from "@/hook/useAxiosSecure";
 import type { CartItemProps } from "@/types/cart.interface";
+import { toast } from "react-toastify";
 
 
-const CartItem: React.FC<CartItemProps> = ({ item }) => {
+const CartItem: React.FC<CartItemProps> = ({ item ,mutate}) => {
 
+    const axiosSecure = useAxiosSecure()
 
-    
+    // Delete cart Item form cart page 
+    const handleRemoveCart = async (id:string) => {
+        try{
+            const res = await axiosSecure.patch(`${process.env.NEXT_PUBLIC_API_URL}/cart/removeCart/${id}`)
+
+            if(res.status === 200 || res.data.success){
+                toast.success(res?.data.message)
+            }
+            mutate();
+        }
+        catch(er:any){
+            const erMessage = er.response?.data.message;
+            toast.error(erMessage)
+        }
+    } 
+
     return (
 
         <div className="flex flex-col md:flex-row md:justify-between md:items-center p-2 shadow-md rounded-lg dark:border dark:border-primary">
@@ -34,7 +52,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
             <div className="flex items-center justify-center gap-3 ">
                 <button className="btn btn-sm">-</button>
                 <button className="btn btn-sm">+</button>
-                <button onClick={handleRemoveCart} className="btn btn-outline btn-accent">remove</button>
+                <button onClick={ () =>  handleRemoveCart(item?.productId?._id)} className="btn btn-outline btn-accent">remove</button>
             </div>
 
         </div>

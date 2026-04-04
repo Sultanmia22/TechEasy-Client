@@ -35,4 +35,5 @@ export interface ICart {
 
 export interface CartItemProps {
   item: ICartItem;
+  mutate: () => void
 }
