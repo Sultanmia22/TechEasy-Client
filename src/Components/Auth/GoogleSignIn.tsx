@@ -11,7 +11,7 @@ const GoogleSignIn = () => {
 
   const router = useRouter()
 
-  const [loading,setLoading] = useState<Boolean>(false)
+  const [loading,setLoading] = useState<boolean>(false)
 
   const { status } = useSession()
 

@@ -3,6 +3,7 @@ import { signOut } from "next-auth/react"
 import { toast } from 'react-toastify'
 
 const handleLogOut = async () => {
+  
   try{
     const res = await signOut()
     toast.success('Logout Successfully!')
@@ -11,6 +12,7 @@ const handleLogOut = async () => {
   toast.error(er.message)
   }
 }
+
 
 const LogOut = () => {
   return (

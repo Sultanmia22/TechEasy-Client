@@ -15,7 +15,7 @@ const LoginForm = () => {
 
   const router = useRouter()
 
-  const [loading,setLoading] = useState<Boolean>(false)
+  const [loading,setLoading] = useState<boolean>(false)
 
   const {
     register,
@@ -47,7 +47,7 @@ const LoginForm = () => {
       }
     }
 
-    catch (er: any) {
+    catch (er:any) {
       setLoading(false)
       toast.error(er.message)
     }

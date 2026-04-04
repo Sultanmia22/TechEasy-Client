@@ -1,26 +1,37 @@
-'use client';
+'use client'
 import CartItem from '@/Components/CartComponent/CartItem';
 import OrderSummary from '@/Components/CartComponent/OrderSummary';
-import Link from 'next/link';
+import useAuth from '@/hook/useAuth';
+import useAxiosSecure from '@/hook/useAxiosSecure';
+import type { ICartItem} from '@/types/cart.interface';
+import { useEffect, useState } from 'react';
+
 
 const CartPage = () => {
+  const axiosSecure = useAxiosSecure();
+  const {user} = useAuth()
+ 
+  const [cartItems,setCartItems] = useState<ICartItem[]>([])
+  const [totalPrice,setTotalPrice] = useState<number>(0)
 
-  // Dummy cart data (later API diye replace korba)
-  const cartItems = [
-
-    {
-      _id: "2",
-      name: "iPhone 15 Pro Max",
-      price: 148000,
-      quantity: 2,
-      image: "https://images.unsplash.com/photo-1696446701796-da61225697cc"
+  useEffect(() => {
+    const getItemByEmail = async () => {
+      if (!user?.email) return;
+      try{
+        const res = await axiosSecure.get(`/cart/getCart/${user.email}`)
+        const data = res.data.data.cart[0].items 
+        setCartItems(data)
+        setTotalPrice(res.data.data.subTotal)
+      }
+      catch(er:any){
+        console.log(er.response?.data?.message || er.message)
+      }
     }
-  ];
+    getItemByEmail()
+  },[axiosSecure,user])
 
-  const totalPrice = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
+
+
 
   return (
     <div>
@@ -28,15 +39,14 @@ const CartPage = () => {
 
         <div className='flex flex-col md:flex-row  gap-6'>
             <div className='w-full flex-1 min-h-24 p-4'>
-                <div className='flex flex-col'>
+                 <div className='flex flex-col'>
                 {
-         
-                    cartItems.map((item) => <CartItem key={item._id} item={item}></CartItem>)
+                   cartItems?.map((cartItem) => <CartItem key={cartItem.productId._id} item={cartItem}></CartItem>)
                 }
-                </div>
+                </div> 
             </div>
             <div className='w-full flex-1  min-h-24 p-4'>
-              <OrderSummary />
+              <OrderSummary  totalPrice={totalPrice}/>
             </div>
         </div>
     </div>
