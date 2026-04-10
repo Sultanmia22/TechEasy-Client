@@ -1,42 +1,62 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import Navbar from "@/Components/Layouts/Navbar/Navbar";
-import { ToastContainer } from "react-toastify";
-import NextAuthProviders from "@/Providers/NextAuthProviders";
 import Footer from "@/Components/Layouts/Footer/Footer";
-
-
+import Navbar from "@/Components/Layouts/Navbar/Navbar";
+import ClientProviders from "@/Providers/ClientProviders";
+import "./globals.css";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "TechEasy",
-  description: "A Tech Product E-Commerce Platform",
+  title: "TechEasy - E-Commerce Platform",
+  description:
+    "TechEasy is your go-to online store for tech products in Bangladesh.",
+  keywords: [
+    "TechEasy",
+    "E-Commerce",
+    "Tech Products",
+    "Bangladesh",
+    "Online Shopping",
+  ],
+  authors: [{ name: "TechEasy Team", url: "https://techeasy.com.bd" }],
+  viewport: "width=device-width, initial-scale=1.0",
+  robots: "index, follow",
+  openGraph: {
+    title: "TechEasy - E-Commerce Platform",
+    description: "Shop tech products online easily and securely with TechEasy.",
+    url: "https://techeasy.com.bd",
+    siteName: "TechEasy",
+    images: [
+      {
+        url: "https://techeasy.com.bd/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "TechEasy Logo",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "TechEasy - E-Commerce Platform",
+    description: "Shop tech products online easily and securely with TechEasy.",
+    images: ["https://techeasy.com.bd/og-image.png"],
+  },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en" data-theme='light'>
-      
-      <body
-        className={`antialiased`}
-      >
-
-        <NextAuthProviders>
+    <html lang="en" data-theme="light">
+      <body className="antialiased">
+        <ClientProviders>
           <Navbar />
-          
-        <main className="flex flex-col gap-20 w-11/12 md:w-10/12 mx-5 md:mx-auto py-5 md:py-5">
-          {children}
-        </main>
-
-        <Footer />
-
-        <ToastContainer />
-        
-        </NextAuthProviders>
-
+          <main className="flex-1 w-11/12 md:w-10/12 mx-5 md:mx-auto py-5">
+            {children}
+          </main>
+          <Footer />
+        </ClientProviders>
       </body>
     </html>
   );

@@ -76,7 +76,7 @@ const Navbar = () => {
     return CustomerLinks;
   };
 
-  const navLinks = getNavLink(user.role);
+  const navLinks = getNavLink(user.role || 'customer');
 
   const toggleMenu = (
     e: React.MouseEvent<HTMLDivElement | HTMLAnchorElement>,
