@@ -1,9 +1,10 @@
 import React from 'react';
 import { FiMail, FiPhone, FiMapPin, FiClock, FiSend } from 'react-icons/fi';
 import { FaFacebookF, FaLinkedinIn, FaGithub, FaTwitter } from 'react-icons/fa';
+import ContactForm from '@/Components/Contact/ContactForm';
 
 const ContactPage = () => {
- 
+
 
   return (
     <div className="bg-base-100 text-base-content min-h-screen">
@@ -88,49 +89,7 @@ const ContactPage = () => {
           </div>
 
           {/* Contact Form */}
-          <div className="lg:col-span-2 bg-base-200 p-8 md:p-12 rounded-[2.5rem] shadow-sm border border-base-300">
-            <form  className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text font-bold">Full Name</span>
-                  </label>
-                  <input type="text" placeholder="MD Sultan" className="input input-bordered bg-base-100 focus:border-primary transition-all w-full" required />
-                </div>
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text font-bold">Email Address</span>
-                  </label>
-                  <input type="email" placeholder="sultan@example.com" className="input input-bordered bg-base-100 focus:border-primary transition-all w-full" required />
-                </div>
-              </div>
-
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-bold">Subject</span>
-                </label>
-                <select className="select select-bordered bg-base-100 focus:border-primary w-full">
-                  <option disabled selected>How can we help?</option>
-                  <option>Order Status</option>
-                  <option>Product Inquiry</option>
-                  <option>Technical Support</option>
-                  <option>Partnership</option>
-                </select>
-              </div>
-
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text font-bold">Message</span>
-                </label>
-                <textarea className="textarea textarea-bordered bg-base-100 focus:border-primary h-40 transition-all w-full" placeholder="Tell us more about your hurdle..."></textarea>
-              </div>
-
-              <button type="submit" className="btn btn-primary btn-block rounded-xl group">
-                <FiSend className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                Send Message
-              </button>
-            </form>
-          </div>
+          <ContactForm />
         </div>
       </section>
 

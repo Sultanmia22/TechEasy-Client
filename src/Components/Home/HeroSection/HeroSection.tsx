@@ -29,7 +29,7 @@ const HeroSection = () => {
 ];
 
     return (
-        <div className='flex flex-col-reverse md:flex-row gap-10'>
+        <div className='flex flex-col-reverse md:flex-row gap-10 mt-10'>
             {/* Hero Left side */}
             <div className='flex-1 space-y-5'>
 
