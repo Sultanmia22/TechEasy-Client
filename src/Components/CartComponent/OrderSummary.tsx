@@ -39,7 +39,7 @@ const OrderSummary : React.FC<ITotalPrice> = ({totalPrice}) => {
       <div className="flex gap-4">
         
         {/*  Add More  */}
-        <Link href={'/all-product'} className="flex-1 flex items-center justify-center gap-2.5 btn btn-primary btn-outline">
+        <Link href={'/all-product'} className="flex-1 flex items-center justify-center gap-2.5 btn btn-primary btn-outline transition duration-300 ">
           <span className="text-[24px] font-medium leading-none">+</span>
           Add More
         </Link>

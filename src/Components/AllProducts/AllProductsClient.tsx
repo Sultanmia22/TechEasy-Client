@@ -41,7 +41,7 @@ const AllProductsClient = ({ brands,categories,products,total,page,limit }: IAll
   return (
     <div>
       {/* Header */}
-      <div className="max-w-7xl mx-auto    pt-10 pb-6 text-center md:text-left">
+      <div className=" pt-10 pb-6 text-center md:text-left">
         <h1 className="text-3xl md:text-4xl font-black text-base-content">
           All Products
         </h1>
@@ -51,7 +51,7 @@ const AllProductsClient = ({ brands,categories,products,total,page,limit }: IAll
       </div>
 
       {/* Filter + Search + Sort */}
-      <div className="max-w-7xl mx-auto pb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div className=" pb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
 
         {/* Left Side (Search + Filters) */}
         <div className="flex flex-col sm:flex-row gap-4 w-full">
