@@ -44,7 +44,7 @@ const categories = [
 const CategoriesSection = () => {
   return (
     <section className="py-14 md:py-20">
-      <div className="w-11/12 md:w-10/12 mx-auto">
+      <div>
 
         {/* Heading */}
         <div className="flex items-center justify-between mb-10">

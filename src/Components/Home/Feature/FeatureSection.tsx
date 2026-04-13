@@ -27,7 +27,7 @@ const features = [
 const FeatureSection = () => {
   return (
     <section className="py-14 md:py-20">
-      <div className="w-11/12 md:w-10/12 mx-auto">
+      <div>
 
         {/* Heading */}
         <div className="text-center mb-10 md:mb-14">

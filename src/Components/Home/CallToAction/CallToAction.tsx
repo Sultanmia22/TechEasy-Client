@@ -6,7 +6,7 @@ import { FaShoppingCart } from "react-icons/fa";
 const CallToAction: React.FC = () => {
   return (
     <section className="py-20 bg-primary dark:bg-primary text-primary-content dark:text-base-100">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="px-5 md:px-10 text-center">
         <h2 className="text-4xl font-bold mb-4">
           Upgrade Your Tech Today
         </h2>

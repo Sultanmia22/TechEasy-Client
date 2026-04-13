@@ -29,8 +29,8 @@ const PopularProducts = async () => {
     }
 
   return (
-    <section className="py-12 bg-base-100 dark:bg-base-200">
-      <div className="container mx-auto px-4">
+    <section className="py-12 bg-base-100 ">
+      <div>
         <h2 className="text-3xl font-bold text-primary dark:text-primary mb-8">
           Popular Products
         </h2>

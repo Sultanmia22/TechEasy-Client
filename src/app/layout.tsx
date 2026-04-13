@@ -1,9 +1,10 @@
-import Footer from "@/Components/Layouts/Footer/Footer";
-import Navbar from "@/Components/Layouts/Navbar/Navbar";
-import ClientProviders from "@/Providers/ClientProviders";
-import "./globals.css";
-import type { Metadata } from "next";
 
+import ClientProviders from "@/Providers/ClientProviders";
+import "./globals.css"; 
+import type { Metadata } from "next";
+import ConditionalLayout from "@/Components/Layouts/ConditionalLayout";
+
+// মেটাডেটা এখানেই থাকবে
 export const metadata: Metadata = {
   title: "TechEasy - E-Commerce Platform",
   description:
@@ -50,12 +51,10 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="light">
       <body className="antialiased">
-        <ClientProviders>
-          <Navbar />
-          <main className="flex-1 w-11/12 md:w-10/12 mx-5 md:mx-auto py-5">
+       <ClientProviders>
+          <ConditionalLayout>
             {children}
-          </main>
-          <Footer />
+          </ConditionalLayout>
         </ClientProviders>
       </body>
     </html>

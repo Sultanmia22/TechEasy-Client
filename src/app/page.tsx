@@ -16,52 +16,63 @@ import { Suspense } from "react";
 
 export default function Home() {
   return (
-    <div className="">
-     <section>
-      <HeroSection />
-     </section>
+   <div className="flex flex-col gap-16 md:gap-24">
+      {/* Hero Section */}
+      <section>
+        <HeroSection />
+      </section>
 
-     <section>
-      <FeatureSection />
-     </section>
+      {/* Categories Section */}
+      <section>
+        <CategoriesSection />
+      </section>
 
-     <section>
-      <ServicesSection />
-     </section>
-
-     <section>
-      <CategoriesSection />
-     </section>
-
-     <section>
-     <Suspense fallback={<TextLoader />}>
+      {/* ৩. Popular Section */}
+      <section>
+        <Suspense fallback={<TextLoader />}>
           <PopularProducts />
         </Suspense>
-     </section>
+      </section>
 
-     <section>
-      <Statistics/>
-     </section>
+      {/* Feature Section */}
+      <section>
+        <FeatureSection />
+      </section>
 
-     <section>
-      <Testimonials />
-     </section>
+      {/* Statistics Section */}
+      <section>
+        <Statistics />
+      </section>
 
-     <section>
-      <BlogSection />
-     </section>
+      {/* Services Section */}
+      <section>
+        <ServicesSection />
+      </section>
 
-     <section>
-      <FaqSection />
-     </section>
+      {/* Call to Action */}
+      <section>
+        <CallToAction />
+      </section>
 
-     <section>
-      <Newsletter />
-     </section>
+      {/* Testimonials */}
+      <section>
+        <Testimonials />
+      </section>
 
-     <section>
-      <CallToAction />
-     </section>
+      {/* Blog Section */}
+      <section>
+        <BlogSection />
+      </section>
+
+      {/* FAQ */}
+      <section>
+        <FaqSection />
+      </section>
+
+      {/* Newsletter */}
+      <section>
+        <Newsletter />
+      </section>
     </div>
   );
 }
