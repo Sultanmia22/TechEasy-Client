@@ -1,5 +1,5 @@
 
-import ClientProviders from "@/Providers/ClientProviders";
+import ClientProviders from "@/Providers/LayoutProvider";
 import "./globals.css"; 
 import type { Metadata } from "next";
 import ConditionalLayout from "@/Components/Layouts/ConditionalLayout";
