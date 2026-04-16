@@ -7,13 +7,15 @@ import useAuth from '@/hook/useAuth';
 import useAxiosSecure from '@/hook/useAxiosSecure';
 import type { ICartItem } from '@/types/cart.interface';
 import { useQuery } from '@tanstack/react-query';
-import { FaChessKing } from 'react-icons/fa';
+
 
 
 
 const CartPage = () => {
   const axiosSecure = useAxiosSecure();
   const {user} = useAuth()
+
+  console.log(user?.email)
 
 const { data, isLoading, refetch } = useQuery({
     queryKey: ['cart', user?.email],
@@ -23,6 +25,8 @@ const { data, isLoading, refetch } = useQuery({
       return res.data;
     },
   });
+
+  console.log(data)
 
 
   const cartItems: ICartItem[] = data?.data?.cart[0]?.items || [];
