@@ -9,6 +9,7 @@ const useAuth = () => {
         session,
         user : session?.user,
         token: session?.user?.accessToken || null,
+        role : session?.user?.role || 'customer' ,
         isLoading : status === 'loading',
         isAuthenticated : status === 'authenticated',
         isUnauthenticated : status === 'unauthenticated',

@@ -2,7 +2,9 @@
 import { IProduct } from '@/types/products.interface';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
+import Image from 'next/image';
 import Link from 'next/link';
+import {  useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import { toast } from 'react-toastify';
@@ -13,15 +15,15 @@ interface ProductDetailsProps {
 
 const ProductDetails = ({ singleProduct }: ProductDetailsProps) => {
 
+  const router = useRouter();
+
   const { data } = useSession()
-
-
 
   const [quantity, setQuantity] = useState<number>(1)
 
   const product = singleProduct || {}
 
-  // handle Product Quantiy Increase Decrease 
+  // Quantity Change Function
   const handleQuantityChange = (type: 'increase' | 'decrease') => {
     if (type === 'increase') {
       setQuantity(prev => prev + 1)
@@ -31,6 +33,7 @@ const ProductDetails = ({ singleProduct }: ProductDetailsProps) => {
     }
   }
 
+  // Add to Cart Function
   const handleAddToCart = async () => {
     try {
       const cartData = {
@@ -43,6 +46,7 @@ const ProductDetails = ({ singleProduct }: ProductDetailsProps) => {
 
       if(res.data.success){
         toast.success(res.data.message)
+        router.push('/cart')
       }
     }
 
@@ -52,7 +56,23 @@ const ProductDetails = ({ singleProduct }: ProductDetailsProps) => {
     }
   }
 
-  // Generate star rating visually
+  // Add to Wishlist Funtion 
+  const handleAddToWishlist = async () => {
+    try{
+       const wishListData = {
+        customerEmail: data?.user?.email,
+        productId: product?._id,
+      };
+
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/wishlist/addwishlist`,wishListData);
+      console.log(res)
+    }
+    catch(er:any){
+        console.log(er)
+    }
+  }
+
+ 
   const fullStars = Math.floor(product.rating);
   const hasHalfStar = product.rating - fullStars >= 0.5;
 
@@ -68,13 +88,12 @@ const ProductDetails = ({ singleProduct }: ProductDetailsProps) => {
 
         {/* Product Image */}
         <div className="w-full md:w-1/2 flex justify-center ">
-          <img
-            src={product.image}
-            alt={product.name}
-            width={400}
-            height={400}
-            className="rounded-xl object-cover"
-          />
+          <Image 
+           className="rounded-xl object-cover"
+           src={product.image}  
+           alt={product.name} 
+           width={400} 
+           height={400} />
         </div>
 
         {/* Product Info */}
@@ -120,14 +139,26 @@ const ProductDetails = ({ singleProduct }: ProductDetailsProps) => {
               <button className='btn text-lg'>{quantity}</button>
               <button onClick={() => handleQuantityChange('increase')} className='btn text-lg'>+</button>
             </div>
-            <div>
+
+            {/* Wishlist and Add to cart button */}
+            <div className='flex items-center gap-2'>
+              {/* wishlist button */}
+              <button 
+                onClick={handleAddToWishlist}
+                className="btn btn-outline btn-accent transition-colors duration-200"
+                >
+                  Add to Wishlist
+                </button>
+
+               {/* add to cart button */}
               <button
                 onClick={handleAddToCart}
-                className="btn btn-accent w-full transition-colors duration-200"
+                className="btn btn-accent transition-colors duration-200"
               >
                 Add to Cart
               </button>
             </div>
+
           </div>
 
         </div>

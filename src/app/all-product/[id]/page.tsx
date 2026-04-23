@@ -1,5 +1,5 @@
-import ProductDetails from '@/Components/AllProducts/ProductDetails'
 import React from 'react'
+import ProductDetails from '@/Components/AllProducts/ProductDetails'
 
 const getProductById = async (id: string) => {
     try {

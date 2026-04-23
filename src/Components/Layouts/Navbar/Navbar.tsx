@@ -10,6 +10,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { FaBars, FaShoppingCart } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
 import { FaUser } from "react-icons/fa";
+import Image from "next/image";
 
 type NavLinkType = {
   name: string;
@@ -116,7 +117,7 @@ const Navbar = () => {
 
         <div className="flex items-center gap-6">
           <div>
-            <Link href={""}>
+            <Link href={"/cart"}>
               {" "}
               <FaShoppingCart size={24} className="text-accent" />{" "}
             </Link>
@@ -133,12 +134,9 @@ const Navbar = () => {
                   }}
                   className="cursor-pointer border-2 border-primary rounded-full p-0.5 hover:shadow-lg transition-all w-12 h-12 flex items-center justify-center"
                 >
-                  {user?.image ? (
-                    <img
-                      src={user.image}
-                      alt="profile"
-                      className="rounded-full object-cover w-11 h-11"
-                    />
+                  {user?.image? (
+                   
+                    <Image src={user?.image} width={100} height={100} className="rounded-full object-cover w-11 h-11" alt="profile" />
                   ) : (
                     <FaUser className="text-primary text-lg" />
                   )}
@@ -151,11 +149,7 @@ const Navbar = () => {
                     {/* profile header */}
                     <div className="flex items-center gap-3 px-4 py-3 bg-primary/5 border-b border-base-200">
                       {user?.image && (
-                        <img
-                          src={user.image}
-                          alt="profile"
-                          className="w-10 h-10 rounded-full object-cover border border-transparent"
-                        />
+                         <Image src={user?.image} width={100} height={100} className="rounded-full object-cover w-11 h-11" alt="profile" />
                       )}
 
                       <div className="flex flex-col">

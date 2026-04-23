@@ -2,6 +2,7 @@
 
 import useAxiosSecure from "@/hook/useAxiosSecure";
 import type { CartItemProps } from "@/types/cart.interface";
+import Image from "next/image";
 import { toast } from "react-toastify";
 
 
@@ -33,8 +34,14 @@ const CartItem: React.FC<CartItemProps> = ({ item ,mutate}) => {
 
                 <div className="w-full h-40 md:w-30 md:h-30 ">
 
-                    <img src={item?.productId?.image} alt="" className="w-full h-full object-cover rounded-xl" />
-
+                    <Image 
+                     src={item?.productId?.image} 
+                     alt="" 
+                     className="w-full h-full object-cover rounded-xl"
+                     width={200}
+                     height={200}
+                     />
+    
                 </div>
 
                 <div>

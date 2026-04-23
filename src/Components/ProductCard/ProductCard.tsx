@@ -1,4 +1,5 @@
 import { IProduct } from '@/types/products.interface'
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
 
@@ -10,10 +11,14 @@ const ProductCard : React.FC<ProductCardProps> =  ({product}) => {
 
   return (
     <div className="bg-base-100 dark:bg-base-200 shadow-lg rounded-xl overflow-hidden hover:shadow-2xl transition-shadow duration-300">
-      <img
+     <Image
+        className="w-full h-70 rounded-t-xl object-cover"
         src={product.image}
         alt={product.name}
-        className="w-full h-48 object-cover"
+        width={400}
+        height={400}
+        placeholder='blur'
+        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
       />
       <div className="p-4">
         <h3 className="text-lg font-semibold text-base-content dark:text-base-content">{product.name}</h3>
