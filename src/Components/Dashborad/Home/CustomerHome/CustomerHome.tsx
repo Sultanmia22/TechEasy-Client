@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FaHandshake } from "react-icons/fa";
 import { PiRocketLaunchBold } from "react-icons/pi";
 import CustomerSummaryCard from "./CustomerSummaryCard";
+import OrderAndWishList from "./OrderAndWishList";
 const CustomerHome = () => {
   const {user} = useAuth()
 
@@ -26,11 +27,14 @@ const CustomerHome = () => {
         </Link>
       </div>
     </div>
-
+    {/* Sammary Card */}
     <div>
       <CustomerSummaryCard/>
     </div>
-    
+    {/* Recent orders & Wishlist */}
+    <div>
+      <OrderAndWishList />
+    </div>
   </div>
   );
 };
