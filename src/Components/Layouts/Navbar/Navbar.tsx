@@ -24,8 +24,6 @@ const Navbar = () => {
 
   const { data, status } = useSession();
 
-  //  console.log(data)
-
   const isAuthenticate: boolean = status === "authenticated";
 
   // Close profile menu when clicking outside

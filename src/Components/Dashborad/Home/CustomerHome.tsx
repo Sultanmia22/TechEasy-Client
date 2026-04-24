@@ -1,9 +1,11 @@
 "use client";
+import useAuth from "@/hook/useAuth";
 import Link from "next/link";
-import React from "react";
 import { FaHandshake } from "react-icons/fa";
 import { PiRocketLaunchBold } from "react-icons/pi";
 const CustomerHome = () => {
+  const {user} = useAuth()
+
   return (
   <div>
       {/* Banner */}
@@ -11,7 +13,7 @@ const CustomerHome = () => {
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 text-lg md:text-2xl font-bold tracking-tight">
-            <span className="flex text-white dark:text-gray-300"> Welcome, Rahat Bhai </span> <span className="flex"> <FaHandshake className="text-white"/> </span>
+            <span className="flex text-white dark:text-gray-300"> Welcome, Mr. {user?.name} </span> <span className="flex"> <FaHandshake className="text-white"/> </span>
           </div>
           <p className="text-white dark:text-gray-300 opacity-90 mt-1">
             Here’s what’s happening with your TechEasy account today.
