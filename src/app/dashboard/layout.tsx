@@ -83,10 +83,10 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
     <div className="flex  w-full  min-h-screen bg-gray-100 dark:bg-black">
       {/* Sidebar */}
       <div
-        className={`fixed bg-base-100 shadow-md  w-64 min-h-screen ${sidebarOpen === true ? "translate-x-0" : "-translate-x-64"} lg:translate-x-0 lg:static `}
+        className={` max-lg:fixed lg:sticky lg:top-0 bg-base-100 shadow-md  w-64 min-h-screen lg:h-screen z-50 ${sidebarOpen === true ? "translate-x-0" : "-translate-x-64"} lg:translate-x-0 `}
       >
 
-        <div className="flex flex-col justify-between min-h-screen">
+        <div className="flex flex-col justify-between h-screen">
           {/* Logo,Cross bar and nav Items */}
           <div className="felx-1">
             <div className="flex items-center justify-between h-20 p-3 border-b border-gray-100">
@@ -137,7 +137,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
 
       {/* Main */}
       <main className="flex-1">
-        <header className="flex justify-between items-center h-20 p-3  shadow-md dark:border-b bg-base-100">
+        <header className="flex justify-between items-center h-20 p-3  shadow-md dark:border-b bg-base-100 sticky top-0 z-50">
           {/* Logo and bar icon */}
           <div className="flex items-center gap-2">
             <div className="flex items-center justify-center lg:hidden">
@@ -167,14 +167,21 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
 
             <div className="flex">
               <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full">
-                <Image
-                  className="rounded-full"
-                  src={user?.image}
-                  width={50}
-                  height={50}
-                  alt="Profile" />
+                {
+                  user?.image ? (
+                    <Image
+                      className="rounded-full"
+                      src={user?.image || 'https://i.pinimg.com/474x/4c/1d/a0/4c1da05326a6d32d124df246038df53d.jpg'}
+                      width={50}
+                      height={50}
+                      alt="Profile" />
+                  )
+                    :
+                    <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full"></div>
+                }
+
               </div>
-            </div>
+            </div> 
           </div>
         </header>
         <div className="">{children}</div>
