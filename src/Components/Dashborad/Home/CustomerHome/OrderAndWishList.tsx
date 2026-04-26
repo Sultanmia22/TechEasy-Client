@@ -1,6 +1,7 @@
 
 import React from 'react'
 import HomePageRecentOrders from './HomePageRecentOrders'
+import HomeWihslist from './HomeWihslist'
 
 const OrderAndWishList = () => {
     return (
@@ -18,7 +19,16 @@ const OrderAndWishList = () => {
                 <HomePageRecentOrders />
                 </div>
             </div>
-            <div className='basis-2/5 border border-gray-900 p-5'></div>
+            <div className='basis-2/5 bg-base-100 p-5 rounded-xl '>
+                 <div className='flex justify-between items-center text-lg lg:text-base font-semibold  mb-6'>
+                    <span>Wishlist</span>
+                    <span className='text-primary'>View All</span>
+                </div>
+                <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-3'>
+                    <HomeWihslist />
+                      <HomeWihslist />
+                </div>
+            </div>
         </div>
     )
 }

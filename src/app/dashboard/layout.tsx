@@ -83,7 +83,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
     <div className="flex  w-full  min-h-screen bg-gray-100 dark:bg-black">
       {/* Sidebar */}
       <div
-        className={` max-lg:fixed lg:sticky lg:top-0 bg-base-100 shadow-md  w-64 min-h-screen lg:h-screen z-50 ${sidebarOpen === true ? "translate-x-0" : "-translate-x-64"} lg:translate-x-0 `}
+        className={` max-lg:fixed lg:sticky lg:top-0 bg-base-100 shadow-md  w-64 min-h-screen lg:h-screen z-70 ${sidebarOpen === true ? "translate-x-0" : "-translate-x-64"} lg:translate-x-0 `}
       >
 
         <div className="flex flex-col justify-between h-screen">

@@ -5,8 +5,15 @@ import { FaHandshake } from "react-icons/fa";
 import { PiRocketLaunchBold } from "react-icons/pi";
 import CustomerSummaryCard from "./CustomerSummaryCard";
 import OrderAndWishList from "./OrderAndWishList";
+import { useContext } from "react";
+import { DashboardContext } from "@/Providers/DashboardProvider";
 const CustomerHome = () => {
+
   const {user} = useAuth()
+
+  const dashboardData = useContext(DashboardContext)
+
+  console.log('Dashborad',dashboardData)
 
   return (
   <div className="flex flex-col gap-10 min-h-screen">

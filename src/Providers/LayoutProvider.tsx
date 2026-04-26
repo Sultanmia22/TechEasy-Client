@@ -3,6 +3,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import NextAuthProviders from './NextAuthProviders';
 import { ToastContainer } from 'react-toastify';
+import DashboardProvider from './DashboardProvider';
 
 
 const queryClient = new QueryClient();
@@ -11,8 +12,10 @@ export default function ClientProviders({ children }: { children: React.ReactNod
   return (
     <QueryClientProvider client={queryClient}>
       <NextAuthProviders>
-        {children}
-        <ToastContainer />
+        <DashboardProvider>
+          {children}
+          <ToastContainer />
+        </DashboardProvider>
       </NextAuthProviders>
     </QueryClientProvider>
   );
