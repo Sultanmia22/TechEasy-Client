@@ -1,8 +1,25 @@
+'use client'
 import React from 'react'
 import { FiShoppingBag } from 'react-icons/fi'
 import { MdOutlinePendingActions } from "react-icons/md";
 import { LuHeart, LuPackageCheck } from "react-icons/lu";
+
+interface ICustomerSummaryCardProps{
+  dashboradContent: {
+    stats?: {
+      totalOrder: number;
+      totalPendingOrder: number;
+      totalDeliveredOrder: number;
+      totalWishList: number;
+    };
+    wishListItems?: any[];
+    recentOrders?: any[];
+  } | null;
+}
+
 const CustomerSummaryCard = () => {
+
+
   return (
     <div className='w-full grid grid-cols-2 lg:grid-cols-4 gap-5'>
         <div className='p-8 flex flex-col sm:flex-row text-center sm:text-start items-center gap-3 bg-base-100 shadow-sm rounded-lg  dark:border dark:border-primary'>

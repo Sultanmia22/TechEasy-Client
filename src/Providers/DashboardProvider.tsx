@@ -30,7 +30,7 @@ const DashboardProvider = ({ children }: { children: ReactNode }) => {
 
 
     const DashboradDataInfo = {
-        dashboardData
+        dashboardData,
     };
 
    return (

@@ -5,15 +5,16 @@ import { FaHandshake } from "react-icons/fa";
 import { PiRocketLaunchBold } from "react-icons/pi";
 import CustomerSummaryCard from "./CustomerSummaryCard";
 import OrderAndWishList from "./OrderAndWishList";
-import { useContext } from "react";
-import { DashboardContext } from "@/Providers/DashboardProvider";
+import useDashboardContent from "@/hook/useDashboardContext";
+
 const CustomerHome = () => {
 
   const {user} = useAuth()
 
-  const dashboardData = useContext(DashboardContext)
+  const allDashboradData = useDashboardContent()
 
-  console.log('Dashborad',dashboardData)
+  console.log('All Dashboard Data ',allDashboradData?.dashboardData)
+
 
   return (
   <div className="flex flex-col gap-10 min-h-screen">
@@ -36,7 +37,7 @@ const CustomerHome = () => {
     </div>
     {/* Sammary Card */}
     <div>
-      <CustomerSummaryCard/>
+      <CustomerSummaryCard />
     </div>
     {/* Recent orders & Wishlist */}
     <div>
