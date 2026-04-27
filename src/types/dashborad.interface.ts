@@ -1,5 +1,5 @@
-export interface stats {
-    otalOrder: number;
+export interface Istats {
+    totalOrder: number;
     totalPendingOrder: number;
     totalDeliveredOrder: number;
     totalWishList: number;
@@ -28,5 +28,33 @@ export interface IWishlist {
 }
 
 export interface IRecentOrder {
-    
+  _id: string;
+  orderDate: string;
+  totalPrice: number;
+  paymentStatus: string;
+  devliveredStatus: string;
+  stripeSessionId: string;
+  shippingInfo: {
+    firstName: string;
+    lastName: string;
+    address: string;
+    upazila: string;
+    district: string;
+    mobile: string;
+    email: string;
+    comment: string;
+  };
+  items: {
+    productId: string;
+    name: string;
+    price: number;
+    quantity: number;
+    image: string;
+  }[];
+}
+
+export interface IDashboradData {
+    stats : Istats,
+    wishListItems : IWishlist[],
+    recentOrders : IRecentOrder[]
 }

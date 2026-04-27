@@ -1,9 +1,14 @@
 'use client'
 import useAuth from "@/hook/useAuth";
 import useAxiosSecure from "@/hook/useAxiosSecure";
+import { IDashboradData } from "@/types/dashborad.interface";
 import { createContext, useEffect, useState, type ReactNode } from "react"
 
-export const DashboardContext = createContext(null)
+interface IDashboardContextValue {
+    dashboardData: IDashboradData | undefined;
+}
+
+export const DashboardContext = createContext<IDashboardContextValue | undefined>(undefined)
 
 const DashboardProvider = ({ children }: { children: ReactNode }) => {
 
@@ -11,7 +16,7 @@ const DashboardProvider = ({ children }: { children: ReactNode }) => {
 
     const axiosSecure = useAxiosSecure()
 
-     const [dashboardData, setDashboardData] = useState(null)
+    const [dashboardData, setDashboardData] = useState<IDashboradData>()
 
     useEffect(() => {
         const getDashboradData = async () => {
@@ -26,14 +31,14 @@ const DashboardProvider = ({ children }: { children: ReactNode }) => {
 
         }
         getDashboradData()
-    }, [user?.email,axiosSecure])
+    }, [user?.email, axiosSecure])
 
 
     const DashboradDataInfo = {
         dashboardData,
     };
 
-   return (
+    return (
         <DashboardContext value={DashboradDataInfo as any}>
             {children}
         </DashboardContext>

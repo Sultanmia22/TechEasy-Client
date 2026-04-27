@@ -9,41 +9,47 @@ import useDashboardContent from "@/hook/useDashboardContext";
 
 const CustomerHome = () => {
 
-  const {user} = useAuth()
+  const { user } = useAuth()
 
-  const allDashboradData = useDashboardContent()
+  const contextValue = useDashboardContent()
 
-  console.log('All Dashboard Data ',allDashboradData?.dashboardData)
+  const dashboardData = contextValue?.dashboardData
 
+  const stats = dashboardData?.stats;
+  const recentOrders = dashboardData?.recentOrders || [];
+  const wishListItems = dashboardData?.wishListItems || [];
 
   return (
-  <div className="flex flex-col gap-10 min-h-screen">
+    <div className="flex flex-col gap-10 min-h-screen">
       {/* Banner */}
-    <div className="w-full rounded-2xl p-5 md:p-8 bg-linear-to-r from-primary/90 to-primary text-primary-content shadow-lg hover:shadow-xl transition duration-300">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2 text-lg md:text-2xl font-bold tracking-tight">
-            <span className="flex text-white dark:text-gray-300"> Welcome, Mr. {user?.name} </span> <span className="flex"> <FaHandshake className="text-white"/> </span>
+      <div className="w-full rounded-2xl p-5 md:p-8 bg-linear-to-r from-primary/90 to-primary text-primary-content shadow-lg hover:shadow-xl transition duration-300">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2 text-lg md:text-2xl font-bold tracking-tight">
+              <span className="flex text-white dark:text-gray-300"> Welcome, Mr. {user?.name} </span> <span className="flex"> <FaHandshake className="text-white" /> </span>
+            </div>
+            <p className="text-white dark:text-gray-300 opacity-90 mt-1">
+              Here’s what’s happening with your TechEasy account today.
+            </p>
           </div>
-          <p className="text-white dark:text-gray-300 opacity-90 mt-1">
-            Here’s what’s happening with your TechEasy account today.
-          </p>
+
+          <Link href={''} className="flex items-center justify-center gap-2 w-40 mx-auto md:mx-0 text-white bg-white/20 backdrop-blur-md px-4 py-2 rounded-xl text-sm font-medium">
+            <span className=""> Total Orders </span> <span className=""> <PiRocketLaunchBold size={20} /> </span>
+          </Link>
         </div>
-           
-        <Link href={''} className="flex items-center justify-center gap-2 w-40 mx-auto md:mx-0 text-white bg-white/20 backdrop-blur-md px-4 py-2 rounded-xl text-sm font-medium">
-          <span className=""> Total Orders </span> <span className=""> <PiRocketLaunchBold size={20} /> </span>
-        </Link>
+      </div>
+      {/* Sammary Card */}
+      <div>
+        <CustomerSummaryCard stats={stats} />
+      </div>
+      {/* Recent orders & Wishlist */}
+      <div>
+        <OrderAndWishList 
+    recentOrders={recentOrders} 
+    wishListItems={wishListItems}
+        />
       </div>
     </div>
-    {/* Sammary Card */}
-    <div>
-      <CustomerSummaryCard />
-    </div>
-    {/* Recent orders & Wishlist */}
-    <div>
-      <OrderAndWishList />
-    </div>
-  </div>
   );
 };
 
