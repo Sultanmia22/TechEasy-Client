@@ -184,7 +184,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
             </div> 
           </div>
         </header>
-        <div className="">{children}</div>
+        <div className="m-3 md:m-5">{children}</div>
       </main>
     </div>
   );
