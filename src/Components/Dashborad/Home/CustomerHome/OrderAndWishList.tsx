@@ -5,13 +5,14 @@ import { FiHeart } from "react-icons/fi";
 import Link from 'next/link';
 import Order from '../../Order/Order';
 import Wishlist from '../../Wishlist/Wishlist';
+import EmptyOrder from '../../Order/EmptyOrder';
 interface IProps {
     recentOrders: IRecentOrder[];
     wishListItems: IWishlist[];
 }
 
 const OrderAndWishList = ({ recentOrders, wishListItems }: IProps) => {
-    console.log('Wishlist', wishListItems)
+
     return (
         <div className='flex flex-col md:flex-row w-full gap-6'>
             <div className='basis-3/5 bg-base-100 p-5 rounded-xl self-start'>
@@ -24,13 +25,10 @@ const OrderAndWishList = ({ recentOrders, wishListItems }: IProps) => {
                 <div className='grid grid-cols-1 gap-4'>
                     {recentOrders.length > 0 ? (
                         recentOrders?.map(order => (
-                            < Order key={order._id} order={order} />
+                            <Order key={order._id} order={order} />
                         ))
                     ) : (
-                        <div className="flex flex-col items-center justify-center py-10 opacity-50">
-                            <span className="text-4xl mb-2"> <FaBoxOpen size={24} /> </span>
-                            <p className="">You haven't placed any orders yet.!</p>
-                        </div>
+                       <EmptyOrder />
                     )}
                 </div>
             </div>

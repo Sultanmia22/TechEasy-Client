@@ -1,4 +1,4 @@
-
+'use client'
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -39,7 +39,7 @@ const Order = ({ order }: { order: IRecentOrder }) => {
             </h4>
 
             <p className="text-xs opacity-60">
-              Order ID: #{order._id.slice(-6).toUpperCase()}
+              Order ID: #{order?._id.slice(-6).toUpperCase()}
             </p>
           </div>
         </div>
@@ -47,17 +47,17 @@ const Order = ({ order }: { order: IRecentOrder }) => {
         <div className="flex items-center gap-4">
           <div className="text-right">
             <p className="font-bold text-sm text-primary">
-              Tk {order.totalPrice.toLocaleString()}
+              Tk {order?.totalPrice.toLocaleString()}
             </p>
 
             <span
               className={`text-xs font-semibold uppercase ${
-                order.devliveredStatus === "delivered"
+                order?.devliveredStatus === "delivered"
                   ? "text-secondary"
                   : "text-accent"
               }`}
             >
-              {order.devliveredStatus}
+              {order?.devliveredStatus}
             </span>
           </div>
 
@@ -105,7 +105,7 @@ const Order = ({ order }: { order: IRecentOrder }) => {
                   </div>
 
                   <p className="text-xs font-bold text-primary">
-                    ৳{item.price.toLocaleString()}
+                    Tk {item.price.toLocaleString()}
                   </p>
                 </div>
               ))}
@@ -114,7 +114,7 @@ const Order = ({ order }: { order: IRecentOrder }) => {
             
             <div className="flex justify-end mt-4">
               <Link
-                href={`/dashboard/orders/${order._id}`}
+                href={`/dashboard/orders/${order?._id}`}
                 className="btn btn-sm btn-primary text-white"
               >
                 View Details
