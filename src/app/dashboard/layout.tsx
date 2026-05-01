@@ -28,7 +28,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
       {
         navName: "My Orders",
         navIcon: FaShoppingBag,
-        href: "/dashboard/orders",
+        href: "/dashboard/myOrders",
       },
       {
         navName: "Wishlist",

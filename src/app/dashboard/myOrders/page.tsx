@@ -52,7 +52,7 @@ const MyOrderPage = () => {
         <div>
             {/* ====== Modern Professional Banner Section ====== */}
             <OrdersBanner totalCount={totalCount} />
-            <div className='mt-15'>
+            <div className='mt-15 space-y-3'>
                 {
                     orderData.length > 0 ? (
                         orderData.map((order) => 

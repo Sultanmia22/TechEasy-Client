@@ -114,7 +114,7 @@ const Order = ({ order }: { order: IRecentOrder }) => {
             
             <div className="flex justify-end mt-4">
               <Link
-                href={`/dashboard/orders/${order?._id}`}
+                href={`/dashboard/myOrders/${order?._id}`}
                 className="btn btn-sm btn-primary text-white"
               >
                 View Details
