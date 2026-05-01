@@ -32,7 +32,7 @@ export interface IRecentOrder {
   orderDate: string;
   totalPrice: number;
   paymentStatus: string;
-  devliveredStatus: string;
+  orderStatus: [string];
   stripeSessionId: string;
   shippingInfo: {
     firstName: string;

@@ -1,22 +1,22 @@
 import React from 'react'
 import { Check, ArrowRight, MoveUpRight, PackageCheck } from 'lucide-react'
-const DeliveredStatus = () => {
+interface IorderStatus {
+    orderStatus: [string]
+}
+const DeliveredStatus = ({orderStatus}:IorderStatus) => {
     const deliverIconAndTitle = [
         { title: 'Confirmed', icon: Check },
         { title: 'Paid', icon: Check },
         { title: 'Pending', icon: ArrowRight },
         { title: 'Shipped', icon: MoveUpRight },
         { title: 'Delivered', icon: PackageCheck },
-    ]
-
-    const orderStatus = ['paid','confirmed',]
-    
+    ]    
 
     return (
         
             <div className='grid grid-cols-5 gap-5 mt-5'>
             {deliverIconAndTitle.map((item, index) => {
-                const active = orderStatus.includes(item.title.toLowerCase());
+                const active = orderStatus?.includes(item.title.toLowerCase());
                 
                 return (
                     <div key={index} className='flex flex-col items-center'>
