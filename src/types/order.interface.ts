@@ -23,6 +23,7 @@ export interface IOrder {
   shippingInfo: ShippingInfo;
   items: OrderItem[];
   totalPrice: number;
+  deliveryCharge : number,
   paymentStatus: 'paid' | 'pending' | 'failed'; 
   stripeSessionId: string;
 }

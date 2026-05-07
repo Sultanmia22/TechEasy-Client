@@ -1,9 +1,14 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect} from 'react'
 
-const Theme = () => {
+// Define props interface
+interface ThemeProps {
+  isDark: boolean;
+  setIsDark: (value: boolean) => void;
+}
 
-    const [isDark, setIsDark] = useState<boolean>(false)
+const Theme = ({isDark,setIsDark}:ThemeProps) => {
+
 
     useEffect(() => {
         const saved = localStorage.getItem('theme')
@@ -23,6 +28,8 @@ const Theme = () => {
         document.documentElement.setAttribute('data-theme' , dark ? 'dark' : 'light')
 
         localStorage.setItem('theme',dark ? 'dark' : 'light')
+
+       window.dispatchEvent(new Event("themeChange"));
     }
     return (
         <input

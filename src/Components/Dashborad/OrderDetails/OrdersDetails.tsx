@@ -60,6 +60,14 @@ const shippingInfo = singleOrder?.shippingInfo
 
 const items = singleOrder?.items;
 
+console.log(singleOrder)
+
+ const priceandItemInfo = {
+    price : singleOrder?.totalPrice,
+    deliveryCharge : singleOrder?.deliveryCharge,
+    totalItem : singleOrder?.items?.length
+} 
+
 
     if (loading) {
         return <TextLoader />
@@ -106,7 +114,7 @@ const items = singleOrder?.items;
             </div>
 
             <div>
-                <PriceInfo />
+                <PriceInfo priceandItemInfo={priceandItemInfo}/>
             </div>
         </div>
     )

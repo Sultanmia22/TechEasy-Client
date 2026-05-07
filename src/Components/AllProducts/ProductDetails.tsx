@@ -1,10 +1,11 @@
 'use client'
+import useCart from '@/hook/useCart';
 import { IProduct } from '@/types/products.interface';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import {  useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
 import { toast } from 'react-toastify';
@@ -14,6 +15,8 @@ interface ProductDetailsProps {
 }
 
 const ProductDetails = ({ singleProduct }: ProductDetailsProps) => {
+
+  const { addToCart } = useCart();
 
   const router = useRouter();
 
@@ -35,44 +38,32 @@ const ProductDetails = ({ singleProduct }: ProductDetailsProps) => {
 
   // Add to Cart Function
   const handleAddToCart = async () => {
-    try {
-      const cartData = {
-        userEmail: data?.user?.email,
-        productId: product?._id,
-        quantity: quantity
-      }
 
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/cart/addToCart`,cartData)
-
-      if(res.data.success){
-        toast.success(res.data.message)
-        router.push('/cart')
-      }
-    }
-
-    catch (er: any) {
-      console.log(er)
-
-    }
+    addToCart({
+      userEmail: data?.user?.email,
+      productId: product?._id,
+      quantity: quantity
+    })
+    
   }
 
   // Add to Wishlist Funtion 
   const handleAddToWishlist = async () => {
-    try{
-       const wishListData = {
+    try {
+      const wishListData = {
         customerEmail: data?.user?.email,
         productId: product?._id,
       };
 
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/wishlist/addwishlist`,wishListData);
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/wishlist/addwishlist`, wishListData);
       console.log(res)
     }
-    catch(er:any){
-        console.log(er)
+    catch (er: any) {
+      console.log(er)
     }
   }
 
- 
+
   const fullStars = Math.floor(product.rating);
   const hasHalfStar = product.rating - fullStars >= 0.5;
 
@@ -88,12 +79,12 @@ const ProductDetails = ({ singleProduct }: ProductDetailsProps) => {
 
         {/* Product Image */}
         <div className="w-full md:w-1/2 flex justify-center ">
-          <Image 
-           className="rounded-xl object-cover"
-           src={product.image}  
-           alt={product.name} 
-           width={400} 
-           height={400} />
+          <Image
+            className="rounded-xl object-cover"
+            src={product.image}
+            alt={product.name}
+            width={400}
+            height={400} />
         </div>
 
         {/* Product Info */}
@@ -143,14 +134,14 @@ const ProductDetails = ({ singleProduct }: ProductDetailsProps) => {
             {/* Wishlist and Add to cart button */}
             <div className='flex items-center gap-2'>
               {/* wishlist button */}
-              <button 
+              <button
                 onClick={handleAddToWishlist}
                 className="btn btn-outline btn-accent transition-colors duration-200"
-                >
-                  Add to Wishlist
-                </button>
+              >
+                Add to Wishlist
+              </button>
 
-               {/* add to cart button */}
+              {/* add to cart button */}
               <button
                 onClick={handleAddToCart}
                 className="btn btn-accent transition-colors duration-200"

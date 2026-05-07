@@ -14,7 +14,7 @@ interface IProps {
 const OrderAndWishList = ({ recentOrders, wishListItems }: IProps) => {
 
     return (
-        <div className='flex flex-col md:flex-row w-full gap-6'>
+        <div className='flex flex-col 2xl:flex-row w-full gap-6'>
             <div className='w-full md:basis-3/5 bg-base-100 p-5 rounded-xl self-start'>
                 <div className='flex justify-between items-center text-lg lg:text-base font-semibold  mb-6'>
                     <span>Recent Orders</span>
@@ -39,7 +39,7 @@ const OrderAndWishList = ({ recentOrders, wishListItems }: IProps) => {
                     <span>Wishlist</span>
                     <span className='text-primary'>View All</span>
                 </div>
-                <div className='grid grid-cols-2 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-2 gap-3'>
+                <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-3'>
                     {wishListItems.length > 0 ? (
                         wishListItems?.map(item => (
                             <Wishlist key={item?.productId._id} item={item} />

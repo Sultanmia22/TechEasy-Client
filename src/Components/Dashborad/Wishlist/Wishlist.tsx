@@ -1,26 +1,78 @@
 "use client";
+import useCart from "@/hook/useCart";
 import type { IWishlist } from "@/types/dashborad.interface";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { FaTrash, FaStar } from "react-icons/fa";
+import { useState } from "react";
+import { FaTrash, FaStar, FaCartPlus, FaPlus, FaMinus } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 interface IProps {
   item: IWishlist;
 }
 
 const Wishlist = ({ item }: IProps) => {
+
+  const {addToCart} = useCart()
+
+  const { data } = useSession()
+
   const product = item?.productId;
+
+  const [qty, setQty] = useState(1);
+
+  // Handle Quantity Manage Function
+  const handleQty = async (type: "inc" | 'dec') => {
+
+    setQty((prev) => {
+
+      if (type === 'inc') {
+
+        if (prev >= product?.stock) {
+          toast.warn(`Only ${product?.stock} items available in stock!`)
+          return prev
+        };
+
+        return prev + 1
+      }
+
+      if (type === "dec") {
+
+        if (prev <= 1) {
+
+          toast.warn('Minimum quantity is 1!')
+
+          return prev
+        };
+
+        return prev - 1;
+      }
+
+      return prev;
+    })
+
+  }
+
+  // Hanlde Add To Cart Function 
+  const handleAddToCart = async () => {
+    addToCart({
+      userEmail: data?.user?.email,
+      productId: product?._id,
+      quantity: qty
+    })
+  }
+
 
   return (
     <div className="group relative bg-base-100 dark:bg-base-200 border border-base-300 p-3 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden">
 
-  
       <button className="absolute top-2 right-2 z-10 p-2 bg-white/80 hover:bg-red-500 hover:text-white rounded-full transition">
         <FaTrash size={12} />
       </button>
 
-     
-      <div className="relative w-full h-36 overflow-hidden rounded-xl bg-base-200">
+
+      <div className="relative w-full h-56 overflow-hidden rounded-xl bg-base-200">
         <Image
           src={product?.image || "/fallback.png"}
           alt={product?.name || "Product"}
@@ -62,21 +114,52 @@ const Wishlist = ({ item }: IProps) => {
 
 
         <p
-          className={`text-xs font-medium ${
-            product?.stock > 0 ? "text-secondary" : "text-accent"
-          }`}
+          className={`text-xs font-medium ${product?.stock > 0 ? "text-secondary" : "text-accent"
+            }`}
         >
           {product?.stock > 0 ? "In Stock" : "Out of Stock"}
         </p>
       </div>
 
-      <div className="mt-4">
+      <div className="mt-4 flex flex-col gap-3">
+
+        {/* Quantity Control */}
+        <div className="flex items-center justify-between bg-base-200 border border-base-300 rounded-xl px-3 py-2">
+
+          <span className="text-xs text-neutral">Quantity</span>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => handleQty('dec')}
+              disabled={qty <= 0}
+              className={` w-7 h-7 flex items-center justify-center rounded-md bg-base-100 hover:bg-primary/10 text-base-content hover:text-primary transition`}
+            >
+              <FaMinus size={10} />
+            </button>
+
+            <span className="w-6 text-center text-sm font-bold">
+              {qty}
+            </span>
+
+            <button
+              onClick={() => handleQty('inc')}
+              className={` w-7 h-7 flex items-center justify-center rounded-md bg-base-100 hover:bg-primary/10 text-base-content hover:text-primary transition`}
+            >
+              <FaPlus size={10} />
+            </button>
+          </div>
+        </div>
+
+        {/* Add to Cart Button */}
         <button
+        onClick={() => handleAddToCart()}
           disabled={product?.stock === 0}
-          className="w-full py-2 bg-primary/10 hover:bg-primary text-primary hover:text-white text-xs font-bold rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-primary text-white font-semibold text-sm hover:bg-primary/90 transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Add to Cart
+          <FaCartPlus size={14} />
+           Add {qty} to Cart
         </button>
+
       </div>
     </div>
   );

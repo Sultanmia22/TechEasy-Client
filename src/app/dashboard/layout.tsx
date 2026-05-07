@@ -2,7 +2,7 @@
 import { signOut } from "next-auth/react"
 import Logo from "@/Components/Logo/Logo";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { IoMdClose, IoMdLogOut, IoMdNotificationsOutline } from "react-icons/io";
 import {
@@ -21,7 +21,21 @@ import Theme from "@/Components/Theme/Theme";
 export default function DashboardLayout({ children, }: { children: React.ReactNode; }) {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
 
+   const [isDark, setIsDark] = useState<boolean>(false);
+
   const { user, role } = useAuth()
+
+   useEffect(() => {
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark') {
+      setIsDark(true);
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      setIsDark(false);
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  }, []);
+
 
   const getDashboradNav = (role: string) => {
     const customerNav = [
@@ -123,7 +137,8 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
           <div className="px-3 pb-10 md:pb-20 space-y-3">
             <div className=" bg-gray-100 h-0.5 w-full"></div>
             <div className="w-full bg-gray-50 dark:bg-gray-800  p-2 rounded-lg font-semibold space-x-2">
-              <span className="text-neutral">Dark Mode</span> <Theme />
+              <span className="text-neutral">{isDark ? "Dark Mode" : "Light Mode"}</span> 
+              <Theme isDark={isDark} setIsDark={setIsDark} />
             </div>
             <button
               onClick={() => signOut()}

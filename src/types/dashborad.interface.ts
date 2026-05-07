@@ -31,6 +31,7 @@ export interface IRecentOrder {
   _id: string;
   orderDate: string;
   totalPrice: number;
+  deliveryCharge : number,
   paymentStatus: string;
   orderStatus: [string];
   stripeSessionId: string;
