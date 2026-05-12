@@ -3,9 +3,10 @@ import type { IRecentOrder, IWishlist } from '@/types/dashborad.interface'
 import { FaBoxOpen } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import Link from 'next/link';
-import Order from '../../Order/Order';
-import Wishlist from '../../Wishlist/Wishlist';
-import EmptyOrder from '../../Order/EmptyOrder';
+import Order from '../../(Customer)/Order/Order';
+import Wishlist from '../../(Customer)/Wishlist/Wishlist';
+import EmptyOrder from '../../(Customer)/Order/EmptyOrder';
+import NoWishlist from '../../(Customer)/Wishlist/NoWishlist';
 interface IProps {
     recentOrders: IRecentOrder[];
     wishListItems: IWishlist[];
@@ -45,20 +46,7 @@ const OrderAndWishList = ({ recentOrders, wishListItems }: IProps) => {
                             <Wishlist key={item?.productId._id} item={item} />
                         ))
                     ) : (
-                        <div className="col-span-full flex flex-col items-center justify-center py-12 px-4">
-                            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                                <FiHeart size={32} className="text-primary opacity-60" />
-                            </div>
-                            <h3 className="text-lg font-bold text-neutral-content">Your Wishlist is Empty</h3>
-                            <p className="text-sm text-neutral opacity-60 mt-1 mb-6 max-w-[200px] text-center">
-                                You haven't added anything to your wishlist yet!
-                            </p>
-
-
-                            <button className="btn btn-primary btn-sm rounded-lg px-6 font-bold">
-                                Explore Products
-                            </button>
-                        </div>
+                        <NoWishlist/>
                     )}
                 </div>
             </div>

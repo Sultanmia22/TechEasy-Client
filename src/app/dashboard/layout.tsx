@@ -57,7 +57,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
       {
         navName: "Profile",
         navIcon: FaUser,
-        href: "/profile"
+        href: "/dashboard/profile"
       },
     ];
 

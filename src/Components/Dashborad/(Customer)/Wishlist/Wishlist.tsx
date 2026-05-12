@@ -1,4 +1,5 @@
 "use client";
+import useAxiosSecure from "@/hook/useAxiosSecure";
 import useCart from "@/hook/useCart";
 import type { IWishlist } from "@/types/dashborad.interface";
 import { useSession } from "next-auth/react";
@@ -10,9 +11,12 @@ import { toast } from "react-toastify";
 
 interface IProps {
   item: IWishlist;
+  refetch: () => void;
 }
 
-const Wishlist = ({ item }: IProps) => {
+const Wishlist = ({ item ,refetch}: IProps) => {
+
+  const axiosSecure = useAxiosSecure()
 
   const {addToCart} = useCart()
 
@@ -63,11 +67,27 @@ const Wishlist = ({ item }: IProps) => {
     })
   }
 
+  const handleDelWishlist = async (email:string,id:string) => {
+    try{
+        const res = await axiosSecure.delete(`/wishlist/deleteWishlist?customerEmail=${email}&productId=${id}`)
+
+        if(res.status === 200 && res.data.success === true){
+          toast.success(res.data.message)
+        }
+        refetch()
+    }
+    catch(er){
+      console.log(er)
+    }
+  }
+
 
   return (
     <div className="group relative bg-base-100 dark:bg-base-200 border border-base-300 p-3 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden">
 
-      <button className="absolute top-2 right-2 z-10 p-2 bg-white/80 hover:bg-red-500 hover:text-white rounded-full transition">
+      <button 
+      onClick={() => handleDelWishlist(data?.user?.email ?? "", product?._id ?? "")}
+      className="absolute top-2 right-2 z-10 p-2 bg-white/80 hover:bg-red-500 hover:text-white rounded-full transition">
         <FaTrash size={12} />
       </button>
 

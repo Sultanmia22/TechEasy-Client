@@ -1,11 +1,11 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import OrdersBanner from '@/Components/Dashborad/Order/OrdersBanner';
+import OrdersBanner from '@/Components/Dashborad/(Customer)/Order/OrdersBanner';
 import useAxiosSecure from '@/hook/useAxiosSecure';
 import type { IRecentOrder } from '@/types/dashborad.interface';
 import useAuth from '@/hook/useAuth';
-import Order from '@/Components/Dashborad/Order/Order';
-import EmptyOrder from '@/Components/Dashborad/Order/EmptyOrder';
+import Order from '@/Components/Dashborad/(Customer)/Order/Order';
+import EmptyOrder from '@/Components/Dashborad/(Customer)/Order/EmptyOrder';
 import TextLoader from '@/Components/Loading/TextLoader';
 
 const MyOrderPage = () => {

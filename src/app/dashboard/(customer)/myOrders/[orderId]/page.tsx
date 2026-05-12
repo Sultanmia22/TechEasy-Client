@@ -1,4 +1,4 @@
-import OrdersDetails from '@/Components/Dashborad/OrderDetails/OrdersDetails'
+import OrdersDetails from '@/Components/Dashborad/(Customer)/OrderDetails/OrdersDetails'
 import { ArrowLeft, } from 'lucide-react'
 import React from 'react'
 

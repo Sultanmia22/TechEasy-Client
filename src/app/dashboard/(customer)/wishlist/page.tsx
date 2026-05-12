@@ -1,4 +1,4 @@
-import AllWishlist from '@/Components/Dashborad/Wishlist/AllWishlist'
+import AllWishlist from '@/Components/Dashborad/(Customer)/Wishlist/AllWishlist'
 import React from 'react'
 
 const WishlistPage = () => {
