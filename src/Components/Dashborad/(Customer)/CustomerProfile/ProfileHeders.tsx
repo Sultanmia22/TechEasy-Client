@@ -3,10 +3,10 @@ import { Calendar, Heart, Mail, MapPin, Medal, PackageOpen, Settings, SquarePen,
 const ProfileHeaders = () => {
   return (
     <div>
-        <header className=' relative bg-base-100 w-full h-120 rounded-lg'>
+        <header className=' relative bg-base-100 w-full h-120 sm:h-100 xl:h-120 rounded-lg'>
         <div className='h-1/4 xl:h-2/4 bg-primary bg-[repeating-linear-gradient(45deg,rgba(255,255,255,0.1)_0px,rgba(255,255,255,0.1)_1px,transparent_1px,transparent_20px)]'></div>
 
-        <div className='sm:relative h-1/3  mt-20 sm:mt-0 px-10'>
+        <div className='sm:relative h-3/4 xl:h-2/4 mt-20 sm:mt-0 px-10'>
           {/* Profile About */}
           <div className='flex flex-col gap-3 sm:absolute sm:left-35 sm:mt-1'>
 
@@ -25,7 +25,7 @@ const ProfileHeaders = () => {
             <div className='flex flex-col sm:flex-row  sm:items-end xl:items-center xl:justify-between gap-5'>
               {/* BASIC INFO */}
               <div className='flex sm:flex-col xl:flex-row items-center sm:items-start  justify-center  gap-3'>
-                <div className='text-sm text-neutral font-semibold flex items-center sm:items-start gap-1'>
+                <div className='text-sm text-neutral font-semibold flex items-center  gap-1'>
                   <span><Mail size={16} /></span>
                   <span>sultanmia5732@gmail.com</span>
                 </div>
@@ -94,7 +94,7 @@ const ProfileHeaders = () => {
           </div>
         </div>
 
-        <div className=' absolute bg-amber-400 w-25 h-25 rounded-full top-20 left-1/2 -translate-x-1/2  sm:left-19 xl:top-50'>
+        <div className=' absolute bg-amber-400 w-25 h-25 rounded-full top-16 left-1/2 -translate-x-1/2  sm:left-19 xl:top-50'>
 
         </div>
       </header>
