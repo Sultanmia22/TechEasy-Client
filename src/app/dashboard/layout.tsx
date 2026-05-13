@@ -4,16 +4,16 @@ import Logo from "@/Components/Logo/Logo";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
-import { 
-  X, 
-  LogOut, 
-  Bell, 
-  ShoppingBag, 
-  Heart, 
-  ShoppingCart, 
-  User, 
-  Package, 
-  Users, 
+import {
+  X,
+  LogOut,
+  Bell,
+  ShoppingBag,
+  Heart,
+  ShoppingCart,
+  User,
+  Package,
+  Users,
   UserCog,
   Menu,
   PanelLeftOpen
@@ -55,7 +55,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
   }, []);
 
 
-const getDashboradNav = (role: string) => {
+  const getDashboradNav = (role: string) => {
     const customerNav = [
       {
         navName: "My Orders",
@@ -137,27 +137,27 @@ const getDashboradNav = (role: string) => {
             </div>
 
             {/* Nav Items */}
-   <div className="p-3 space-y-3">
-  {navItem.map((item, index) => {
-    const Icon = item.navIcon;
-    return (
-      <Link
-        href={item?.href}
-        key={index}
-        className={`flex items-center p-2 rounded-lg font-semibold transition-all duration-300 group
+            <div className="p-3 space-y-3">
+              {navItem.map((item, index) => {
+                const Icon = item.navIcon;
+                return (
+                  <Link
+                    href={item?.href}
+                    key={index}
+                    className={`flex items-center p-2 rounded-lg font-semibold transition-all duration-300 group
           ${isCollapsed ? 'lg:justify-center tooltip tooltip-right' : 'justify-start gap-3'} 
           text-gray-600 dark:text-gray-50 border border-transparent hover:border-primary/30 hover:bg-primary/5 hover:text-primary`}
-        data-tip={isCollapsed ? item.navName : ""}
-      >
-        <Icon className="text-xl shrink-0" />
-        <span className={`whitespace-nowrap transition-all duration-300 
+                    data-tip={isCollapsed ? item.navName : ""}
+                  >
+                    <Icon className="text-xl shrink-0" />
+                    <span className={`whitespace-nowrap transition-all duration-300 
           ${isCollapsed ? "lg:hidden opacity-0" : "opacity-100"}`}>
-          {item.navName}
-        </span>
-      </Link>
-    );
-  })}
-</div>
+                      {item.navName}
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
 
           <div className="px-3 pb-10 md:pb-20 space-y-3">
@@ -210,7 +210,7 @@ const getDashboradNav = (role: string) => {
             </div>
 
             <div className=" hidden lg:flex items-center ">
-              <h2 className="text-xl font-semibold text-neutral">Dashborad</h2>
+              <h2 className="text-xl font-semibold text-gray-600 dark:text-gray-50">Dashborad</h2>
             </div>
           </div>
           {/* Profile Menu */}

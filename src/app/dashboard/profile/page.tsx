@@ -3,7 +3,7 @@ import React from 'react'
 
 const profile = () => {
   return (
-    <div className='w-full h-screen'>
+    <div className='w-full min-h-screen'>
       <section>
         <CustomerProfile />
       </section>

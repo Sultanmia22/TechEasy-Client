@@ -3,8 +3,8 @@ import { Calendar, Heart, Mail, MapPin, Medal, PackageOpen, Settings, SquarePen,
 const ProfileHeaders = () => {
   return (
     <div>
-        <header className=' relative bg-base-100 w-full h-120 sm:h-100 xl:h-120 rounded-lg'>
-        <div className='h-1/4 xl:h-2/4 bg-primary bg-[repeating-linear-gradient(45deg,rgba(255,255,255,0.1)_0px,rgba(255,255,255,0.1)_1px,transparent_1px,transparent_20px)]'></div>
+        <header className=' relative bg-base-100 w-full h-120 sm:h-100 xl:h-120 rounded-2xl'>
+        <div className='h-1/4 xl:h-2/4 bg-primary bg-[repeating-linear-gradient(45deg,rgba(255,255,255,0.1)_0px,rgba(255,255,255,0.1)_1px,transparent_1px,transparent_20px)] rounded-t-2xl '></div>
 
         <div className='sm:relative h-3/4 xl:h-2/4 mt-20 sm:mt-0 px-10'>
           {/* Profile About */}
@@ -65,7 +65,7 @@ const ProfileHeaders = () => {
                   <span><Heart /></span>
                 </div>
                 <div className='flex flex-col font-semibold'>
-                  <span className='text-xl'>12</span>
+                  <span className=''>12</span>
                   <span className='text-neutral text-sm'>Wishlis</span>
                 </div>
               </div>
@@ -75,7 +75,7 @@ const ProfileHeaders = () => {
                   <span><WalletCards /></span>
                 </div>
                 <div className='flex flex-col font-semibold'>
-                  <span className='text-xl'>Tk2043</span>
+                  <span className=''>Tk2043</span>
                   <span className='text-neutral text-sm'>Spent</span>
                 </div>
               </div>
@@ -85,7 +85,7 @@ const ProfileHeaders = () => {
                   <span><PackageOpen /></span>
                 </div>
                 <div className='flex flex-col font-semibold'>
-                  <span className='text-xl'>45</span>
+                  <span className=''>45</span>
                   <span className='text-neutral text-sm'>Orders</span>
                 </div>
               </div>
