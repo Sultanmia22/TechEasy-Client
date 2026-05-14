@@ -1,28 +1,34 @@
-import React, { useRef } from 'react'
-import {
-  User, Mail, Phone, Briefcase, Flag, Calendar, ShieldCheck, Edit3,
-  UserPlus,
-  Plus,
-} from 'lucide-react'
+'use client'
+import React, { useRef, useState } from 'react'
 import InfoModal from './InfoModal';
+import type { IPersonalInfoFields } from '@/types/customerProfile.interface';
+import { Edit3, Plus, UserPlus } from 'lucide-react';
+import useAuth from '@/hook/useAuth';
 
-
-const personalInfo = [
-  { icon: User, label: 'Full Name', value: 'MD Sultan Mia' },
-  { icon: Mail, label: 'Email', value: 'sultanmia5732@gmail.com' },
-  { icon: Phone, label: 'Phone', value: '+880 1712-345678' },
-  { icon: Briefcase, label: 'Occupation', value: 'Software Engineer' },
-  { icon: Flag, label: 'Gender', value: 'Male' },
-  { icon: Calendar, label: 'Member Since', value: 'January 2026' },
-]
 
 const PersonalInfo = () => {
 
-  const modalRef = useRef(null);
+  const {user} = useAuth()
+
+  const modalRef = useRef<HTMLDialogElement>(null);
+
+  const [personalInfoData,setPersonalInfoData] = useState<IPersonalInfoFields | null>(null)
 
   const handleOpenModal = () => {
     modalRef.current?.showModal();
   }
+
+const initialDataForModal: IPersonalInfoFields = {
+    fullName: personalInfoData?.fullName || user?.name || '',
+    email: personalInfoData?.email || user?.email || '',
+    phone: personalInfoData?.phone || '',
+    altPhone: personalInfoData?.altPhone || '',
+    dateOfBirth: personalInfoData?.dateOfBirth || '',
+    gender: personalInfoData?.gender || 'Male',
+    nidNumber: personalInfoData?.nidNumber || '',
+    occupation: personalInfoData?.occupation || '',
+    location: personalInfoData?.location || '',
+  };
 
   return (
     <div className='bg-base-100 rounded-2xl shadow-sm p-5 sm:p-6'>
@@ -43,8 +49,8 @@ const PersonalInfo = () => {
           <Plus size={15} /> Add Information
         </button>
       </div>
-      
-      <InfoModal  ref={modalRef}/>
+
+      <InfoModal initialData={initialDataForModal} ref={modalRef} />
     </div>
   )
 }

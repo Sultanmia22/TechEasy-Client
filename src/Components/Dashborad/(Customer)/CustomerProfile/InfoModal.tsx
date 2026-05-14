@@ -1,17 +1,30 @@
-import React, { forwardRef } from 'react'
-
-interface InfoModalProps {
-  initialData?: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    phone: string;
-    occupation: string;
-    location: string;
-  };
-}
+'use client'
+import type { InfoModalProps, IPersonalInfoFields } from '@/types/customerProfile.interface';
+import React, { forwardRef, useEffect } from 'react'
+import { useForm, type SubmitHandler } from 'react-hook-form';
 
 const InfoModal = forwardRef<HTMLDialogElement, InfoModalProps>((props, ref) => {
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm<IPersonalInfoFields>({
+    defaultValues:props?.initialData
+  })
+
+  useEffect(() => {
+    if (props.initialData) {
+      reset(props.initialData);
+    }
+  }, [props.initialData, reset]);
+
+  const onSubmit: SubmitHandler<IPersonalInfoFields> = (data) => {
+    console.log(data)
+  }
+
   return (
     <dialog ref={ref} id="personal_info_modal" className="modal modal-bottom sm:modal-middle">
       <div className="modal-box">
@@ -26,19 +39,17 @@ const InfoModal = forwardRef<HTMLDialogElement, InfoModalProps>((props, ref) => 
         {/* Form Content */}
         <div className="space-y-4">
           {/* Row 1: First Name + Last Name */}
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3">
             <div>
               <label className="label">
-                <span className="label-text text-sm font-medium">First Name <span className="text-red-500">*</span></span>
+                <span className="label-text text-sm font-medium">Full Name <span className="text-red-500">*</span></span>
               </label>
-              <input type="text" name="firstName" placeholder="First name" className="input input-bordered w-full" />
+              <input 
+                {...register('fullName')}
+                readOnly
+               type="text" name="firstName" placeholder="First name" className="input input-bordered w-full" />
             </div>
-            <div>
-              <label className="label">
-                <span className="label-text text-sm font-medium">Last Name <span className="text-red-500">*</span></span>
-              </label>
-              <input type="text" name="lastName" placeholder="Last name" className="input input-bordered w-full" />
-            </div>
+           
           </div>
 
           {/* Row 2: Email */}
@@ -46,7 +57,10 @@ const InfoModal = forwardRef<HTMLDialogElement, InfoModalProps>((props, ref) => 
             <label className="label">
               <span className="label-text text-sm font-medium">Email <span className="text-red-500">*</span></span>
             </label>
-            <input type="email" name="email" placeholder="example@email.com" className="input input-bordered w-full" />
+            <input 
+            {...register('email')}
+            readOnly
+            type="email" name="email" placeholder="example@email.com" className="input input-bordered w-full" />
           </div>
 
           {/* Row 3: Phone + Alt Phone */}
@@ -55,13 +69,17 @@ const InfoModal = forwardRef<HTMLDialogElement, InfoModalProps>((props, ref) => 
               <label className="label">
                 <span className="label-text text-sm font-medium">Phone <span className="text-red-500">*</span></span>
               </label>
-              <input type="tel" name="phone" placeholder="+880 1XXX-XXXXXX" className="input input-bordered w-full" />
+              <input 
+              {...register('phone')}
+              type="tel" name="phone" placeholder="+880 1XXX-XXXXXX" className="input input-bordered w-full" />
             </div>
             <div>
               <label className="label">
                 <span className="label-text text-sm font-medium">Alt Phone</span>
               </label>
-              <input type="tel" name="altPhone" placeholder="+880 1XXX-XXXXXX" className="input input-bordered w-full" />
+              <input 
+              {...register('altPhone')}
+              type="tel" name="altPhone" placeholder="+880 1XXX-XXXXXX" className="input input-bordered w-full" />
             </div>
           </div>
 
@@ -71,13 +89,17 @@ const InfoModal = forwardRef<HTMLDialogElement, InfoModalProps>((props, ref) => 
               <label className="label">
                 <span className="label-text text-sm font-medium">Date of Birth</span>
               </label>
-              <input type="date" name="dob" className="input input-bordered w-full" />
+              <input 
+               {...register('dateOfBirth')}
+              type="date" name="dob" className="input input-bordered w-full" />
             </div>
             <div>
               <label className="label">
                 <span className="label-text text-sm font-medium">Gender <span className="text-red-500">*</span></span>
               </label>
-              <select name="gender" className="select select-bordered w-full" defaultValue="Select">
+              <select 
+               {...register('gender')}
+              name="gender" className="select select-bordered w-full" defaultValue="Select">
                 <option disabled>Select</option>
                 <option>Male</option>
                 <option>Female</option>
@@ -91,7 +113,9 @@ const InfoModal = forwardRef<HTMLDialogElement, InfoModalProps>((props, ref) => 
             <label className="label">
               <span className="label-text text-sm font-medium">Occupation</span>
             </label>
-            <input type="text" name="occupation" placeholder="e.g. Software Engineer" className="input input-bordered w-full" />
+            <input 
+            {...register('occupation')}
+            type="text" name="occupation" placeholder="e.g. Software Engineer" className="input input-bordered w-full" />
           </div>
 
           {/* Row 6: NID + Location */}
@@ -100,13 +124,17 @@ const InfoModal = forwardRef<HTMLDialogElement, InfoModalProps>((props, ref) => 
               <label className="label">
                 <span className="label-text text-sm font-medium">NID Number</span>
               </label>
-              <input type="text" name="nid" placeholder="e.g. 1234567890" className="input input-bordered w-full" />
+              <input 
+              {...register('nidNumber')}
+              type="text" name="nid" placeholder="e.g. 1234567890" className="input input-bordered w-full" />
             </div>
             <div>
               <label className="label">
                 <span className="label-text text-sm font-medium">Location <span className="text-red-500">*</span></span>
               </label>
-              <input type="text" name="location" placeholder="e.g. Dhaka, Bangladesh" className="input input-bordered w-full" />
+              <input 
+              {...register('location')}
+              type="text" name="location" placeholder="e.g. Dhaka, Bangladesh" className="input input-bordered w-full" />
             </div>
           </div>
         </div>
@@ -116,14 +144,12 @@ const InfoModal = forwardRef<HTMLDialogElement, InfoModalProps>((props, ref) => 
           <form method="dialog">
             <button className="btn btn-ghost">Cancel</button>
           </form>
-          {/* Save বাটনে ক্লিক করলে ক্লোজ হওয়ার জন্য logic */}
           <button className="btn btn-primary" onClick={() => ref?.current?.close()}>
             Save Information
           </button>
         </div>
       </div>
 
-      {/* বাইরে ক্লিক করলে ক্লোজ হওয়ার ব্যাকড্রপ */}
       <form method="dialog" className="modal-backdrop">
         <button>close</button>
       </form>
