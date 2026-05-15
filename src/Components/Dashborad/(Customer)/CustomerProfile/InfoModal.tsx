@@ -23,6 +23,13 @@ const InfoModal = forwardRef<HTMLDialogElement, InfoModalProps>((props, ref) => 
     }
   }, [props.initialData, reset]);
 
+
+  const handleCloseModal = () => {
+    if (ref && 'current' in ref && ref.current) {
+      ref.current.close();
+    }
+  };
+
   const onSubmit: SubmitHandler<IPersonalInfoFields> = async (data) => {
     const personalData = {
       phone: data.phone,
@@ -39,11 +46,7 @@ const InfoModal = forwardRef<HTMLDialogElement, InfoModalProps>((props, ref) => 
 
       if (res.status === 200 && res.data.success === true) {
         toast.success(res.data.message || "Information updated successfully!");
-        
-        // সফলভাবে সাবমিট হলে মোডালটি বন্ধ করার জন্য:
-        if (ref && 'current' in ref && ref.current) {
-          ref.current.close();
-        }
+        handleCloseModal();
       }
     }
     catch (er: any) {
@@ -59,13 +62,11 @@ const InfoModal = forwardRef<HTMLDialogElement, InfoModalProps>((props, ref) => 
         {/* Header */}
         <div className="flex items-center justify-between mb-5">
           <h3 className="font-bold text-lg text-base-content">Personal Information</h3>
-          {/* এই বাটনটি শুধুমাত্র মোডাল বন্ধ করার জন্য, তাই এখানে form method="dialog" ঠিক আছে */}
           <form method="dialog">
             <button className="btn btn-sm btn-circle btn-ghost">✕</button>
           </form>
         </div>
 
-        {/* আসল Form শুরু হলো এখানে */}
         <form onSubmit={handleSubmit(onSubmit)}>
           
           {/* Form Content */}
@@ -80,7 +81,7 @@ const InfoModal = forwardRef<HTMLDialogElement, InfoModalProps>((props, ref) => 
                 readOnly
                 type="text" 
                 placeholder="First name" 
-                className="input input-bordered w-full bg-gray-100 cursor-not-allowed" 
+                className="input input-bordered w-full bg-base-100 dark:bg-gra cursor-not-allowed" 
               />
             </div>
 
@@ -94,7 +95,7 @@ const InfoModal = forwardRef<HTMLDialogElement, InfoModalProps>((props, ref) => 
                 readOnly
                 type="email" 
                 placeholder="example@email.com" 
-                className="input input-bordered w-full bg-gray-100 cursor-not-allowed" 
+                className="input input-bordered w-full bg-base-100 cursor-not-allowed" 
               />
             </div>
 
@@ -193,10 +194,9 @@ const InfoModal = forwardRef<HTMLDialogElement, InfoModalProps>((props, ref) => 
             </div>
           </div>
 
-          
           <div className="modal-action">
-           
-            <button type="button" className="btn btn-ghost" onClick={() => ref && 'current' in ref && ref.current?.close()}>
+
+            <button type="button" className="btn btn-ghost" onClick={handleCloseModal}>
               Cancel
             </button>
             
@@ -207,7 +207,6 @@ const InfoModal = forwardRef<HTMLDialogElement, InfoModalProps>((props, ref) => 
         </form>
       </div>
 
-      
       <form method="dialog" className="modal-backdrop">
         <button>close</button>
       </form>
