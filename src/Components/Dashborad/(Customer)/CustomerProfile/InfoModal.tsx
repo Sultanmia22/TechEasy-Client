@@ -1,18 +1,20 @@
 'use client'
+import useAxiosSecure from '@/hook/useAxiosSecure';
 import type { InfoModalProps, IPersonalInfoFields } from '@/types/customerProfile.interface';
 import React, { forwardRef, useEffect } from 'react'
 import { useForm, type SubmitHandler } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 const InfoModal = forwardRef<HTMLDialogElement, InfoModalProps>((props, ref) => {
+  const axiosSecure = useAxiosSecure()
 
   const {
     register,
     handleSubmit,
-    watch,
     reset,
     formState: { errors },
   } = useForm<IPersonalInfoFields>({
-    defaultValues:props?.initialData
+    defaultValues: props?.initialData
   })
 
   useEffect(() => {
@@ -21,135 +23,191 @@ const InfoModal = forwardRef<HTMLDialogElement, InfoModalProps>((props, ref) => 
     }
   }, [props.initialData, reset]);
 
-  const onSubmit: SubmitHandler<IPersonalInfoFields> = (data) => {
-    console.log(data)
+  const onSubmit: SubmitHandler<IPersonalInfoFields> = async (data) => {
+    const personalData = {
+      phone: data.phone,
+      altPhone: data.altPhone,
+      dateOfBirth: data.dateOfBirth,
+      gender: data.gender,
+      nidNumber: data.nidNumber,
+      occupation: data.occupation,
+      location: data.location,
+    }
+
+    try {
+      const res = await axiosSecure.patch(`/users/savedPersonalInfo`, personalData)
+
+      if (res.status === 200 && res.data.success === true) {
+        toast.success(res.data.message || "Information updated successfully!");
+        
+        // সফলভাবে সাবমিট হলে মোডালটি বন্ধ করার জন্য:
+        if (ref && 'current' in ref && ref.current) {
+          ref.current.close();
+        }
+      }
+    }
+    catch (er: any) {
+      console.log(er)
+      toast.error(er?.response?.data?.message || "Something went wrong!")
+    }
   }
 
   return (
     <dialog ref={ref} id="personal_info_modal" className="modal modal-bottom sm:modal-middle">
       <div className="modal-box">
+        
         {/* Header */}
         <div className="flex items-center justify-between mb-5">
           <h3 className="font-bold text-lg text-base-content">Personal Information</h3>
+          {/* এই বাটনটি শুধুমাত্র মোডাল বন্ধ করার জন্য, তাই এখানে form method="dialog" ঠিক আছে */}
           <form method="dialog">
             <button className="btn btn-sm btn-circle btn-ghost">✕</button>
           </form>
         </div>
 
-        {/* Form Content */}
-        <div className="space-y-4">
-          {/* Row 1: First Name + Last Name */}
-          <div className="grid grid-cols-1 gap-3">
+        {/* আসল Form শুরু হলো এখানে */}
+        <form onSubmit={handleSubmit(onSubmit)}>
+          
+          {/* Form Content */}
+          <div className="space-y-4">
+            {/* Row 1: Full Name */}
             <div>
               <label className="label">
                 <span className="label-text text-sm font-medium">Full Name <span className="text-red-500">*</span></span>
               </label>
-              <input 
+              <input
                 {...register('fullName')}
                 readOnly
-               type="text" name="firstName" placeholder="First name" className="input input-bordered w-full" />
+                type="text" 
+                placeholder="First name" 
+                className="input input-bordered w-full bg-gray-100 cursor-not-allowed" 
+              />
             </div>
+
+            {/* Row 2: Email */}
+            <div>
+              <label className="label">
+                <span className="label-text text-sm font-medium">Email <span className="text-red-500">*</span></span>
+              </label>
+              <input
+                {...register('email')}
+                readOnly
+                type="email" 
+                placeholder="example@email.com" 
+                className="input input-bordered w-full bg-gray-100 cursor-not-allowed" 
+              />
+            </div>
+
+            {/* Row 3: Phone + Alt Phone */}
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="label">
+                  <span className="label-text text-sm font-medium">Phone <span className="text-red-500">*</span></span>
+                </label>
+                <input
+                  {...register('phone', { required: true })}
+                  type="tel" 
+                  placeholder="+880 1XXX-XXXXXX" 
+                  className="input input-bordered w-full" 
+                />
+              </div>
+              <div>
+                <label className="label">
+                  <span className="label-text text-sm font-medium">Alt Phone</span>
+                </label>
+                <input
+                  {...register('altPhone')}
+                  type="tel" 
+                  placeholder="+880 1XXX-XXXXXX" 
+                  className="input input-bordered w-full" 
+                />
+              </div>
+            </div>
+
+            {/* Row 4: Date of Birth + Gender */}
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="label">
+                  <span className="label-text text-sm font-medium">Date of Birth</span>
+                </label>
+                <input
+                  {...register('dateOfBirth')}
+                  type="date" 
+                  className="input input-bordered w-full" 
+                />
+              </div>
+              <div>
+                <label className="label">
+                  <span className="label-text text-sm font-medium">Gender <span className="text-red-500">*</span></span>
+                </label>
+                <select
+                  {...register('gender')}
+                  className="select select-bordered w-full" 
+                  defaultValue="Select"
+                >
+                  <option disabled>Select</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Row 5: Occupation */}
+            <div>
+              <label className="label">
+                <span className="label-text text-sm font-medium">Occupation</span>
+              </label>
+              <input
+                {...register('occupation')}
+                type="text" 
+                placeholder="e.g. Software Engineer" 
+                className="input input-bordered w-full" 
+              />
+            </div>
+
+            {/* Row 6: NID + Location */}
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="label">
+                  <span className="label-text text-sm font-medium">NID Number</span>
+                </label>
+                <input
+                  {...register('nidNumber')}
+                  type="text" 
+                  placeholder="e.g. 1234567890" 
+                  className="input input-bordered w-full" 
+                />
+              </div>
+              <div>
+                <label className="label">
+                  <span className="label-text text-sm font-medium">Location <span className="text-red-500">*</span></span>
+                </label>
+                <input
+                  {...register('location')}
+                  type="text" 
+                  placeholder="e.g. Dhaka, Bangladesh" 
+                  className="input input-bordered w-full" 
+                />
+              </div>
+            </div>
+          </div>
+
+          
+          <div className="modal-action">
            
+            <button type="button" className="btn btn-ghost" onClick={() => ref && 'current' in ref && ref.current?.close()}>
+              Cancel
+            </button>
+            
+            <button type="submit" className="btn btn-primary">
+              Save Information
+            </button>
           </div>
-
-          {/* Row 2: Email */}
-          <div>
-            <label className="label">
-              <span className="label-text text-sm font-medium">Email <span className="text-red-500">*</span></span>
-            </label>
-            <input 
-            {...register('email')}
-            readOnly
-            type="email" name="email" placeholder="example@email.com" className="input input-bordered w-full" />
-          </div>
-
-          {/* Row 3: Phone + Alt Phone */}
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="label">
-                <span className="label-text text-sm font-medium">Phone <span className="text-red-500">*</span></span>
-              </label>
-              <input 
-              {...register('phone')}
-              type="tel" name="phone" placeholder="+880 1XXX-XXXXXX" className="input input-bordered w-full" />
-            </div>
-            <div>
-              <label className="label">
-                <span className="label-text text-sm font-medium">Alt Phone</span>
-              </label>
-              <input 
-              {...register('altPhone')}
-              type="tel" name="altPhone" placeholder="+880 1XXX-XXXXXX" className="input input-bordered w-full" />
-            </div>
-          </div>
-
-          {/* Row 4: Date of Birth + Gender */}
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="label">
-                <span className="label-text text-sm font-medium">Date of Birth</span>
-              </label>
-              <input 
-               {...register('dateOfBirth')}
-              type="date" name="dob" className="input input-bordered w-full" />
-            </div>
-            <div>
-              <label className="label">
-                <span className="label-text text-sm font-medium">Gender <span className="text-red-500">*</span></span>
-              </label>
-              <select 
-               {...register('gender')}
-              name="gender" className="select select-bordered w-full" defaultValue="Select">
-                <option disabled>Select</option>
-                <option>Male</option>
-                <option>Female</option>
-                <option>Other</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Row 5: Occupation */}
-          <div>
-            <label className="label">
-              <span className="label-text text-sm font-medium">Occupation</span>
-            </label>
-            <input 
-            {...register('occupation')}
-            type="text" name="occupation" placeholder="e.g. Software Engineer" className="input input-bordered w-full" />
-          </div>
-
-          {/* Row 6: NID + Location */}
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="label">
-                <span className="label-text text-sm font-medium">NID Number</span>
-              </label>
-              <input 
-              {...register('nidNumber')}
-              type="text" name="nid" placeholder="e.g. 1234567890" className="input input-bordered w-full" />
-            </div>
-            <div>
-              <label className="label">
-                <span className="label-text text-sm font-medium">Location <span className="text-red-500">*</span></span>
-              </label>
-              <input 
-              {...register('location')}
-              type="text" name="location" placeholder="e.g. Dhaka, Bangladesh" className="input input-bordered w-full" />
-            </div>
-          </div>
-        </div>
-
-        {/* Footer */}
-        <div className="modal-action">
-          <form method="dialog">
-            <button className="btn btn-ghost">Cancel</button>
-          </form>
-          <button className="btn btn-primary" onClick={() => ref?.current?.close()}>
-            Save Information
-          </button>
-        </div>
+        </form>
       </div>
 
+      
       <form method="dialog" className="modal-backdrop">
         <button>close</button>
       </form>
