@@ -48,6 +48,10 @@ const InfoModal = forwardRef<HTMLDialogElement, InfoModalProps>((props, ref) => 
         toast.success(res.data.message || "Information updated successfully!");
         handleCloseModal();
       }
+
+      if (props.refetch) {
+          props.refetch(); 
+        }
     }
     catch (er: any) {
       console.log(er)

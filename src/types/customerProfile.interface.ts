@@ -12,4 +12,5 @@ export interface IPersonalInfoFields {
 
 export interface InfoModalProps {
   initialData?: IPersonalInfoFields;
+  refetch?: () => void;
 }
