@@ -48,9 +48,9 @@ const ProfileHeaders = () => {
             </div>
 
             {/* Stats */}
-            <div className='flex items-center justify-center sm:justify-between gap-3 my-4'>
+            <div className='flex items-center justify-center sm:justify-between gap-3 my-4 w-full'>
               {/* Orders Stats */}
-              <div className='bg-gray-50 flex items-center gap-2 px-2 py-1 md:px-4 md:py-2 rounded-lg'>
+              <div className='bg-gray-50 dark:bg-gray-900 flex items-center gap-2 px-2 py-1 md:px-4 md:py-2 rounded-lg'>
                 <div className='bg-green-100 px-1  py-0.5 md:py-1 md:px-2 rounded-lg text-green-600'>
                   <span><PackageOpen /></span>
                 </div>
@@ -60,7 +60,7 @@ const ProfileHeaders = () => {
                 </div>
               </div>
               {/* Wishlist Stats */}
-              <div className='bg-gray-50 flex items-center gap-2 px-2 py-1 md:px-4 md:py-2 rounded-lg'>
+              <div className='bg-gray-50 dark:bg-gray-900 flex items-center gap-2 px-2 py-1 md:px-4 md:py-2 rounded-lg'>
                 <div className='bg-red-100 px-1 py-0.5 md:py-1 md:px-2 rounded-lg text-red-600'>
                   <span><Heart /></span>
                 </div>
@@ -70,7 +70,7 @@ const ProfileHeaders = () => {
                 </div>
               </div>
               {/* Spent Stats */}
-              <div className='bg-gray-50 flex items-center gap-2 px-2 py-1 md:px-4 md:py-2 rounded-lg'>
+              <div className='bg-gray-50 dark:bg-gray-900 flex items-center gap-2 px-2 py-1 md:px-4 md:py-2 rounded-lg'>
                 <div className='bg-fuchsia-100 px-1 py-0.5 md:py-1 md:px-2 rounded-lg text-fuchsia-600'>
                   <span><WalletCards /></span>
                 </div>
@@ -80,7 +80,7 @@ const ProfileHeaders = () => {
                 </div>
               </div>
               {/* Delivered Stats */}
-              <div className='bg-gray-50 flex items-center gap-2 px-2 py-1 md:px-4 md:py-2 rounded-lg'>
+              <div className='bg-gray-50 dark:bg-gray-900 flex items-center gap-2 px-2 py-1 md:px-4 md:py-2 rounded-lg'>
                 <div className='bg-green-100 px-1 py-0.5 md:py-1 md:px-2 rounded-lg text-green-600'>
                   <span><PackageOpen /></span>
                 </div>

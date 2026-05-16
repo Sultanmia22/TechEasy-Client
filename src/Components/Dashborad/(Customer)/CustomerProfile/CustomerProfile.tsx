@@ -1,4 +1,3 @@
-'use client'
 
 import ProfileHeaders from './ProfileHeders'
 import PersonalInfo from './PersonalInfo'

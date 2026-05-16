@@ -60,7 +60,7 @@ const InfoModal = forwardRef<HTMLDialogElement, InfoModalProps>((props, ref) => 
   }
 
   return (
-    <dialog ref={ref} id="personal_info_modal" className="modal modal-bottom sm:modal-middle">
+    <dialog ref={ref} id="personal_info_modal" className="modal modal-bottom sm:modal-middle transform transition-all duration-300 ">
       <div className="modal-box">
         
         {/* Header */}

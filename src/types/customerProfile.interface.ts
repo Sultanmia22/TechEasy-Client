@@ -14,3 +14,14 @@ export interface InfoModalProps {
   initialData?: IPersonalInfoFields;
   refetch?: () => void;
 }
+
+export interface IAddressFields {
+  id?: string;
+  type: 'Home' | 'Work' | 'Shipping' | string;
+  name: string;
+  address: string;
+  city: string;
+  country: string;
+  phone: string;
+  isDefault: boolean;
+}
