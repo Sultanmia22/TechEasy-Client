@@ -44,7 +44,7 @@ const PersonalInfo = () => {
     return <TextLoader />
   }
 
-  // অবজেক্টের ডাটাকে লুপ চালানোর জন্য একটি ডাইনামিক অ্যারে তৈরি করা হলো
+
   const infoItems = [
     { label: 'Full Name', value: personalInfoData?.fullName, icon: User },
     { label: 'Email', value: personalInfoData?.email, icon: User },
@@ -69,7 +69,6 @@ const PersonalInfo = () => {
       </div>
 
       {hasProfileData ? (
-        /* ডাটা থাকলে এই অংশটি রেন্ডার হবে */
         <div>
           <div className='grid grid-cols-1 sm:grid-cols-2 gap-3'>
             {infoItems.map((item) => (

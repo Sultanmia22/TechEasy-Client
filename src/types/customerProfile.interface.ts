@@ -25,3 +25,8 @@ export interface IAddressFields {
   phone: string;
   isDefault: boolean;
 }
+
+export interface IaddressModalProps {
+  initialData?: IAddressFields;
+  refetch?: () => void;
+}

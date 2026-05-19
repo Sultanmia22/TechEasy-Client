@@ -1,10 +1,15 @@
 'use client'
 import React, { forwardRef, useState, useEffect } from 'react';
-import { X, Plus, Home, BriefcaseBusiness, ShoppingBag } from 'lucide-react';
+import { X, Plus, Home, BriefcaseBusiness} from 'lucide-react';
 import { useForm, type SubmitHandler } from 'react-hook-form';
-import type { IAddressFields } from '@/types/customerProfile.interface';
+import type { IAddressFields, IaddressModalProps } from '@/types/customerProfile.interface';
+import useAxiosSecure from '@/hook/useAxiosSecure';
+import { toast } from 'react-toastify';
 
-const AddressModalUI = forwardRef<HTMLDialogElement>((props, ref) => {
+const AddressModalUI = forwardRef<HTMLDialogElement,IaddressModalProps>((props, ref) => {
+
+  const axiosSecure = useAxiosSecure()
+
   const [activeType, setActiveType] = useState<string>('Home');
 
   const {
@@ -12,25 +17,45 @@ const AddressModalUI = forwardRef<HTMLDialogElement>((props, ref) => {
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      type: 'Home',
-      name: '',
-      phone: '',
-      address: '',
-      city: '',
-      country: 'Bangladesh',
-      isDefault: false
-    }
+  } = useForm<IAddressFields>({
+    defaultValues: props?.initialData
   });
 
   useEffect(() => {
     setValue('type', activeType);
   }, [activeType, setValue]);
 
-  const onSubmit: SubmitHandler<IAddressFields> = (data) => {
-    console.log("Form Data:", data); 
+  const handleCloseModal = () => {
+    if (ref && 'current' in ref && ref.current) {
+      ref.current.close();
+    }
   };
+
+  const onSubmit: SubmitHandler<IAddressFields> = async (data) => {
+    const formData = {
+      ...data,
+      activeType
+    }
+
+    try {
+      const res = await axiosSecure.patch(`/users/saveAddress`, formData)
+
+      if (res.status === 200 && res.data.success === true) {
+
+        toast.success(res.data.message || "Address updated successfully!");
+
+       props.refetch?.();
+       
+        handleCloseModal()
+      }
+
+    }
+    catch (er: any) {
+      console.log(er)
+    }
+  };
+
+
 
   return (
     <dialog
@@ -38,11 +63,11 @@ const AddressModalUI = forwardRef<HTMLDialogElement>((props, ref) => {
       id="address_modal_ui"
       className="modal modal-bottom sm:modal-middle transition-all duration-300 ease-in-out"
     >
-      <form 
-        onSubmit={handleSubmit(onSubmit)} 
+      <form
+        onSubmit={handleSubmit(onSubmit)}
         className="modal-box backdrop-blur-sm transform transition-all duration-300 scale-95 opacity-0 [dialog[open]_&]:scale-100 [dialog[open]_&]:opacity-100 max-w-lg p-5 sm:p-6 bg-base-100 rounded-2xl shadow-xl"
       >
-        
+
         {/* Header */}
         <div className="flex items-center justify-between mb-5">
           <div>
@@ -50,9 +75,9 @@ const AddressModalUI = forwardRef<HTMLDialogElement>((props, ref) => {
             <p className="text-xs text-neutral mt-0.5">Configure your shipping or billing location</p>
           </div>
 
-          <button 
-            type="button" 
-            onClick={() => (ref as any).current?.close()} 
+          <button
+            type="button"
+            onClick={handleCloseModal}
             className="btn btn-sm btn-circle btn-ghost text-neutral hover:bg-base-200"
           >
             <X size={16} />
@@ -67,31 +92,29 @@ const AddressModalUI = forwardRef<HTMLDialogElement>((props, ref) => {
             <label className="label py-1">
               <span className="label-text text-xs font-semibold text-base-content/80 uppercase tracking-wide">Address Type</span>
             </label>
-            
+
             <input type="hidden" {...register('type')} />
-            
+
             <div className="grid grid-cols-3 gap-2">
-             
-              <button 
-                type="button" 
-                onClick={() => setActiveType('Home')} 
-                className={`btn btn-sm h-10 rounded-xl gap-1.5 justify-center transition-all ${
-                  activeType === 'Home'
-                    ? 'btn-primary text-base-100 shadow-sm shadow-primary/20'
-                    : 'btn-outline bg-base-200/50 border-base-300 text-base-content hover:bg-base-200'
-                }`}
+
+              <button
+                type="button"
+                onClick={() => setActiveType('Home')}
+                className={`btn btn-sm h-10 rounded-xl gap-1.5 justify-center transition-all ${activeType === 'Home'
+                  ? 'btn-primary text-base-100 shadow-sm shadow-primary/20'
+                  : 'btn-outline bg-base-200/50 border-base-300 text-base-content hover:bg-base-200'
+                  }`}
               >
                 <Home size={14} /> Home
               </button>
-              
-              <button 
-                type="button" 
-                onClick={() => setActiveType('Office')} 
-                className={`btn btn-sm h-10 rounded-xl gap-1.5 justify-center transition-all ${
-                  activeType === 'Work'
-                    ? 'btn-primary text-base-100 shadow-sm shadow-primary/20'
-                    : 'btn-outline bg-base-200/50 border-base-300 text-base-content hover:bg-base-200'
-                }`}
+
+              <button
+                type="button"
+                onClick={() => setActiveType('Office')}
+                className={`btn btn-sm h-10 rounded-xl gap-1.5 justify-center transition-all ${activeType === 'Office'
+                  ? 'btn-primary text-base-100 shadow-sm shadow-primary/20'
+                  : 'btn-outline bg-base-200/50 border-base-300 text-base-content hover:bg-base-200'
+                  }`}
               >
                 <BriefcaseBusiness size={14} /> Office
               </button>
@@ -178,17 +201,17 @@ const AddressModalUI = forwardRef<HTMLDialogElement>((props, ref) => {
 
         {/* Action Buttons */}
         <div className="modal-action gap-2 mt-6">
-          
-          <button 
-            type="button" 
-            onClick={() => (ref as any).current?.close()} 
+
+          <button
+            type="button"
+            onClick={handleCloseModal}
             className="btn btn-ghost h-10 min-h-0 rounded-xl text-sm"
           >
             Cancel
           </button>
-          
-          <button 
-            type="submit" 
+
+          <button
+            type="submit"
             className="btn btn-primary text-base-100 h-10 min-h-0 px-6 rounded-xl text-sm font-medium shadow-sm shadow-primary/20 gap-1.5"
           >
             <Plus size={16} /> Save Address
