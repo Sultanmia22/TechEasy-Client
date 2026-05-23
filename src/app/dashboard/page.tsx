@@ -1,5 +1,5 @@
 
-import CustomerHome from '@/Components/Dashborad/Home/CustomerHome/CustomerHome'
+import CustomerHome from '@/Components/Dashborad/DashboradHome/CustomerHome/CustomerHome'
 import React from 'react'
 
 const page = () => {

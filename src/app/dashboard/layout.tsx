@@ -241,10 +241,10 @@ export default function DashboardLayout({
             </div>
 
             <div className="flex">
-              <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full">
+              <div className="w-8 h-8 sm:w-14 sm:h-14 rounded-full">
                 {user?.image ? (
                   <Image
-                    className="rounded-full"
+                    className="w-8 h-8 sm:w-14 sm:h-14 rounded-full"
                     src={
                       user?.image ||
                       "https://i.pinimg.com/474x/4c/1d/a0/4c1da05326a6d32d124df246038df53d.jpg"
