@@ -64,11 +64,6 @@ const SavedAddresses = () => {
   }
 
 
-
-  if (isLoading) {
-    return <TextLoader />
-  }
-
   return (
     <div className='bg-base-100 rounded-2xl shadow-sm p-5 sm:p-6'>
       <div className='flex items-center justify-between mb-5'>

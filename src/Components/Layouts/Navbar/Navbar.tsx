@@ -3,7 +3,7 @@ import LogOut from "@/Components/Auth/LogOut";
 import Logo from "@/Components/Logo/Logo";
 import NavLink from "@/Components/NavLink/DesktopNavlink";
 import MobileNavLink from "@/Components/NavLink/MobileNavlink";
-
+import { Home, ShoppingBag, ShoppingCart, Info, Headset, LucideIcon} from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useEffect, useState, useRef } from "react";
@@ -15,6 +15,7 @@ import Image from "next/image";
 type NavLinkType = {
   name: string;
   path: string;
+  icon: LucideIcon
 };
 
 const Navbar = () => {
@@ -54,18 +55,18 @@ const Navbar = () => {
 
   const getNavLink = (role: string): NavLinkType[] => {
     const adminLink = [
-      { name: "Home", path: "/" },
-      { name: "All Products", path: "/all-products" },
-      { name: "About", path: "/about" },
-      { name: "Contact", path: "/contact" },
+      { name: "Home", path: "/", icon: Home },
+      { name: "All Products", path: "/all-product", icon: ShoppingBag },
+      { name: "About", path: "/about", icon: Info },
+      { name: "Contact", path: "/contact", icon: Headset },
     ];
 
     const CustomerLinks = [
-      { name: "Home", path: "/" },
-      { name: "All Products", path: "/all-product" },
-      { name: "Cart", path: "/cart" },
-      { name: "About", path: "/about" },
-      { name: "Contact", path: "/contact" },
+      { name: "Home", path: "/", icon: Home },
+      { name: "All Products", path: "/all-product", icon: ShoppingBag }, 
+      { name: "Cart", path: "/cart", icon: ShoppingCart },
+      { name: "About", path: "/about", icon: Info },
+      { name: "Contact", path: "/contact", icon: Headset },
     ];
 
     if (role === "admin") {
@@ -86,7 +87,7 @@ const Navbar = () => {
 
   return (
     <div
-      className={`sticky top-0 z-40 bg-base-100 py-5 w-full border-b border-primary `}
+      className="sticky top-0 z-40 w-full bg-base-100/70 backdrop-blur-md border-b border-base-200 py-4 transition-all duration-300"
     >
       <nav className="w-11/12 md:w-10/12 mx-auto flex justify-between items-center ">
         {/* Logo */}
@@ -107,7 +108,7 @@ const Navbar = () => {
         {/* Desktop Nav */}
         <ul className="md:gap-6 text-neutral items-center hidden md:flex font-medium">
           {navLinks.map((link) => (
-            <NavLink key={link.path} href={link.path}>
+            <NavLink key={link.path} href={link.path} icon={link.icon}>
               {link.name}
             </NavLink>
           ))}

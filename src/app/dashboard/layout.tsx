@@ -1,5 +1,5 @@
 "use client";
-import { signOut } from "next-auth/react"
+import { signOut } from "next-auth/react";
 import Logo from "@/Components/Logo/Logo";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -15,30 +15,35 @@ import {
   Package,
   Users,
   UserCog,
-  Menu,
-  PanelLeftOpen
+  FolderKanban,
+  PanelLeftOpen,
 } from "lucide-react";
 import Image from "next/image";
 import useAuth from "@/hook/useAuth";
 import Theme from "@/Components/Theme/Theme";
+import DashboardNav from "@/Components/NavLink/DashboardNav";
 
-export default function DashboardLayout({ children, }: { children: React.ReactNode; }) {
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
 
-  const [isCollapsed, setIsCollapsed] = useState<boolean>(false)
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
 
   const [isDark, setIsDark] = useState<boolean>(false);
 
-  const { user, role } = useAuth()
+  const { user, role } = useAuth();
 
   useEffect(() => {
-    const saved = localStorage.getItem('theme');
-    if (saved === 'dark') {
+    const saved = localStorage.getItem("theme");
+    if (saved === "dark") {
       setIsDark(true);
-      document.documentElement.setAttribute('data-theme', 'dark');
+      document.documentElement.setAttribute("data-theme", "dark");
     } else {
       setIsDark(false);
-      document.documentElement.setAttribute('data-theme', 'light');
+      document.documentElement.setAttribute("data-theme", "light");
     }
   }, []);
 
@@ -54,9 +59,13 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-
   const getDashboradNav = (role: string) => {
     const customerNav = [
+      {
+        navName: "Overview",
+        navIcon: FolderKanban,
+        href: "/dashboard",
+      },
       {
         navName: "My Orders",
         navIcon: ShoppingBag,
@@ -65,21 +74,26 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
       {
         navName: "Wishlist",
         navIcon: Heart,
-        href: "/dashboard/wishlist"
+        href: "/dashboard/wishlist",
       },
       {
         navName: "Cart",
         navIcon: ShoppingCart,
-        href: "/cart"
+        href: "/cart",
       },
       {
         navName: "Profile",
         navIcon: User,
-        href: "/dashboard/profile"
+        href: "/dashboard/profile",
       },
     ];
 
     const adminNav = [
+      {
+        navName: "Overview",
+        navIcon: FolderKanban,
+        href: "/dashboard",
+      },
       {
         navName: "Orders Management",
         navIcon: ShoppingBag,
@@ -88,17 +102,17 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
       {
         navName: "Product Management",
         navIcon: Package,
-        href: "/dashboard/product_management"
+        href: "/dashboard/product_management",
       },
       {
         navName: "Customers Management",
         navIcon: Users,
-        href: "/customer_management"
+        href: "/customer_management",
       },
       {
         navName: "Profile",
         navIcon: UserCog,
-        href: "/profile"
+        href: "/profile",
       },
     ];
 
@@ -108,22 +122,23 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
 
     return adminNav;
   };
-  const navItem = getDashboradNav(role || 'customer');
-
-
+  const navItem = getDashboradNav(role || "customer");
 
   return (
     <div className="flex  w-full  min-h-screen bg-gray-100 dark:bg-black">
       {/* Sidebar */}
       <div
-        className={` max-lg:fixed lg:sticky lg:top-0 bg-base-100 shadow-md transition-all duration-300 ease-in-out ${isCollapsed ? 'w-24' : 'w-64'} min-h-screen lg:h-screen z-70 ${sidebarOpen === true ? "translate-x-0" : "-translate-x-64"} lg:translate-x-0 `}
+        className={` max-lg:fixed lg:sticky lg:top-0 bg-base-100 shadow-md transition-all duration-300 ease-in-out ${isCollapsed ? "w-24" : "w-64"} min-h-screen lg:h-screen z-70 ${sidebarOpen === true ? "translate-x-0" : "-translate-x-64"} lg:translate-x-0 `}
       >
-
         <div className="flex flex-col justify-between h-screen">
           {/* Logo,Cross bar and nav Items */}
           <div className="felx-1">
-            <div className={`flex items-center ${isCollapsed ? 'lg:justify-center' : 'justify-between'} h-20 p-3 border-b border-gray-100`}>
-              <div className={`flex items-center justify-between ${isCollapsed ? 'lg:opacity-0 lg:scale-0 w-0' : 'opacity-100 scale-100'}`}>
+            <div
+              className={`flex items-center ${isCollapsed ? "lg:justify-center" : "justify-between"} h-20 p-3 border-b border-gray-100`}
+            >
+              <div
+                className={`flex items-center justify-between ${isCollapsed ? "lg:opacity-0 lg:scale-0 w-0" : "opacity-100 scale-100"}`}
+              >
                 <Logo />
               </div>
               <div className="flex lg:hidden">
@@ -132,31 +147,27 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
                 </button>
               </div>
               <div className="hidden lg:flex lg:justify-center items-center">
-                <span onClick={() => setIsCollapsed(!isCollapsed)} className=" cursor-pointer "><PanelLeftOpen className="text-primary font-bold " /></span>
+                <span
+                  onClick={() => setIsCollapsed(!isCollapsed)}
+                  className=" cursor-pointer "
+                >
+                  <PanelLeftOpen className="text-primary font-bold " />
+                </span>
               </div>
             </div>
 
             {/* Nav Items */}
             <div className="p-3 space-y-3">
-              {navItem.map((item, index) => {
-                const Icon = item.navIcon;
-                return (
-                  <Link
-                    href={item?.href}
-                    key={index}
-                    className={`flex items-center p-2 rounded-lg font-semibold transition-all duration-300 group
-          ${isCollapsed ? 'lg:justify-center tooltip tooltip-right' : 'justify-start gap-3'} 
-          text-gray-600 dark:text-gray-50 border border-transparent hover:border-primary/30 hover:bg-primary/5 hover:text-primary`}
-                    data-tip={isCollapsed ? item.navName : ""}
-                  >
-                    <Icon className="text-xl shrink-0" />
-                    <span className={`whitespace-nowrap transition-all duration-300 
-          ${isCollapsed ? "lg:hidden opacity-0" : "opacity-100"}`}>
-                      {item.navName}
-                    </span>
-                  </Link>
-                );
-              })}
+              {navItem.map((item, index) => (
+                <DashboardNav
+                  key={index}
+                  href={item.href}
+                  icon={item.navIcon}
+                  isCollapsed={isCollapsed} 
+                >
+                  {item.navName}
+                </DashboardNav>
+              ))}
             </div>
           </div>
 
@@ -164,11 +175,16 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
             <div className="bg-gray-100 dark:bg-gray-800 h-0.5 w-full"></div>
 
             {/* Theme Toggle Section */}
-            <div className={`w-full bg-gray-50 dark:bg-gray-800 p-2 rounded-lg font-semibold flex items-center transition-all duration-300
-    ${isCollapsed ? 'lg:justify-center tooltip tooltip-right' : 'justify-between'} text-neutral`}
-              data-tip={isCollapsed ? (isDark ? "Dark Mode" : "Light Mode") : ""}
+            <div
+              className={`w-full bg-gray-50 dark:bg-gray-800 p-2 rounded-lg font-semibold flex items-center transition-all duration-300
+    ${isCollapsed ? "lg:justify-center tooltip tooltip-right" : "justify-between"} text-neutral`}
+              data-tip={
+                isCollapsed ? (isDark ? "Dark Mode" : "Light Mode") : ""
+              }
             >
-              <span className={`whitespace-nowrap ${isCollapsed ? "lg:hidden" : "block"}`}>
+              <span
+                className={`whitespace-nowrap ${isCollapsed ? "lg:hidden" : "block"}`}
+              >
                 {isDark ? "Dark Mode" : "Light Mode"}
               </span>
               <Theme isDark={isDark} setIsDark={setIsDark} />
@@ -178,17 +194,18 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
             <button
               onClick={() => signOut()}
               className={`flex items-center shadow-sm bg-gray-50 dark:bg-gray-800 p-2 rounded-lg font-semibold cursor-pointer text-red-600 transition-all duration-300 w-full
-      ${isCollapsed ? 'lg:justify-center tooltip tooltip-right' : 'gap-3'}`}
+      ${isCollapsed ? "lg:justify-center tooltip tooltip-right" : "gap-3"}`}
               data-tip={isCollapsed ? "Logout" : ""}
             >
               <LogOut size={20} className="shrink-0" />
-              <span className={`whitespace-nowrap ${isCollapsed ? "lg:hidden" : "block"}`}>
+              <span
+                className={`whitespace-nowrap ${isCollapsed ? "lg:hidden" : "block"}`}
+              >
                 Logout
               </span>
             </button>
           </div>
         </div>
-
       </div>
 
       {/* Main */}
@@ -210,7 +227,9 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
             </div>
 
             <div className=" hidden lg:flex items-center ">
-              <h2 className="text-xl font-semibold text-gray-600 dark:text-gray-50">Dashborad</h2>
+              <h2 className="text-xl font-semibold text-gray-600 dark:text-gray-50">
+                Dashborad
+              </h2>
             </div>
           </div>
           {/* Profile Menu */}
@@ -223,19 +242,20 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
 
             <div className="flex">
               <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full">
-                {
-                  user?.image ? (
-                    <Image
-                      className="rounded-full"
-                      src={user?.image || 'https://i.pinimg.com/474x/4c/1d/a0/4c1da05326a6d32d124df246038df53d.jpg'}
-                      width={50}
-                      height={50}
-                      alt="Profile" />
-                  )
-                    :
-                    <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full"></div>
-                }
-
+                {user?.image ? (
+                  <Image
+                    className="rounded-full"
+                    src={
+                      user?.image ||
+                      "https://i.pinimg.com/474x/4c/1d/a0/4c1da05326a6d32d124df246038df53d.jpg"
+                    }
+                    width={50}
+                    height={50}
+                    alt="Profile"
+                  />
+                ) : (
+                  <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full"></div>
+                )}
               </div>
             </div>
           </div>

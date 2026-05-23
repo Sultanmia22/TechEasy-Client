@@ -40,9 +40,6 @@ const PersonalInfo = () => {
 
   const hasProfileData = personalInfoData?.phone || personalInfoData?.location;
 
-  if (isLoading) {
-    return <TextLoader />
-  }
 
 
   const infoItems = [
