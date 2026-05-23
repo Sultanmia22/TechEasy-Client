@@ -11,6 +11,8 @@ import { FaBars, FaShoppingCart } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
 import { FaUser } from "react-icons/fa";
 import Image from "next/image";
+import UserDropdown from "./UserDropdown";
+import MobileSidebar from "./MobileSidebar";
 
 type NavLinkType = {
   name: string;
@@ -87,7 +89,7 @@ const Navbar = () => {
 
   return (
     <div
-      className="sticky top-0 z-40 w-full bg-base-100/70 backdrop-blur-md border-b border-base-200 py-4 transition-all duration-300"
+      className="sticky top-0 z-40 w-full bg-base-100 border-b border-base-200 py-4 transition-all duration-300"
     >
       <nav className="w-11/12 md:w-10/12 mx-auto flex justify-between items-center ">
         {/* Logo */}
@@ -142,60 +144,9 @@ const Navbar = () => {
                 </div>
 
                 {openProfileMenu && (
-                  <div 
-                    className="absolute right-0 top-full mt-3 z-50 w-56 bg-base-100 rounded-2xl shadow-2xl border border-base-200 overflow-hidden"
-                  >
-                    {/* profile header */}
-                    <div className="flex items-center gap-3 px-4 py-3 bg-primary/5 border-b border-base-200">
-                      {user?.image && (
-                         <Image src={user?.image} width={100} height={100} className="rounded-full object-cover w-11 h-11" alt="profile" />
-                      )}
-
-                      <div className="flex flex-col">
-                        <p className="text-sm font-semibold text-neutral">
-                          {user.name}
-                        </p>
-                        <p className="text-xs opacity-60 truncate">
-                          {user.email}
-                        </p>
-                      </div>
-                    </div>
-
-                    <ul className="flex flex-col p-2 text-sm">
-                      <li>
-                        <Link
-                          href="/dashboard"
-                          className="flex items-center px-3 py-2 rounded-lg hover:bg-primary hover:text-white transition-all duration-200"
-                        >
-                          Dashboard
-                        </Link>
-                      </li>
-
-                      <li>
-                        <Link
-                          href="/profile"
-                          className="flex items-center px-3 py-2 rounded-lg hover:bg-primary hover:text-white transition-all duration-200"
-                        >
-                          My Profile
-                        </Link>
-                      </li>
-
-                      <li>
-                        <Link
-                          href="/settings"
-                          className="flex items-center px-3 py-2 rounded-lg hover:bg-primary hover:text-white transition-all duration-200"
-                        >
-                          Settings
-                        </Link>
-                      </li>
-
-                      <div className="my-1 border-t-2 border-base-300"></div>
-
-                      <li>
-                        <LogOut />
-                      </li>
-                    </ul>
-                  </div>
+                 <div>
+                  <UserDropdown user={user} />
+                 </div>
                 )}
               </div>
             ) : (
@@ -210,49 +161,11 @@ const Navbar = () => {
         </div>
 
         {/* --- Mobile Sidebar --- */}
-        <div
-          className={`fixed inset-0 z-[100] transition-visibility duration-300 md:hidden ${isMenuOpen ? "visible" : "invisible"}`}
-        >
-          {/* Overlay */}
-          <div
-            className={`absolute inset-0 bg-neutral/40 backdrop-blur-sm transition-opacity duration-300 ${isMenuOpen ? "opacity-100" : "opacity-0"}`}
-            onClick={() => setIsMenuOpen(false)}
-          />
-
-          {/* Sidebar Content */}
-          <aside
-            className={`absolute left-0 top-0 h-full w-[280px] bg-base-100 p-6 shadow-2xl transition-transform duration-300 ease-out ${isMenuOpen ? "translate-x-0" : "-translate-x-full"}`}
-          >
-            <div className="flex items-center justify-between border-b pb-6">
-              <Link
-                href="/"
-                onClick={() => setIsMenuOpen(false)}
-                className="text-xl font-black"
-              >
-                <span className="text-neutral">Tech</span>
-                <span className="text-primary">Easy</span>
-              </Link>
-              <button
-                onClick={() => setIsMenuOpen(false)}
-                className="rounded-full bg-base-200 p-2"
-              >
-                <RxCross1 size={18} />
-              </button>
-            </div>
-
-            <nav className="mt-8 flex flex-col gap-3">
-              {navLinks.map((link) => (
-                <MobileNavLink
-                  onClick={() => setIsMenuOpen(false)}
-                  key={link.path}
-                  href={link.path}
-                >
-                  {link.name}
-                </MobileNavLink>
-              ))}
-            </nav>
-          </aside>
-        </div>
+        <MobileSidebar
+           isOpen={isMenuOpen} 
+           onClose={() => setIsMenuOpen(false)} 
+           navLinks={navLinks} 
+        />
       </nav>
     </div>
   );
