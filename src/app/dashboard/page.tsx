@@ -1,11 +1,10 @@
-
-import CustomerHome from '@/Components/Dashborad/DashboradHome/CustomerHome/CustomerHome'
+import DashboardHome from '@/Components/Dashborad/DashboradHome/DashboardHome';
 import React from 'react'
 
 const page = () => {
   return (
     <div className=''>
-      <CustomerHome />
+      <DashboardHome />
     </div>
   )
 }
