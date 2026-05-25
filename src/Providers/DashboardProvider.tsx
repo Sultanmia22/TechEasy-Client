@@ -1,27 +1,31 @@
 'use client'
 import useDashboardData from "@/hook/useDashboardData";
-import { IDashboradData } from "@/types/dashborad.interface";
+import { IDashboardAdminData } from "@/types/dashboardAdmin.interface";
+import { IDashboradCustomerData } from "@/types/dashboradCustomer.interface";
 import { createContext,  type ReactNode} from "react"
 
+type DashboardData = IDashboardAdminData | IDashboradCustomerData;
+
 interface IDashboardContextValue {
-    dashboardData: IDashboradData | undefined;
+    dashboardData: DashboardData | undefined;
+    isLoading: boolean; 
 }
 
 export const DashboardContext = createContext<IDashboardContextValue | undefined>(undefined)
 
 const DashboardProvider = ({ children }: { children: ReactNode }) => {
 
-    const {data:dashboardData={},isLoading} = useDashboardData()
+    const { data: dashboardData, isLoading } = useDashboardData()
 
-    console.log('Dashboard Data',dashboardData)
+    console.log('Dashborad Data',dashboardData)
 
-    const DashboradDataInfo = {
+    const dashboardContextValue: IDashboardContextValue = {
         dashboardData,
         isLoading
-    };
+    };;
 
     return (
-        <DashboardContext value={DashboradDataInfo as any}>
+        <DashboardContext value={dashboardContextValue}>
             {children}
         </DashboardContext>
     )

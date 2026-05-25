@@ -1,5 +1,5 @@
 import React from 'react'
-import type { IRecentOrder, IWishlist } from '@/types/dashborad.interface'
+import type { IRecentOrder, IWishlist } from '@/types/dashboradCustomer.interface'
 import { FaBoxOpen } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import Link from 'next/link';

@@ -1,4 +1,4 @@
-'use clinet'
+'use client'
 import { DashboardContext } from '@/Providers/DashboardProvider'
 import { use } from 'react'
 

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import OrdersBanner from '@/Components/Dashborad/(Customer)/Order/OrdersBanner';
 import useAxiosSecure from '@/hook/useAxiosSecure';
-import type { IRecentOrder } from '@/types/dashborad.interface';
+import type { IRecentOrder } from '@/types/dashboradCustomer.interface';
 import useAuth from '@/hook/useAuth';
 import Order from '@/Components/Dashborad/(Customer)/Order/Order';
 import EmptyOrder from '@/Components/Dashborad/(Customer)/Order/EmptyOrder';

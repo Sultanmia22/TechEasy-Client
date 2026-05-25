@@ -1,19 +1,18 @@
-import React from 'react'
 import useAuth from './useAuth';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from './useAxiosSecure';
 
 const useDashboardData = () => {
-    const {user} = useAuth()
+    const { user, token, isLoading: isAuthLoading } = useAuth()
     const axiosSecure = useAxiosSecure()
     
      return useQuery({
-        queryKey: ['dashboard-data', user?.email],
+        queryKey: ['dashboard-data', user?.email, user?.role],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/dashboard/getDashboradSummary?customerEmail=${user?.email}`)
+            const res = await axiosSecure.get(`/dashboard/getDashboradSummary?email=${user?.email}`)
             return res.data.data;
         },
-        enabled: !!user?.email,
+        enabled: !!user?.email && !!token && !isAuthLoading,
     })
 }
 

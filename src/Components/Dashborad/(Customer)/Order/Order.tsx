@@ -3,7 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaChevronDown } from "react-icons/fa";
-import type { IRecentOrder } from "@/types/dashborad.interface";
+import type { IRecentOrder } from "@/types/dashboradCustomer.interface";
 
 const Order = ({ order }: { order: IRecentOrder }) => {
   const [isOpen, setIsOpen] = useState(false);

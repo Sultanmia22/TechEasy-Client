@@ -1,7 +1,7 @@
 "use client";
 import useAxiosSecure from "@/hook/useAxiosSecure";
 import useCart from "@/hook/useCart";
-import type { IWishlist } from "@/types/dashborad.interface";
+import type { IWishlist } from "@/types/dashboradCustomer.interface";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";

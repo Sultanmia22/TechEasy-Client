@@ -8,7 +8,7 @@ const DashboardHome = () => {
   const {user} = useAuth()
 
   const isRole = user?.role || 'customer'
-  console.log('User',user)
+ 
   return (
     <div>
       {

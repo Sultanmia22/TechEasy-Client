@@ -3,7 +3,7 @@ import React from "react";
 import { FiShoppingBag } from "react-icons/fi";
 import { MdOutlinePendingActions } from "react-icons/md";
 import { LuHeart, LuPackageCheck } from "react-icons/lu";
-import type { Istats } from "@/types/dashborad.interface";
+import type { Istats } from "@/types/dashboradCustomer.interface";
 
 const CustomerSummaryCard = ({ stats }: { stats: Istats | undefined }) => {
   const {

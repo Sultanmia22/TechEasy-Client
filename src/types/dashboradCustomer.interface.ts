@@ -54,7 +54,7 @@ export interface IRecentOrder {
   }[];
 }
 
-export interface IDashboradData {
+export interface IDashboradCustomerData {
     stats : Istats,
     wishListItems : IWishlist[],
     recentOrders : IRecentOrder[]

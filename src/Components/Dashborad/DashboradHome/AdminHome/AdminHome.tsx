@@ -5,9 +5,14 @@ import React from 'react'
 import { FaUserShield } from 'react-icons/fa';
 import { PiShieldCheckBold } from 'react-icons/pi';
 import SummaryCard from './SummaryCard/SummaryCard';
+import useDashboardContent from '@/hook/useDashboardContext';
 
 const AdminHome = () => {
   const {user} = useAuth()
+
+  const {dashboardData} = useDashboardContent()
+
+  console.log(dashboardData)
   return (
     <div className="flex flex-col gap-10 min-h-screen">
       {/* Banner */}
