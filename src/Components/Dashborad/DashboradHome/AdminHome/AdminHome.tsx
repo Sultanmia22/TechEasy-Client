@@ -6,13 +6,25 @@ import { FaUserShield } from 'react-icons/fa';
 import { PiShieldCheckBold } from 'react-icons/pi';
 import SummaryCard from './SummaryCard/SummaryCard';
 import useDashboardContent from '@/hook/useDashboardContext';
+import { IDashboardAdminData } from '@/types/dashboardAdmin.interface';
+import RecentOrders from './RecentOrders/RecentOrders';
 
 const AdminHome = () => {
   const {user} = useAuth()
 
   const {dashboardData} = useDashboardContent()
 
-  console.log(dashboardData)
+  const adminData = dashboardData as IDashboardAdminData;
+
+  console.log( 'DashboardData', dashboardData)
+
+  const stats = adminData?.stats
+  const recentOrders = adminData?.recentOrders || []
+  const topProducts = adminData?.topProducts
+  const recentUsers = adminData?.recentUsers 
+
+  console.log('Recent Orders',recentOrders)
+
   return (
     <div className="flex flex-col gap-10 min-h-screen">
       {/* Banner */}
@@ -34,7 +46,11 @@ const AdminHome = () => {
       </div>
 
       <div>
-        <SummaryCard />
+        <SummaryCard stats={stats} />
+      </div>
+
+      <div>
+       <RecentOrders  recentOrders={recentOrders}/>
       </div>
     </div>
   )

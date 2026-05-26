@@ -54,7 +54,7 @@ const formattedTime = singleOrder?.orderDate ? new Date(singleOrder?.orderDate).
   timeZone: 'Asia/Dhaka'
 }): "N/A"
 
-const orderStatus = singleOrder?.orderStatus
+const delivaryStatus = singleOrder?.delivaryStatus
 
 const shippingInfo = singleOrder?.shippingInfo
 
@@ -99,9 +99,9 @@ console.log(singleOrder)
             </div>
 
             <div className='bg-base-100 w-full p-5 rounded-lg'>
-                <h2 className='text-xl font-semibold text-neutral'>Order Status</h2>
+                <h2 className='text-xl font-semibold text-neutral'>Delivary Status</h2>
                 <div>
-                    <DeliveredStatus  orderStatus={orderStatus}/>
+                    <DeliveredStatus  delivaryStatus={delivaryStatus}/>
                 </div>
             </div>
 

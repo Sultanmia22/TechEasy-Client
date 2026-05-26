@@ -51,13 +51,12 @@ const Order = ({ order }: { order: IRecentOrder }) => {
             </p>
 
             <span
-              className={`text-xs font-semibold uppercase ${
-                order?.devliveredStatus === "delivered"
+              className={`text-xs font-semibold uppercase ${order?.delivaryStatus[0] === "delivered"
                   ? "text-secondary"
                   : "text-accent"
               }`}
             >
-              {order?.devliveredStatus}
+              {order?.delivaryStatus}
             </span>
           </div>
 

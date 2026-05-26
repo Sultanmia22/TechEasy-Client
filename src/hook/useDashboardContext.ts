@@ -6,6 +6,10 @@ const useDashboardContent = () => {
 
   const dashboardContent = use(DashboardContext)
 
+  if (!dashboardContent) {
+    throw new Error('useDashboardContent must be used within a DashboardProvider');
+  }
+
   return dashboardContent
 }
 

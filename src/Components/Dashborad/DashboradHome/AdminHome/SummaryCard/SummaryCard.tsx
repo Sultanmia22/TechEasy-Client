@@ -4,32 +4,33 @@ import { FiShoppingBag } from "react-icons/fi";
 import { MdOutlinePendingActions } from "react-icons/md";
 import { LuPackageCheck } from "react-icons/lu";
 import { TbCurrencyTaka } from "react-icons/tb";
+import { IDashboardStats } from "@/types/dashboardAdmin.interface";
 
-const SummaryCard = () => {
+const SummaryCard = ({stats}:{stats:IDashboardStats}) => {
 
 
   const summaryData = [
     {
       title: "Total Orders",
-      value: 248,
+      value: stats?.totalOrder,
       icon: <FiShoppingBag size={22} />,
       color: "primary",
     },
     {
       title: "Total Revenue",
-      value: "৳1,25,400",
+      value: stats?.totalRevenue,
       icon: <TbCurrencyTaka size={22} />,
       color: "secondary",
     },
     {
       title: "Pending Orders",
-      value: 18,
+      value: stats?.totalPendingOrder,
       icon: <MdOutlinePendingActions size={22} />,
       color: "accent",
     },
     {
       title: "Complete Orders",
-      value: 230,
+      value: stats?.totalDeliveredOrder,
       icon: <LuPackageCheck size={22} />,
       color: "primary",
     },

@@ -20,7 +20,7 @@ export interface IRecentOrder {
     email: string;
     image: string;
     createdAt: string; 
-  }
+  }[]
 
   export interface ITopProduct {
     _id: string;
@@ -33,6 +33,6 @@ export interface IRecentOrder {
   export interface IDashboardAdminData {
     stats: IDashboardStats;
     recentOrders: IRecentOrder[];
-    recentUsers: IRecentUser[];
     topProducts: ITopProduct[];
+    recentUsers: IRecentUser[];
   }
