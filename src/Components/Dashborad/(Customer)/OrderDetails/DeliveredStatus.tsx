@@ -40,7 +40,7 @@ const DeliveredStatus = ({ delivaryStatus }: IOrderStatus) => {
                             <item.icon size={16} />
                         </span>
 
-                        {/* টাইটেল */}
+                        
                         <p className={`text-[10px] mt-2 uppercase font-semibold ${active ? 'text-primary' : 'text-gray-400'}`}>
                             {item.title}
                         </p>
