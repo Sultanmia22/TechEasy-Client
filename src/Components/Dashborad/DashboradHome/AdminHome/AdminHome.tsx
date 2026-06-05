@@ -26,7 +26,7 @@ const AdminHome = () => {
   const topProducts = adminData?.topProducts
   const recentUsers = adminData?.recentUsers 
 
-  console.log("Recent Users:", recentUsers);
+  // console.log("Recent Users:", recentUsers);
 
   if(isLoading){
     return <TextLoader />
@@ -65,7 +65,7 @@ const AdminHome = () => {
           <TopProducts  topProducts={topProducts}/>
         </div>
         <div className="w-full">
-          <RecentUser />
+          <RecentUser recentUsers={recentUsers}/>
         </div>
       </div>
     </div>

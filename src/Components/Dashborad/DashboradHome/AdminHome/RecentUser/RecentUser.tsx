@@ -10,43 +10,9 @@ interface RecentUser {
   createdAt: string
 }
 
-const recentUsers: RecentUser[] = [
-  {
-    _id: '6a08c5f9e638b229c50cb903',
-    name: 'Sultan Mia',
-    email: 'sultanmia5732@gmail.com',
-    image: 'https://lh3.googleusercontent.com/a/ACg8ocImQLBsAinNarWUCssNZlncQE_qpY_sIThLlDOLzAGHzq77-TQ=s96-c',
-    createdAt: '2026-05-16T19:31:05.634Z',
-  },
-  {
-    _id: '6a08c5f9e638b229c50cb904',
-    name: 'Nadia Akter',
-    email: 'nadia.akter@gmail.com',
-    image: '',
-    createdAt: '2026-05-15T10:22:14.123Z',
-  },
-  {
-    _id: '6a08c5f9e638b229c50cb905',
-    name: 'Rahat Hossain',
-    email: 'rahat.hossain@gmail.com',
-    image: '',
-    createdAt: '2026-05-14T08:45:30.000Z',
-  },
-  {
-    _id: '6a08c5f9e638b229c50cb906',
-    name: 'Karim Uddin',
-    email: 'karim.uddin@gmail.com',
-    image: '',
-    createdAt: '2026-05-13T15:10:55.400Z',
-  },
-  {
-    _id: '6a08c5f9e638b229c50cb907',
-    name: 'Sumaiya Islam',
-    email: 'sumaiya.islam@gmail.com',
-    image: '',
-    createdAt: '2026-05-12T09:00:00.000Z',
-  },
-]
+interface IRecentOrderProps {
+  recentUsers: RecentUser[]
+}
 
 const avatarColors = [
   'bg-primary',
@@ -56,9 +22,9 @@ const avatarColors = [
   'bg-accent/70',
 ]
 
-const RecentUser = () => {
+const RecentUser = ({recentUsers}: IRecentOrderProps) => {
   return (
-    <div className='bg-base-100 border border-base-300 rounded-2xl overflow-hidden'>
+    <div className='bg-base-100 border border-base-300 rounded-2xl '>
 
       {/* Header */}
       <div className='flex items-center justify-between px-5 py-4 border-b border-base-300'>
@@ -69,7 +35,7 @@ const RecentUser = () => {
       </div>
 
       {/* ── Desktop Table ── */}
-      <div className='hidden md:block overflow-x-auto'>
+      <div className='hidden md:block overflow-x-visible'>
         <table className='w-full'>
           <thead>
             <tr className='bg-base-200'>
@@ -100,10 +66,10 @@ const RecentUser = () => {
                         height={100}
                         src={user.image}
                         alt={user.name}
-                        className='w-8 h-8 rounded-full object-cover flex-shrink-0'
+                        className='w-8 h-8 rounded-full object-cover shrink-0'
                       />
                     ) : (
-                      <div className={`w-8 h-8 rounded-full ${avatarColors[i % avatarColors.length]} flex items-center justify-center text-[11px] font-bold text-white flex-shrink-0`}>
+                      <div className={`w-8 h-8 rounded-full ${avatarColors[i % avatarColors.length]} flex items-center justify-center text-[11px] font-bold text-white shrink-0`}>
                         {user.name.charAt(0).toUpperCase()}
                       </div>
                     )}
@@ -129,7 +95,7 @@ const RecentUser = () => {
 
                 {/* Joined */}
                  <td className='px-5 py-3 relative overflow-visible'>
-                  <UserActionDropdown />
+                  <UserActionDropdown  email={user?.email}  />
                 </td>
               </tr>
             ))}
