@@ -10,6 +10,7 @@ import { IDashboardAdminData } from '@/types/dashboardAdmin.interface';
 import RecentOrders from './RecentOrders/RecentOrders';
 import TextLoader from '@/Components/Loading/TextLoader';
 import TopProducts from './TopProducts/TopProducts';
+import RecentUser from './RecentUser/RecentUser';
 
 const AdminHome = () => {
   const {user} = useAuth()
@@ -25,7 +26,7 @@ const AdminHome = () => {
   const topProducts = adminData?.topProducts
   const recentUsers = adminData?.recentUsers 
 
-  console.log("Top Selling Product:", topProducts);
+  console.log("Recent Users:", recentUsers);
 
   if(isLoading){
     return <TextLoader />
@@ -63,7 +64,9 @@ const AdminHome = () => {
         <div className="w-full">
           <TopProducts  topProducts={topProducts}/>
         </div>
-        <div className="w-full border border-2"></div>
+        <div className="w-full">
+          <RecentUser />
+        </div>
       </div>
     </div>
   )
