@@ -7,11 +7,17 @@ export interface IDashboardStats {
 
 export interface IRecentOrder {
     _id: string;
+    orderId: string
     customerName: string;
-    productName: string;
-    productImage: string;
+    customerEmail: string;
+    products: {
+      name: string,
+      quantity: string,
+      image: string
+    }[]
     amount: number;
     status: 'paid' | 'pending' | 'delivered' | 'cancelled' | string;
+    date: string
   }
 
   export interface IRecentUser {
@@ -36,3 +42,11 @@ export interface IRecentOrder {
     topProducts: ITopProduct[];
     recentUsers: IRecentUser[];
   }
+
+  export interface TopProduct {
+  _id: string
+  productName: string
+  productImage: string
+  totalQty: number
+  totalAmount: number
+}

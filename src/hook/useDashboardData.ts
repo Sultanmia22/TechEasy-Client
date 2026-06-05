@@ -13,6 +13,8 @@ const useDashboardData = () => {
             return res.data.data;
         },
         enabled: !!user?.email && !!token && !isAuthLoading,
+        staleTime: 0, 
+        refetchOnWindowFocus: true,
     })
 }
 

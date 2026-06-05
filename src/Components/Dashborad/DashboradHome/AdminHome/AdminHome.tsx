@@ -8,11 +8,13 @@ import SummaryCard from './SummaryCard/SummaryCard';
 import useDashboardContent from '@/hook/useDashboardContext';
 import { IDashboardAdminData } from '@/types/dashboardAdmin.interface';
 import RecentOrders from './RecentOrders/RecentOrders';
+import TextLoader from '@/Components/Loading/TextLoader';
+import TopProducts from './TopProducts/TopProducts';
 
 const AdminHome = () => {
   const {user} = useAuth()
 
-  const {dashboardData} = useDashboardContent()
+  const {dashboardData,isLoading,refetch} = useDashboardContent()
 
   const adminData = dashboardData as IDashboardAdminData;
 
@@ -23,7 +25,11 @@ const AdminHome = () => {
   const topProducts = adminData?.topProducts
   const recentUsers = adminData?.recentUsers 
 
-  console.log('Recent Orders',recentOrders)
+  console.log("Top Selling Product:", topProducts);
+
+  if(isLoading){
+    return <TextLoader />
+  }
 
   return (
     <div className="flex flex-col gap-10 min-h-screen">
@@ -50,7 +56,14 @@ const AdminHome = () => {
       </div>
 
       <div>
-       <RecentOrders  recentOrders={recentOrders}/>
+       <RecentOrders  recentOrders={recentOrders} refetch={refetch} />
+      </div>
+
+      <div className="flex flex-col md:flex-row gap-5 w-full">
+        <div className="w-full">
+          <TopProducts  topProducts={topProducts}/>
+        </div>
+        <div className="w-full border border-2"></div>
       </div>
     </div>
   )

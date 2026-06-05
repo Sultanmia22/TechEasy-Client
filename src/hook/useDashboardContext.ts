@@ -1,10 +1,10 @@
 'use client'
 import { DashboardContext } from '@/Providers/DashboardProvider'
-import { use } from 'react'
+import { useContext } from 'react'
 
 const useDashboardContent = () => {
 
-  const dashboardContent = use(DashboardContext)
+  const dashboardContent = useContext(DashboardContext)
 
   if (!dashboardContent) {
     throw new Error('useDashboardContent must be used within a DashboardProvider');

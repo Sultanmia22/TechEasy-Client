@@ -9,25 +9,25 @@ type DashboardData = IDashboardAdminData | IDashboradCustomerData;
 interface IDashboardContextValue {
     dashboardData: DashboardData | undefined;
     isLoading: boolean; 
+    refetch: () => Promise<unknown>
 }
 
 export const DashboardContext = createContext<IDashboardContextValue | undefined>(undefined)
 
 const DashboardProvider = ({ children }: { children: ReactNode }) => {
 
-    const { data: dashboardData, isLoading } = useDashboardData()
-
-    console.log('Dashborad Data',dashboardData)
+    const { data: dashboardData, isLoading , refetch} = useDashboardData()
 
     const dashboardContextValue: IDashboardContextValue = {
         dashboardData,
-        isLoading
-    };;
+        isLoading,
+        refetch
+    }
 
     return (
-        <DashboardContext value={dashboardContextValue}>
+        <DashboardContext.Provider value={dashboardContextValue}>
             {children}
-        </DashboardContext>
+        </DashboardContext.Provider>
     )
 }
 
