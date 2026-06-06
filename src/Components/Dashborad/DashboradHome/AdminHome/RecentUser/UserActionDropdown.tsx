@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import useAuth from "@/hook/useAuth";
 import useAxiosSecure from "@/hook/useAxiosSecure";
 import { useQueryClient } from "@tanstack/react-query";
+import Swal from 'sweetalert2';
 
 const roles = [
     { label: "Admin", value: "admin", icon: ShieldCheck },
@@ -111,6 +112,43 @@ const UserActionDropdown = ({
             }
         }
     };
+
+    const handleDeleteUser = async (email:string) => {
+
+        const result = await Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this action!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, delete it!"
+        });
+
+        if (result.isConfirmed) {
+            try {
+
+                const res = await axiosSecure.delete(`/users/deleteUser?email=${email}`);
+
+                if (res.status === 200 && res.data.success === true) {
+                    await queryClient.invalidateQueries({
+                        queryKey: ['dashboard-data']
+                    });
+                    refetch();
+
+                    toast.success("User deleted successfully!");
+                    Swal.fire("Deleted!", "The user has been removed.", "success");
+                }
+            } catch (er: unknown) {
+                if (axios.isAxiosError(er)) {
+                    const errorMessage = er.response?.data?.message || "Failed to delete user.";
+                    toast.error(errorMessage);
+                } else {
+                    toast.error("An unexpected error occurred.");
+                }
+            }
+        }
+    }
 
     return (
         <div className="flex items-center gap-2">
