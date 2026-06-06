@@ -65,7 +65,7 @@ const AdminHome = () => {
           <TopProducts  topProducts={topProducts}/>
         </div>
         <div className="w-full">
-          <RecentUser recentUsers={recentUsers}/>
+          <RecentUser recentUsers={recentUsers} refetch={refetch}/>
         </div>
       </div>
     </div>

@@ -8,10 +8,12 @@ interface RecentUser {
   email: string
   image: string
   createdAt: string
+  status: string
 }
 
 interface IRecentOrderProps {
   recentUsers: RecentUser[]
+  refetch: () => void
 }
 
 const avatarColors = [
@@ -22,7 +24,8 @@ const avatarColors = [
   'bg-accent/70',
 ]
 
-const RecentUser = ({recentUsers}: IRecentOrderProps) => {
+const RecentUser = ({ recentUsers ,refetch}: IRecentOrderProps) => {
+
   return (
     <div className='bg-base-100 border border-base-300 rounded-2xl '>
 
@@ -94,8 +97,8 @@ const RecentUser = ({recentUsers}: IRecentOrderProps) => {
                 </td>
 
                 {/* Joined */}
-                 <td className='px-5 py-3 relative overflow-visible'>
-                  <UserActionDropdown  email={user?.email}  />
+                <td className='px-5 py-3 relative overflow-visible'>
+                  <UserActionDropdown email={user?.email} currentStatus={user?.status} refetch={refetch}/>
                 </td>
               </tr>
             ))}
@@ -105,48 +108,48 @@ const RecentUser = ({recentUsers}: IRecentOrderProps) => {
 
       {/* ── Mobile Cards ── */}
       <div className='md:hidden divide-y divide-base-300'>
-  {recentUsers.map((user, i) => (
-    <div key={user._id} className='flex items-center gap-3 px-4 py-3'>
-      
-      {/* Avatar */}
-      {user.image ? (
-        <Image
-         width={100}
-         height={100}
-          src={user.image}
-          alt={user.name}
-          className='w-9 h-9 rounded-full object-cover shrink-0'
-        />
-      ) : (
-        <div className={`w-9 h-9 rounded-full ${avatarColors[i % avatarColors.length]} flex items-center justify-center text-sm font-bold text-white flex-shrink-0`}>
-          {user.name.charAt(0).toUpperCase()}
-        </div>
-      )}
+        {recentUsers.map((user, i) => (
+          <div key={user._id} className='flex items-center gap-3 px-4 py-3'>
 
-      {/* Info */}
-      <div className='flex-1 min-w-0'>
-        <p className='text-sm font-medium text-base-content'>{user.name}</p>
-        <p className='text-[11px] text-neutral truncate mt-0.5'>{user.email}</p>
-      </div>
+            {/* Avatar */}
+            {user.image ? (
+              <Image
+                width={100}
+                height={100}
+                src={user.image}
+                alt={user.name}
+                className='w-9 h-9 rounded-full object-cover shrink-0'
+              />
+            ) : (
+              <div className={`w-9 h-9 rounded-full ${avatarColors[i % avatarColors.length]} flex items-center justify-center text-sm font-bold text-white flex-shrink-0`}>
+                {user.name.charAt(0).toUpperCase()}
+              </div>
+            )}
 
-      {/* Action (বাটন অথবা আইকন) */}
-      <div className='flex items-center gap-2'>
-        <span className='text-[10px] text-neutral hidden sm:block'>
-          {new Date(user.createdAt).toLocaleDateString('en-US', {
-            month: 'short',
-            day: 'numeric',
-          })}
-        </span>
-        
-        <div className='flex items-center gap-2'>
-          <UserActionDropdown />
-           <button className='text-sm text-red-500 '>Delete</button> 
-        </div>
+            {/* Info */}
+            <div className='flex-1 min-w-0'>
+              <p className='text-sm font-medium text-base-content'>{user.name}</p>
+              <p className='text-[11px] text-neutral truncate mt-0.5'>{user.email}</p>
+            </div>
+
+            {/* Action (বাটন অথবা আইকন) */}
+            <div className='flex items-center gap-2'>
+              <span className='text-[10px] text-neutral hidden sm:block'>
+                {new Date(user.createdAt).toLocaleDateString('en-US', {
+                  month: 'short',
+                  day: 'numeric',
+                })}
+              </span>
+
+              <div className='flex items-center gap-2'>
+                <UserActionDropdown email={user?.email} currentStatus={user?.status} refetch={refetch}/>
+                <button className='text-sm text-red-500 '>Delete</button>
+              </div>
+            </div>
+
+          </div>
+        ))}
       </div>
-      
-    </div>
-  ))}
-</div>
 
     </div>
   )

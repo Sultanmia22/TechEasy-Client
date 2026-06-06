@@ -26,6 +26,7 @@ export interface IRecentOrder {
     email: string;
     image: string;
     createdAt: string; 
+    status: string
   }[]
 
   export interface ITopProduct {
