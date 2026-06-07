@@ -97,7 +97,7 @@ export default function DashboardLayout({
       {
         navName: "Orders Management",
         navIcon: ShoppingBag,
-        href: "/dashboard/orders_management",
+        href: "/dashboard/orderManagement",
       },
       {
         navName: "Product Management",
