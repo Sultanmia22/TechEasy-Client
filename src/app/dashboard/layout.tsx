@@ -102,7 +102,7 @@ export default function DashboardLayout({
       {
         navName: "Product Management",
         navIcon: Package,
-        href: "/dashboard/product_management",
+        href: "/dashboard/productManagement",
       },
       {
         navName: "Customers Management",

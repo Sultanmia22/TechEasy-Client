@@ -1,5 +1,4 @@
 'use client'
-import AllOrder from '@/Components/Dashborad/(Admin)/OrderManagement/AllOrder'
 import Banner from '@/Components/Dashborad/(Admin)/OrderManagement/Banner'
 import RecentOrders from '@/Components/Dashborad/DashboradHome/AdminHome/RecentOrders/RecentOrders'
 import TextLoader from '@/Components/Loading/TextLoader'
