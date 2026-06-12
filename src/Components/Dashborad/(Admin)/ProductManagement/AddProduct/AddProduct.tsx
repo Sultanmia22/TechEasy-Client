@@ -6,25 +6,51 @@ import AddProductButton from './AddProductButton'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import type { IProduct } from '@/types/products.interface'
 import { uploadImage } from '@/lib/imageUpload'
+import { toast } from 'react-toastify'
+import useAxiosSecure from '@/hook/useAxiosSecure'
 
 const AddProduct = () => {
+
+    const axiosSecure = useAxiosSecure()
 
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors },
     } = useForm<IProduct>()
 
     const onSubmit: SubmitHandler<IProduct> = async (data) => {
 
-        console.log(data.image)
-
-       const imageFile = data.image?.[0]
+        const imageFile = data.image?.[0]
 
         const image = await uploadImage(imageFile as File)
 
-        console.log(image)
-        
+        try {
+
+            const productData = {
+                ...data,
+                image,
+            }
+
+            const res = await axiosSecure.post('/product/addProduct',productData)
+
+            if(res.status === 201 && res.data.success === true){
+                toast.success(res.data.message)
+                reset()
+            }
+
+        }
+
+        catch (er: unknown) {
+            if (er instanceof Error) {
+                console.log('Add Product Error:', er.message)
+                toast.error(er.message)
+            } else {
+                alert("An unexpected error occurred.");
+            }
+        }
+
     }
 
     return (
@@ -48,7 +74,7 @@ const AddProduct = () => {
                                     Product Name
                                 </label>
                                 <input
-                                    {...register('name',{required: true})}
+                                    {...register('name', { required: true })}
                                     type='text'
                                     placeholder='e.g. MacBook Pro 14 M3'
                                     className='w-full border border-base-300 rounded-xl px-4 py-2.5 text-sm text-base-content bg-base-100 outline-none focus:border-primary transition-colors'
@@ -61,7 +87,7 @@ const AddProduct = () => {
                                     Brand
                                 </label>
                                 <input
-                                    {...register('brand',{required: true})}
+                                    {...register('brand', { required: true })}
                                     type='text'
                                     placeholder='e.g. Apple'
                                     className='w-full border border-base-300 rounded-xl px-4 py-2.5 text-sm text-base-content bg-base-100 outline-none focus:border-primary transition-colors'
@@ -77,7 +103,7 @@ const AddProduct = () => {
                                     Price tk
                                 </label>
                                 <input
-                                    {...register('price',{required:true})}
+                                    {...register('price', { required: true })}
                                     type='number'
                                     placeholder='0'
                                     className='w-full border border-base-300 rounded-xl px-4 py-2.5 text-sm text-base-content bg-base-100 outline-none focus:border-primary transition-colors'
@@ -90,7 +116,7 @@ const AddProduct = () => {
                                     Stock Quantity
                                 </label>
                                 <input
-                                    {...register("stock",{required:true})}
+                                    {...register("stock", { required: true })}
                                     type='number'
                                     placeholder='0'
                                     className='w-full border border-base-300 rounded-xl px-4 py-2.5 text-sm text-base-content bg-base-100 outline-none focus:border-primary transition-colors'
@@ -103,7 +129,7 @@ const AddProduct = () => {
                                     Rating (0–5)
                                 </label>
                                 <input
-                                    {...register('rating',{required: true})}
+                                    {...register('rating', { required: true })}
                                     type='number'
                                     placeholder='4.5'
                                     step='0.1'
@@ -126,7 +152,7 @@ const AddProduct = () => {
                                     Processor
                                 </label>
                                 <input
-                                    {...register('specs.processor',{required: true})}
+                                    {...register('specs.processor', { required: true })}
                                     type='text'
                                     placeholder='e.g. Apple M3 Chip'
                                     className='w-full border border-base-300 rounded-xl px-4 py-2.5 text-sm text-base-content bg-base-100 outline-none focus:border-primary transition-colors'
@@ -139,7 +165,7 @@ const AddProduct = () => {
                                     RAM
                                 </label>
                                 <input
-                                    {...register('specs.ram',{required: true})}
+                                    {...register('specs.ram', { required: true })}
                                     type='text'
                                     placeholder='e.g. 16GB'
                                     className='w-full border border-base-300 rounded-xl px-4 py-2.5 text-sm text-base-content bg-base-100 outline-none focus:border-primary transition-colors'
@@ -152,7 +178,7 @@ const AddProduct = () => {
                                     Storage
                                 </label>
                                 <input
-                                    {...register('specs.processor',{required: true})}
+                                    {...register('specs.processor', { required: true })}
                                     type='text'
                                     placeholder='e.g. 512GB SSD'
                                     className='w-full border border-base-300 rounded-xl px-4 py-2.5 text-sm text-base-content bg-base-100 outline-none focus:border-primary transition-colors'
@@ -165,7 +191,7 @@ const AddProduct = () => {
                                     Display
                                 </label>
                                 <input
-                                    {...register('specs.display',{required: true})}
+                                    {...register('specs.display', { required: true })}
                                     type='text'
                                     placeholder='e.g. 14.2-inch Liquid Retina XDR'
                                     className='w-full border border-base-300 rounded-xl px-4 py-2.5 text-sm text-base-content bg-base-100 outline-none focus:border-primary transition-colors'
@@ -178,7 +204,7 @@ const AddProduct = () => {
                                     Description
                                 </label>
                                 <textarea
-                                    {...register("description",{required: true})}
+                                    {...register("description", { required: true })}
                                     rows={4}
                                     placeholder='Write a short product description...'
                                     className='w-full border border-base-300 rounded-xl px-4 py-2.5 text-sm text-base-content bg-base-100 outline-none focus:border-primary transition-colors resize-none'
