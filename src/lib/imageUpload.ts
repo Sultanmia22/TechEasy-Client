@@ -1,6 +1,7 @@
 import axios from "axios"
 
 export const uploadImage = async (imageFile:File): Promise<string | null> => {
+console.log("File to upload:", imageFile);
     const formData = new FormData()
     formData.append('image',imageFile)
 
@@ -9,4 +10,4 @@ export const uploadImage = async (imageFile:File): Promise<string | null> => {
     const response = await axios.post(`https://api.imgbb.com/1/upload?key=${apiKey}`,formData)
 
     return response.data.data.url
-}
+};

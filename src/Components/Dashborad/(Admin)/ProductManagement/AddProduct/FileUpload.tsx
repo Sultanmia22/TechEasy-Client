@@ -1,15 +1,17 @@
 import { Upload } from 'lucide-react';
 import React, { useState } from 'react';
+import type { UseFormRegister } from 'react-hook-form';
 
-const FileUpload = () => {
+type ProductInpu = {
+  image: File | null;
+}
+
+interface fileUploadProps {
+  register: UseFormRegister<ProductInpu>
+}
+
+const FileUpload = ({ register }: fileUploadProps) => {
   const [fileName, setFileName] = useState(null);
-
-  const handleFileChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setFileName(file.name);
-    }
-  };
 
   return (
     <div className="w-full">
@@ -19,12 +21,21 @@ const FileUpload = () => {
       </label>
 
       {/* Input Field */}
-      <input 
-        type="file" 
-        id="file-upload" 
-        className="hidden" 
-        onChange={handleFileChange} 
-        accept="image/*" 
+      <input
+
+        type="file"
+        id="file-upload"
+        className="hidden"
+        accept="image/*"
+        {...register('image', {
+          onChange: (e) => {
+            const file = e.target.files?.[0];
+            if (file) {
+              setFileName(file.name);
+            }
+          },
+          required: true
+        })}
       />
 
       {/* Design Area */}

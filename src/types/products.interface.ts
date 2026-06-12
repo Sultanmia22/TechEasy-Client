@@ -5,14 +5,14 @@ export interface ProductSpecs {
 
 export interface IProduct {
   _id:string;
-  id: number;
+  id?: number;
   name: string;
   brand: string;
   category: string;
   price: number;
   rating: number;
   stock: number;
-  image: string;
+  image: FileList | string;
   description?: string;
   specs?: ProductSpecs;
 }
