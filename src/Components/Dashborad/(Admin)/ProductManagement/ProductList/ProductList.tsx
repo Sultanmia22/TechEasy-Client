@@ -1,8 +1,11 @@
 import React from 'react'
+import ProductListTable from './ProductListTable'
 
 const ProductList = () => {
   return (
-    <div>ProductList</div>
+    <div>
+      <ProductListTable />
+    </div>
   )
 }
 
