@@ -5,6 +5,7 @@ import ProductToolbar from './ProductToolbar'
 import { useSearchParams } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
 import useAxiosSecure from '@/hook/useAxiosSecure'
+import TextLoader from '@/Components/Loading/TextLoader'
 
 const ProductList =  () => {
 
@@ -14,7 +15,7 @@ const ProductList =  () => {
 
   const queryString = searchParams.toString()
 
-  const {data:product=[],isLoading,isError} = useQuery({
+  const {data:products=[],isLoading,isError} = useQuery({
     queryKey: ['produst',queryString],
     queryFn: async () => {
       const res = await axiosSecure.get(`/product/productList?${queryString}`)
@@ -22,7 +23,12 @@ const ProductList =  () => {
     }
   })
 
-  console.log('Product List Data:',product)
+  console.log(products)
+
+  
+  if(isLoading){
+    return <TextLoader />
+  }
 
   return (
     <div>
@@ -46,7 +52,7 @@ const ProductList =  () => {
       
       {/* Poroduct List Table */}
      <section>
-       <ProductListTable />
+       <ProductListTable  products={products.products}/>
      </section>
     </div>
   )

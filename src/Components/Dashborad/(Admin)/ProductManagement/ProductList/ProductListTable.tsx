@@ -1,61 +1,13 @@
+import type { IProduct } from '@/types/products.interface'
 import { Eye, Pencil, Trash2 } from 'lucide-react'
 import Image from 'next/image'
 import React from 'react'
 
-const products: Product[] = [
-    {
-        id: 1,
-        name: 'MacBook Pro 14 M3',
-        brand: 'Apple',
-        category: 'Mac',
-        price: 159900,
-        stock: 12,
-        rating: 4.9,
-        image: 'https://i.ibb.co.com/7xjGRb7k/Mac-Book-Pro-14-M3.jpg',
-    },
-    {
-        id: 2,
-        name: 'iPhone 16 Pro Max',
-        brand: 'Apple',
-        category: 'iPhone',
-        price: 175000,
-        stock: 24,
-        rating: 4.8,
-        image: '',
-    },
-    {
-        id: 3,
-        name: 'Sony WH-1000XM5',
-        brand: 'Sony',
-        category: 'Audio',
-        price: 32000,
-        stock: 4,
-        rating: 4.7,
-        image: '',
-    },
-    {
-        id: 4,
-        name: 'Apple Watch Series 9',
-        brand: 'Apple',
-        category: 'Wearable',
-        price: 55000,
-        stock: 18,
-        rating: 4.6,
-        image: '',
-    },
-    {
-        id: 5,
-        name: 'Mac Mini M2',
-        brand: 'Apple',
-        category: 'Mac',
-        price: 144000,
-        stock: 2,
-        rating: 4.8,
-        image: '',
-    },
-]
+interface IproductProps {
+    products: IProduct
+}
 
-const ProductListTable = () => {
+const ProductListTable = ({products}:IproductProps) => {
     return (
         <div>
             <div className='hidden md:block bg-base-100 border border-base-300 rounded-2xl overflow-hidden'>
@@ -72,7 +24,7 @@ const ProductListTable = () => {
                     </thead>
                     <tbody>
                         {products.map((product) => (
-                            <tr key={product.id} className='border-t border-base-300 hover:bg-base-200 transition-colors'>
+                            <tr key={product._id} className='border-t border-base-300 hover:bg-base-200 transition-colors'>
 
                                 {/* Product */}
                                 <td className='px-5 py-3'>
