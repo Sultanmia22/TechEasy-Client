@@ -4,6 +4,15 @@ import React, { useState } from 'react'
 import AddProduct from './AddProduct/AddProduct'
 import ProductList from './ProductList/ProductList'
 
+interface ProductListProps {
+  searchParams: Promise<{
+    page?: string
+    search?: string
+    category?: string
+    sort?: string
+  }>
+}
+
 const ManageProduct = () => {
 
   const [manage, setManage] = useState('addProduct')

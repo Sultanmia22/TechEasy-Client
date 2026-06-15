@@ -1,8 +1,29 @@
-import React from 'react'
+'use client'
+import React, { useEffect } from 'react'
 import ProductListTable from './ProductListTable'
 import ProductToolbar from './ProductToolbar'
+import { useSearchParams } from 'next/navigation'
+import { useQuery } from '@tanstack/react-query'
+import useAxiosSecure from '@/hook/useAxiosSecure'
 
-const ProductList = () => {
+const ProductList =  () => {
+
+  const axiosSecure = useAxiosSecure()
+
+  const searchParams = useSearchParams()
+
+  const queryString = searchParams.toString()
+
+  const {data:product=[],isLoading,isError} = useQuery({
+    queryKey: ['produst',queryString],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/product/productList?${queryString}`)
+      return res.data.data
+    }
+  })
+
+  console.log('Product List Data:',product)
+
   return (
     <div>
       {/* Header Section */}

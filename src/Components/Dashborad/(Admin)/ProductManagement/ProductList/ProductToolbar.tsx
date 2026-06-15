@@ -1,7 +1,32 @@
+'use client'
 import { Search, SlidersHorizontal } from 'lucide-react'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import React from 'react'
+import { toast } from 'react-toastify'
 
-const ProductToolbar = () => {
+const ProductToolbar = () => {  
+
+  const searchParams = useSearchParams()
+  
+  const {replace} = useRouter()
+
+  const pathname = usePathname()
+
+
+  const handleFilterChange = async (key:string,value:string) => {
+    
+    const params = new URLSearchParams(searchParams.toString())
+    
+    if(value){
+      params.set(key,value)
+    }
+    else{
+      params.delete(key)
+    }
+    if (key !== 'page') params.set('page', '1')
+      replace(`${pathname}?${params.toString()}`)
+  }
+
   return (
     <div>
         <div className='flex items-center  gap-3 mb-5 flex-wrap w-full'>
@@ -10,6 +35,8 @@ const ProductToolbar = () => {
           <div className='flex items-center gap-2  bg-base-100 border border-base-300 rounded-xl px-4 py-2.5 flex-1 min-w-45'>
             <Search size={14} className='text-neutral shrink-0' />
             <input
+              defaultValue={searchParams.get('search') || ''}
+              onChange={(e) => handleFilterChange('search',e.target.value)}
               type='text'
               placeholder='Search products...'
               className='bg-transparent outline-none ring-0 focus:outline-none focus:ring-0 border-none w-full text-sm text-base-content placeholder:text-neutral'
@@ -17,7 +44,10 @@ const ProductToolbar = () => {
           </div>
 
           {/* Category Filter */}
-          <select className='bg-base-100 border border-base-300 rounded-xl px-4 py-2.5 text-sm text-base-content outline-none focus:border-primary transition-colors'>
+          <select
+          defaultValue={searchParams.get('category') || ''}
+          onChange={(e) => handleFilterChange('category', e.target.value)}
+           className='bg-base-100 border border-base-300 rounded-xl px-4 py-2.5 text-sm text-base-content outline-none focus:border-primary transition-colors'>
             <option value=''>All Categories</option>
             <option value='Mac'>Mac</option>
             <option value='iPhone'>iPhone</option>
@@ -26,7 +56,10 @@ const ProductToolbar = () => {
           </select>
 
           {/* Sort Dropdown */}
-          <select className='bg-base-100 border border-base-300 rounded-xl px-4 py-2.5 text-sm text-base-content outline-none focus:border-primary transition-colors'>
+          <select 
+          defaultValue={searchParams.get('sort') || 'newest'}
+          onChange={(e) => handleFilterChange('sort', e.target.value)}
+          className='bg-base-100 border border-base-300 rounded-xl px-4 py-2.5 text-sm text-base-content outline-none focus:border-primary transition-colors'>
             <option value='newest'>Sort: Newest</option>
             <option value='price_asc'>Price: Low to High</option>
             <option value='price_desc'>Price: High to Low</option>
