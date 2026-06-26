@@ -1,11 +1,16 @@
 'use client'
-import React, { useEffect } from 'react'
 import ProductListTable from './ProductListTable'
 import ProductToolbar from './ProductToolbar'
 import { useSearchParams } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
 import useAxiosSecure from '@/hook/useAxiosSecure'
 import TextLoader from '@/Components/Loading/TextLoader'
+import ProductListPagination from './ProductListPagination'
+
+interface PaginationProps {
+  totalPages: number
+  currentPage: number
+}
 
 const ProductList =  () => {
 
@@ -15,7 +20,7 @@ const ProductList =  () => {
 
   const queryString = searchParams.toString()
 
-  const {data:products=[],isLoading,isError} = useQuery({
+  const {data:apiResponse=[],isLoading,isError} = useQuery({
     queryKey: ['produst',queryString],
     queryFn: async () => {
       const res = await axiosSecure.get(`/product/productList?${queryString}`)
@@ -23,7 +28,10 @@ const ProductList =  () => {
     }
   })
 
-  console.log(products)
+  const products = apiResponse?.products || []
+  const totalProducts = apiResponse?.total || 0
+  const totalPages = apiResponse?.totalPages || 1
+  const currentPage = apiResponse?.page || 1
 
   
   if(isLoading){
@@ -52,7 +60,11 @@ const ProductList =  () => {
       
       {/* Poroduct List Table */}
      <section>
-       <ProductListTable  products={products.products}/>
+       <ProductListTable  products={products}/>
+     </section>
+
+     <section>
+      <ProductListPagination  totalPages={totalPages} currentPage={currentPage}/>
      </section>
     </div>
   )

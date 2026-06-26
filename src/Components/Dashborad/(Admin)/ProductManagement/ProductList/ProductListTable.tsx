@@ -4,7 +4,7 @@ import Image from 'next/image'
 import React from 'react'
 
 interface IproductProps {
-    products: IProduct
+    products: IProduct[]
 }
 
 const ProductListTable = ({products}:IproductProps) => {
