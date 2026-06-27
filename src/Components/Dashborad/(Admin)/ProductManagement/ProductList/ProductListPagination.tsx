@@ -1,4 +1,6 @@
+'use client'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import React from 'react'
 interface PaginationProps {
   totalPages: number
@@ -6,6 +8,25 @@ interface PaginationProps {
 }
 
 const ProductListPagination = ({ totalPages, currentPage }: PaginationProps) => {
+
+  const {replace} = useRouter()
+
+  const pathName = usePathname()
+
+  const searchParams = useSearchParams()
+
+  // Handle page change 
+  const handlePageChange = (pageNum:number) => {
+
+    if(pageNum < 1 || pageNum > totalPages) return;
+
+    const params = new URLSearchParams(searchParams)
+
+    params.set('page',pageNum.toString())
+
+    replace(`${pathName}?${params.toString()}`,{ scroll: false })
+  }
+
   return (
     <div className='flex items-center justify-between border-t border-base-300 px-4 py-4 sm:px-2 mt-4 flex-wrap gap-3'>
       <div className="flex flex-1 justify-between sm:hidden">
@@ -48,6 +69,7 @@ const ProductListPagination = ({ totalPages, currentPage }: PaginationProps) => 
               return (
                 <button
                   key={pageNum}
+                  onClick={() => handlePageChange(pageNum)}
                   className={`w-9 h-9 flex items-center justify-center text-sm font-medium rounded-xl transition-all ${
                     isActive
                       ? 'bg-primary text-primary-content font-bold shadow-sm' 

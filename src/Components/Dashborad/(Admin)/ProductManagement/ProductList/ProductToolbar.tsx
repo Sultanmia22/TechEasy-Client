@@ -42,13 +42,12 @@ const ProductToolbar = () => {
         params.delete('search')
       }
       
-      params.set('page', '1') 
       replace(`${pathname}?${params.toString()}`)
     }, 1000) 
 
    
     return () => clearTimeout(delayDebounceFn)
-  }, [searchTerm,pathname, replace])
+  }, [searchTerm,pathname, replace,searchParams])
   
 
 
