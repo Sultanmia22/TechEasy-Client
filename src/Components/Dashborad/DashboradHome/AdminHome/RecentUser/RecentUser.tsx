@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import UserActionDropdown from './UserActionDropdown'
 import Image from 'next/image'

@@ -1,5 +1,5 @@
+
 import { IRecentOrder } from '@/types/dashboardAdmin.interface'
-import React, { useState, useEffect } from 'react'
 import OrderActionDropdown from './OrderActionDropdown'
 import Image from 'next/image';
 
@@ -45,7 +45,7 @@ const RecentOrders = ({ recentOrders ,refetch}: { recentOrders: IRecentOrder[];r
             </tr>
           </thead>
           <tbody>
-            {recentOrders.map((order, i) => (
+            {recentOrders?.map((order, i) => (
               <tr
                 key={i}
                 className='border-t border-base-300 hover:bg-base-200 transition-colors'
@@ -110,7 +110,7 @@ const RecentOrders = ({ recentOrders ,refetch}: { recentOrders: IRecentOrder[];r
 
       {/* ── Mobile Cards (below md) ── */}
       <div className='md:hidden divide-y divide-base-300'>
-        {recentOrders.map((order, i) => (
+        {recentOrders?.map((order, i) => (
           <div key={i} className='px-4 py-4 flex flex-col gap-3'>
 
             {/* Top row: avatar + name + date */}

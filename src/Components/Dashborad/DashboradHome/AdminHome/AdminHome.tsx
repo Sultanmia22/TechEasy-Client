@@ -26,7 +26,7 @@ const AdminHome = () => {
   const topProducts = adminData?.topProducts
   const recentUsers = adminData?.recentUsers 
 
-  // console.log("Recent Users:", recentUsers);
+  console.log("Recent Users:", recentUsers);
 
   if(isLoading){
     return <TextLoader />

@@ -107,12 +107,12 @@ export default function DashboardLayout({
       {
         navName: "Customers Management",
         navIcon: Users,
-        href: "/customer_management",
+        href: "/dashboard/customerManagement",
       },
       {
         navName: "Profile",
         navIcon: UserCog,
-        href: "/profile",
+        href: "/dashboard/profile",
       },
     ];
 
