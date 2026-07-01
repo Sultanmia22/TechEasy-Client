@@ -2,10 +2,26 @@
 import React from 'react'
 import { Calendar, Mail, MapPin, Package, Settings, ShoppingCart, SquarePen, TrendingUp, UserCog, Users } from 'lucide-react'
 import useAuth from '@/hook/useAuth'
+import useAxiosSecure from '@/hook/useAxiosSecure'
+import { useQuery } from '@tanstack/react-query'
+import type { IadminProfileStats } from '@/types/profile.interface'
+import { formatCompact } from '@/lib/format'
 
 const AdminProfileHeader = () => {
 
-    const {user} = useAuth()
+    const {user,role} = useAuth()
+
+    const axiosSecure = useAxiosSecure()
+
+    const {data: adminProfileStats} = useQuery<IadminProfileStats>({
+      queryKey: ['adminProfileStats',role],
+      queryFn: async () => {
+        const res = await axiosSecure.get('/profile/adminStats')
+        return res.data.data
+      }
+    })
+
+    // console.log('Admin profile stats:',adminProfileStats?.totalOrders)
 
   return (
     <div>
@@ -61,7 +77,7 @@ const AdminProfileHeader = () => {
                   <span><ShoppingCart /></span>
                 </div>
                 <div className='flex flex-col font-semibold'>
-                  <span className=''>45</span>
+                  <span className=''>{adminProfileStats?.totalOrders}</span>
                   <span className='text-neutral text-sm'>Total Orders</span>
                 </div>
               </div>
@@ -71,7 +87,7 @@ const AdminProfileHeader = () => {
                   <span><Package /></span>
                 </div>
                 <div className='flex flex-col font-semibold'>
-                  <span className=''>12</span>
+                  <span className=''>{adminProfileStats?.totalProducts}</span>
                   <span className='text-neutral text-sm'>Products</span>
                 </div>
               </div>
@@ -81,7 +97,7 @@ const AdminProfileHeader = () => {
                   <span><Users /></span>
                 </div>
                 <div className='flex flex-col font-semibold'>
-                  <span className=''>1,240</span>
+                  <span className=''>{adminProfileStats?.totalUsers}</span>
                   <span className='text-neutral text-sm'>Customers</span>
                 </div>
               </div>
@@ -91,7 +107,7 @@ const AdminProfileHeader = () => {
                   <span><TrendingUp /></span>
                 </div>
                 <div className='flex flex-col font-semibold'>
-                  <span className=''>tk1,25,400</span>
+                  <span className=''>{formatCompact(adminProfileStats?.totalRevenue ?? 0)}</span>
                   <span className='text-neutral text-sm'>Revenue</span>
                 </div>
               </div>
