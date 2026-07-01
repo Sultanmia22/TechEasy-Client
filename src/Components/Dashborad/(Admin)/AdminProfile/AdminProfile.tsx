@@ -1,5 +1,7 @@
 import React from 'react'
 import AdminProfileHeader from './AdminProfileHeader'
+import AccountOverview from './AccountOverview'
+import QuickAction from './QuickAction'
 
 const AdminProfile = () => {
   return (
@@ -8,9 +10,13 @@ const AdminProfile = () => {
         <AdminProfileHeader />
       </section>
 
-      <section></section>
+      <section>
+        <AccountOverview />
+      </section>
 
-      <section></section>
+      <section>
+        <QuickAction />
+      </section>
     </div>
   )
 }
