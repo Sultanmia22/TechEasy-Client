@@ -11,9 +11,12 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import GoogleSignIn from "./GoogleSignIn";
 import TextLoader from "../Loading/TextLoader";
+import { Eye, EyeOff } from "lucide-react";
 
 const RegisterForm = () => {
   const router = useRouter();
+
+  const [showPass, setShowPass] = useState(false)
 
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -60,6 +63,7 @@ const RegisterForm = () => {
       toast.error(errorMessage);
     }
   };
+
 
   if (loading) {
     return <TextLoader />;
@@ -231,44 +235,55 @@ const RegisterForm = () => {
 
             {/* --- Password --- */}
             <fieldset className="fieldset mb-5">
-              <legend className="fieldset-legend text-[11px] font-bold text-base-content/60 uppercase tracking-wider">
-                Password
-              </legend>
-              <label
-                className={`input input-bordered w-full flex items-center gap-2 transition-all ${errors.password ? "input-error" : "focus-within:input-primary"}`}
-              >
-                <svg
-                  className="w-4 h-4 text-neutral shrink-0"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                  />
-                </svg>
-                <input
-                  {...register("password", {
-                    required: "Password is required",
-                    minLength: {
-                      value: 6,
-                      message: "Minimum 6 characters required",
-                    },
-                  })}
-                  type="password"
-                  className="grow text-sm"
-                  placeholder="••••••••"
-                />
-              </label>
-              {errors.password && (
-                <span className="text-error text-xs mt-1">
-                  {errors.password.message}
-                </span>
-              )}
-            </fieldset>
+  <legend className="fieldset-legend text-[11px] font-bold text-base-content/60 uppercase tracking-wider">
+    Password
+  </legend>
+  <label
+    className={`input input-bordered w-full flex items-center gap-2 transition-all ${errors.password ? "input-error" : "focus-within:input-primary"}`}
+  >
+    <svg
+      className="w-4 h-4 text-neutral shrink-0"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+      />
+    </svg>
+    <input
+      {...register("password", {
+        required: "Password is required",
+        minLength: {
+          value: 6,
+          message: "Minimum 6 characters required",
+        },
+      })}
+      type={showPass ? "text" : "password"}
+      className="grow text-sm"
+      placeholder="••••••••"
+    />
+    <button
+      type="button"
+      onClick={() => setShowPass(!showPass)}
+      className="text-neutral hover:text-base-content transition-colors"
+    >
+      {showPass ? (
+        <EyeOff className="w-4 h-4" />
+      ) : (
+        <Eye className="w-4 h-4" />
+      )}
+    </button>
+  </label>
+  {errors.password && (
+    <span className="text-error text-xs mt-1">
+      {errors.password.message}
+    </span>
+  )}
+</fieldset>
 
             <button
               type="submit"

@@ -103,11 +103,13 @@ const PaymentSuccessPage = () => {
           <div className="md:text-right">
             <h2 className="text-lg font-bold text-primary mb-2">Date</h2>
             <p className="text-base-content">
-              {new Date(order?.orderDate).toLocaleDateString("en-US", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-              })}
+              {order?.orderDate
+                ? new Date(order.orderDate).toLocaleDateString("en-US", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })
+                : "N/A"}
             </p>
           </div>
         </div>
@@ -148,7 +150,7 @@ const PaymentSuccessPage = () => {
 
       {/* Footer Button */}
       <div className="mt-10">
-        <OrderReceiptDownloadBtn targetRef={receiptRef} orderId={order?._id} />
+        <OrderReceiptDownloadBtn targetRef={receiptRef} orderId={order?._id ?? ""} />
       </div>
     </div>
   );

@@ -1,20 +1,20 @@
 'use client'
-import React, { useState } from 'react'
 import WishlistBanner from './WishlistBanner'
 import useAxiosSecure from '@/hook/useAxiosSecure'
 import useAuth from '@/hook/useAuth'
 import TextLoader from '@/Components/Loading/TextLoader'
-import type { IProduct } from '@/types/products.interface'
+
 import Wishlist from './Wishlist'
 import { useQuery } from '@tanstack/react-query'
 import NoWishlist from './NoWishlist'
+import type { IWishlist } from '@/types/dashboradCustomer.interface'
 
 const AllWishlist = () => {
     const axiosSecure = useAxiosSecure()
 
     const { user } = useAuth()
 
-    const { data: wishlist = [], isLoading, refetch } = useQuery({
+    const { data: wishlist = [], isLoading, refetch } = useQuery<IWishlist[]>({
 
         queryKey: ['Wishlist', user?.email, axiosSecure],
 

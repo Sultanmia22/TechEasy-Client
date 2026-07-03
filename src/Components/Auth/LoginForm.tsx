@@ -10,12 +10,15 @@ import { useRouter } from "next/navigation";
 import GoogleSignIn from "./GoogleSignIn";
 import { useState } from "react";
 import TextLoader from "../Loading/TextLoader";
+import { Eye, EyeOff } from "lucide-react";
 
 const LoginForm = () => {
 
   const router = useRouter()
 
   const [loading,setLoading] = useState<boolean>(false)
+
+  const [showPass, setShowPass] = useState(false)
 
   const {
     register,
@@ -110,7 +113,7 @@ const LoginForm = () => {
             </fieldset>
 
             {/* Password field */}
-            <fieldset className="fieldset mb-5">
+        <fieldset className="fieldset mb-5">
               <legend className="fieldset-legend text-[11px] font-bold text-base-content/60 uppercase tracking-wider">
                 Password
               </legend>
@@ -119,11 +122,18 @@ const LoginForm = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                 </svg>
                 <input
-                  type="password"
+                  type={showPass ? "text" : "password"}
                   className="grow text-sm"
                   placeholder="••••••••"
                   {...register("password", { required: "Password is required" })}
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPass(!showPass)}
+                  className="text-neutral hover:text-base-content transition-colors"
+                >
+                  {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
               </label>
               {errors.password && <span className="text-error text-xs mt-1">{errors.password.message}</span>}
             </fieldset>

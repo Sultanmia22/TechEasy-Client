@@ -4,10 +4,15 @@ import FileUpload from './FileUpload'
 import Category from './Category'
 import AddProductButton from './AddProductButton'
 import { useForm, type SubmitHandler } from 'react-hook-form'
-import type { IProduct } from '@/types/products.interface'
+import type { IProduct, ProductSpecs } from '@/types/products.interface'
 import { uploadImage } from '@/lib/imageUpload'
 import { toast } from 'react-toastify'
 import useAxiosSecure from '@/hook/useAxiosSecure'
+
+type ProductFormInput = Omit<IProduct, '_id' | 'image'> & {
+    image: FileList;
+    specs: ProductSpecs;
+}
 
 const AddProduct = () => {
 
@@ -18,9 +23,9 @@ const AddProduct = () => {
         handleSubmit,
         reset,
         formState: { errors },
-    } = useForm<IProduct>()
+    } = useForm<ProductFormInput>()
 
-    const onSubmit: SubmitHandler<IProduct> = async (data) => {
+    const onSubmit: SubmitHandler<ProductFormInput> = async (data) => {
 
         const imageFile = data.image?.[0]
 

@@ -1,4 +1,4 @@
-import { ArrowRight, MoveRight, Package, ShoppingCart, Users } from 'lucide-react'
+import { ArrowRight, Package, ShoppingCart, Users } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 

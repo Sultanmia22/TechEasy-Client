@@ -6,6 +6,7 @@ export interface Istats {
 }
 
 export interface IWishlist {
+    _id: string;
     productId: {
         brand: string,
         category: string,

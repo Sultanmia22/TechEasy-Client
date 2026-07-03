@@ -15,9 +15,10 @@ const CustomerHome = () => {
 
   const dashboardData = contextValue?.dashboardData
 
-  const stats = dashboardData?.stats;
-  const recentOrders = dashboardData?.recentOrders || [];
-  const wishListItems = dashboardData?.wishListItems || [];
+  const customerData = dashboardData && 'wishListItems' in dashboardData ? dashboardData : undefined;
+  const stats = customerData?.stats;
+  const recentOrders = customerData?.recentOrders || [];
+  const wishListItems = customerData?.wishListItems || [];
 
   return (
     <div className="flex flex-col gap-10 min-h-screen">
@@ -45,8 +46,9 @@ const CustomerHome = () => {
       {/* Recent orders & Wishlist */}
       <div>
         <OrderAndWishList 
-    recentOrders={recentOrders} 
-    wishListItems={wishListItems}
+          recentOrders={recentOrders} 
+          wishListItems={wishListItems}
+          refetch={() => Promise.resolve()}
         />
       </div>
     </div>

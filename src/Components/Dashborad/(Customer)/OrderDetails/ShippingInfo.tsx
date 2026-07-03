@@ -1,6 +1,6 @@
 import React from 'react'
 interface IShipping{
-  shippingInfo: {
+  shippingInfo?: {
     firstName: string;
     lastName: string;
     address: string;
@@ -12,7 +12,7 @@ interface IShipping{
   };
 }
 const ShippingInfo = ({shippingInfo}:IShipping) => {
-  const{firstName,lastName,upazila,address,district} = shippingInfo || {}
+  const { firstName = '', lastName = '', upazila = '', address = '', district = '' } = shippingInfo || {}
   return (
     <div className='bg-base-100 p-5 rounded-lg space-y-2'>
         <h2 className='text-xl font-semibold text-neutral'>SHIPPING ADDRESS</h2>

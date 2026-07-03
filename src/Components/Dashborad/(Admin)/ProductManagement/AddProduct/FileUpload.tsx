@@ -2,12 +2,8 @@ import { Upload } from 'lucide-react';
 import React, { useState } from 'react';
 import type { UseFormRegister } from 'react-hook-form';
 
-type ProductInpu = {
-  image: File | null;
-}
-
 interface fileUploadProps {
-  register: UseFormRegister<ProductInpu>
+  register: UseFormRegister<any>
 }
 
 const FileUpload = ({ register }: fileUploadProps) => {

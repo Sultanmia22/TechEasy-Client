@@ -1,12 +1,8 @@
 import React from 'react'
 import type { UseFormRegister } from 'react-hook-form';
 
-type productInput = {
-    category : string;
-}
-
 interface CategoryProps {
-    register: UseFormRegister<productInput>
+    register: UseFormRegister<any>
 }
 
 const Category = ({register}:CategoryProps) => {

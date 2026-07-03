@@ -54,19 +54,19 @@ const formattedTime = singleOrder?.orderDate ? new Date(singleOrder?.orderDate).
   timeZone: 'Asia/Dhaka'
 }): "N/A"
 
-const delivaryStatus = singleOrder?.delivaryStatus
+const delivaryStatus = singleOrder?.delivaryStatus ?? []
 
 const shippingInfo = singleOrder?.shippingInfo
 
-const items = singleOrder?.items;
+const items = singleOrder?.items ?? [];
 
 console.log(singleOrder)
 
  const priceandItemInfo = {
-    price : singleOrder?.totalPrice,
-    deliveryCharge : singleOrder?.deliveryCharge,
-    totalItem : singleOrder?.items?.length
-} 
+    price : singleOrder?.totalPrice ?? 0,
+    deliveryCharge : singleOrder?.deliveryCharge ?? 0,
+    totalItems : singleOrder?.items?.length ?? 0
+}
 
 
     if (loading) {

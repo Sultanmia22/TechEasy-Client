@@ -12,7 +12,7 @@ export interface IProduct {
   price: number;
   rating: number;
   stock: number;
-  image: FileList | string;
+  image: string;
   description?: string;
   specs?: ProductSpecs;
 }

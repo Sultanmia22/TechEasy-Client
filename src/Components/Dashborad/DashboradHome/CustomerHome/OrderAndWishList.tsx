@@ -10,9 +10,10 @@ import NoWishlist from '../../(Customer)/Wishlist/NoWishlist';
 interface IProps {
     recentOrders: IRecentOrder[];
     wishListItems: IWishlist[];
+    refetch: () => void;
 }
 
-const OrderAndWishList = ({ recentOrders, wishListItems }: IProps) => {
+const OrderAndWishList = ({ recentOrders, wishListItems, refetch }: IProps) => {
 
     return (
         <div className='flex flex-col 2xl:flex-row w-full gap-6'>
@@ -43,7 +44,7 @@ const OrderAndWishList = ({ recentOrders, wishListItems }: IProps) => {
                 <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-3'>
                     {wishListItems.length > 0 ? (
                         wishListItems?.map(item => (
-                            <Wishlist key={item?.productId._id} item={item} />
+                            <Wishlist key={item?.productId._id} item={item} refetch={refetch} />
                         ))
                     ) : (
                         <NoWishlist/>
