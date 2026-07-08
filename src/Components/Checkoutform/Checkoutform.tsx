@@ -3,7 +3,7 @@ import useAuth from "@/hook/useAuth";
 import useAxiosSecure from "@/hook/useAxiosSecure";
 import type { ICartItem } from "@/types/cart.interface";
 import { useQuery } from "@tanstack/react-query";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { useForm, useWatch, type SubmitHandler } from "react-hook-form";
 
 type FormData = {
   firstName: string;
@@ -17,13 +17,13 @@ type FormData = {
 };
 
 const Checkoutform = () => {
-  const {register,handleSubmit,watch,formState: { errors },} = useForm<FormData>();
+  const { register, handleSubmit, control, formState: { errors } } = useForm<FormData>();
 
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
 
   // Fetch Cart Data 
-  const { data, isLoading, refetch } = useQuery({
+  const { data } = useQuery({
     queryKey: ["cart", user?.email],
     enabled: !!user?.email, // User thaklei kebol fetch hobe
     queryFn: async () => {
@@ -32,17 +32,16 @@ const Checkoutform = () => {
     },
   });
 
-   const cartItems: ICartItem[] = data?.data?.cart[0]?.items || [];
-
+  const cartItems: ICartItem[] = data?.data?.items || [];
 
   // Preview Delivery Charge 
-  const district = watch("district");
+  const district = useWatch({ control, name: "district" });
   let deliveryCharge = 0;
   if (district === "dhaka-city") deliveryCharge = 80;
   else if (district) deliveryCharge = 120;
 
-  const SubTotal = data?.data?.subTotal
-  const totalPrice = SubTotal + deliveryCharge;
+  const subTotal = Number(data?.data?.[0]?.subTotal || 0);
+  const totalPrice = subTotal + deliveryCharge;
 
   // Hadle Payment 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
@@ -58,7 +57,7 @@ const Checkoutform = () => {
           comment: data.comment
         }
 
-        const itemPayload = cartItems.map((item:any) => ({
+        const itemPayload = cartItems.map((item: ICartItem) => ({
           productId: item.productId._id,
             name: item.productId.name,
             price: item.productId.price,
@@ -78,11 +77,11 @@ const Checkoutform = () => {
         const res = await axiosSecure.post(`${process.env.NEXT_PUBLIC_API_URL}/order/create-checkout-session`,orderPayload)
 
         if(res.status === 200){
-          window.location.href = res.data.url;
+          window.location.assign(res.data.url);
         }
     }
-    catch(er:any){
-      console.log(er.response.data?.message)
+    catch (error: unknown) {
+      console.error(error)
     }
   };
 
@@ -215,7 +214,7 @@ const Checkoutform = () => {
 
         <div className="flex justify-between text-base-content/70">
           <span>Subtotal</span>
-          <span>Tk {SubTotal}</span>
+          <span>Tk {subTotal}</span>
         </div>
 
         {/* Divider */}
