@@ -26,11 +26,12 @@ const { data, isLoading, refetch } = useQuery({
     },
   });
 
-  console.log(data)
+//  console.log(data?._id)
 
+const cartItems: ICartItem[] = data?.data?.items || [];
+const totalPrice = data?.data?.[0]?.subTotal || 0;
 
-  const cartItems: ICartItem[] = data?.data?.cart[0]?.items || [];
-  const totalPrice = data?.data?.subTotal || 0;
+// console.log( 'Cart Items', cartItems)
 
   if (isLoading) return <TextLoader />
 

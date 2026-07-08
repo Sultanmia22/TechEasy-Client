@@ -37,4 +37,4 @@ export const useCart = () => {
     return { addToCart };
 }
 
-export default useCart
+export default useCart  

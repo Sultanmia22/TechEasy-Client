@@ -20,6 +20,7 @@ interface IProduct {
 }
 
 export interface ICartItem {
+  _id?: string;
   productId: IProduct; 
   quantity: number;
 }

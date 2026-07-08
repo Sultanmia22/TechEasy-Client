@@ -8,10 +8,17 @@ import { toast } from "react-toastify";
 
 const CartItem: React.FC<CartItemProps> = ({ item ,mutate}) => {
 
+    // console.log( 'Cart Items', item._id)
+
     const axiosSecure = useAxiosSecure()
 
     // Delete cart Item form cart page 
-    const handleRemoveCart = async (id:string) => {
+    const handleRemoveCart = async (id?: string) => {
+        if (!id) {
+            toast.error("Cart item id not found");
+            return;
+        }
+
         try{
             const res = await axiosSecure.patch(`${process.env.NEXT_PUBLIC_API_URL}/cart/removeCart/${id}`)
 
@@ -59,7 +66,7 @@ const CartItem: React.FC<CartItemProps> = ({ item ,mutate}) => {
             <div className="flex items-center justify-center gap-3 ">
                 <button className="btn btn-sm">-</button>
                 <button className="btn btn-sm">+</button>
-                <button onClick={ () =>  handleRemoveCart(item?.productId?._id)} className="btn btn-outline btn-accent">remove</button>
+                <button onClick={() => handleRemoveCart(item?._id)} className="btn btn-outline btn-accent">remove</button>
             </div>
 
         </div>
