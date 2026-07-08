@@ -4,9 +4,8 @@ import Logo from "@/Components/Logo/Logo";
 import useAxiosSecure from "@/hook/useAxiosSecure";
 import { IOrder } from "@/types/order.interface";
 import { useQuery } from "@tanstack/react-query";
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 
 const PaymentSuccessPage = () => {
 
@@ -18,26 +17,22 @@ const PaymentSuccessPage = () => {
   const orderId = searchParams.get("order_id");
   const customerEmail = searchParams.get("email");
 
-  const [order,setOrder] = useState<IOrder>()
-
- console.log(order)
-
-  const {data} = useQuery({
-    queryKey: [orderId],
+  const { data: order, isLoading, isError } = useQuery<IOrder | null>({
+    queryKey: ["confirm-order", orderId, customerEmail],
+    enabled: Boolean(orderId && customerEmail),
     queryFn: async () => {
-      const res = await axiosSecure.get(`/order/confirmOrder?orderId=${orderId}&email=${customerEmail}`)
-      setOrder(res.data.data)
+      const res = await axiosSecure.get(`/order/confirmOrder?orderId=${orderId}&email=${customerEmail}`);
+      return res.data?.data ?? null;
     }
-  }) 
+  });
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-base-100 border border-base-300 shadow-xl rounded-2xl my-10 transition-colors duration-300">
-      {/* Header Section */}
       <div className="p-6" ref={receiptRef}>
         <div className="text-center mb-8">
           <div className="mb-3">
             <Logo />
-            <p className="text-xs text-neutral ">Your E-Commerce Partner</p>
+            <p className="text-xs text-neutral">Your E-Commerce Partner</p>
           </div>
 
           <div className="bg-secondary/10 text-secondary w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -62,96 +57,104 @@ const PaymentSuccessPage = () => {
           </p>
         </div>
 
-        <div className="bg-base-200 p-4 rounded-xl mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <div>
-            <p className="text-xs text-neutral uppercase tracking-wider font-bold">
-              Order ID
-            </p>
-            <p className="font-mono text-base-content break-all">{order?._id}</p>
-          </div>
-          <div className="md:text-right">
-            <p className="text-xs text-neutral uppercase tracking-wider font-bold">
-              Status
-            </p>
-            <span className="badge badge-primary font-bold uppercase">
-              {order?.paymentStatus}
-            </span>
-          </div>
-        </div>
+        {isLoading && <p className="text-center text-neutral">Loading your receipt...</p>}
 
-        {/* Shipping Details */}
-        <div className="grid md:grid-cols-2 gap-6 mb-8 border-b border-base-300 pb-6">
-          <div>
-            <h2 className="text-lg font-bold text-primary mb-2">
-              Shipping Information
-            </h2>
-            <div className="text-base-content space-y-1">
-              <p className="font-semibold">
-                {order?.shippingInfo.firstName} {order?.shippingInfo.lastName}
-              </p>
-              <p className="text-sm opacity-80">
-                {order?.shippingInfo.address}, {order?.shippingInfo.upazila}
-              </p>
-              <p className="text-sm opacity-80">
-                {order?.shippingInfo.district}
-              </p>
-              <p className="text-sm font-medium mt-2">
-                📞 {order?.shippingInfo.mobile}
-              </p>
-            </div>
-          </div>
-          <div className="md:text-right">
-            <h2 className="text-lg font-bold text-primary mb-2">Date</h2>
-            <p className="text-base-content">
-              {order?.orderDate
-                ? new Date(order.orderDate).toLocaleDateString("en-US", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  })
-                : "N/A"}
-            </p>
-          </div>
-        </div>
+        {isError && (
+          <p className="text-center text-red-500">
+            We could not load your receipt right now. Please try again.
+          </p>
+        )}
 
-        {/* Items List */}
-        <div className="mb-8">
-          <h2 className="text-lg font-bold text-primary mb-4">Order Items</h2>
-          <div className="space-y-3">
-            {order?.items.map((item: any) => (
-              <div
-                key={item.productId}
-                className="flex justify-between items-center text-base-content"
-              >
-                <div className="flex flex-col">
-                  <span className="font-medium">{item.name}</span>
-                  <span className="text-xs text-neutral">
-                    Quantity: {item.quantity}
-                  </span>
-                </div>
-                <span className="font-semibold">
-                  {(item.price * item.quantity).toLocaleString()} BDT
+        {!isLoading && !isError && order ? (
+          <>
+            <div className="bg-base-200 p-4 rounded-xl mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+              <div>
+                <p className="text-xs text-neutral uppercase tracking-wider font-bold">
+                  Order ID
+                </p>
+                <p className="font-mono text-base-content break-all">{order._id}</p>
+              </div>
+              <div className="md:text-right">
+                <p className="text-xs text-neutral uppercase tracking-wider font-bold">
+                  Status
+                </p>
+                <span className="badge badge-primary font-bold uppercase">
+                  {order.paymentStatus}
                 </span>
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
 
-        {/* Total Price */}
-        <div className="border-t-2 border-dashed border-base-300 pt-4 flex justify-between items-center">
-          <span className="text-xl font-bold text-base-content">
-            Total Paid:
-          </span>
-          <span className="text-2xl font-black text-accent">
-            {order?.totalPrice.toLocaleString()} BDT
-          </span>
-        </div>
+            <div className="grid md:grid-cols-2 gap-6 mb-8 border-b border-base-300 pb-6">
+              <div>
+                <h2 className="text-lg font-bold text-primary mb-2">
+                  Shipping Information
+                </h2>
+                <div className="text-base-content space-y-1">
+                  <p className="font-semibold">
+                    {order.shippingInfo.firstName} {order.shippingInfo.lastName}
+                  </p>
+                  <p className="text-sm opacity-80">
+                    {order.shippingInfo.address}, {order.shippingInfo.upazila}
+                  </p>
+                  <p className="text-sm opacity-80">{order.shippingInfo.district}</p>
+                  <p className="text-sm font-medium mt-2">
+                    📞 {order.shippingInfo.mobile}
+                  </p>
+                </div>
+              </div>
+              <div className="md:text-right">
+                <h2 className="text-lg font-bold text-primary mb-2">Date</h2>
+                <p className="text-base-content">
+                  {order.orderDate
+                    ? new Date(order.orderDate).toLocaleDateString("en-US", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })
+                    : "N/A"}
+                </p>
+              </div>
+            </div>
+
+            <div className="mb-8">
+              <h2 className="text-lg font-bold text-primary mb-4">Order Items</h2>
+              <div className="space-y-3">
+                {order.items.map((item: { productId: string; name: string; quantity: number; price: number }) => (
+                  <div
+                    key={item.productId}
+                    className="flex justify-between items-center text-base-content"
+                  >
+                    <div className="flex flex-col">
+                      <span className="font-medium">{item.name}</span>
+                      <span className="text-xs text-neutral">
+                        Quantity: {item.quantity}
+                      </span>
+                    </div>
+                    <span className="font-semibold">
+                      {(item.price * item.quantity).toLocaleString()} BDT
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="border-t-2 border-dashed border-base-300 pt-4 flex justify-between items-center">
+              <span className="text-xl font-bold text-base-content">Total Paid:</span>
+              <span className="text-2xl font-black text-accent">
+                {order.totalPrice?.toLocaleString()} BDT
+              </span>
+            </div>
+          </>
+        ) : !isLoading && !isError ? (
+          <p className="text-center text-neutral">No order details found.</p>
+        ) : null}
       </div>
 
-      {/* Footer Button */}
-      <div className="mt-10">
-        <OrderReceiptDownloadBtn targetRef={receiptRef} orderId={order?._id ?? ""} />
-      </div>
+      {!isLoading && !isError && order && (
+        <div className="mt-10">
+          <OrderReceiptDownloadBtn targetRef={receiptRef} orderId={order._id ?? ""} />
+        </div>
+      )}
     </div>
   );
 };
