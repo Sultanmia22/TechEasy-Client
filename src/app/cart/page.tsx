@@ -15,7 +15,7 @@ const CartPage = () => {
   const axiosSecure = useAxiosSecure();
   const {user} = useAuth()
 
-  console.log(user?.email)
+  // console.log(user?.email)
 
 const { data, isLoading, refetch } = useQuery({
     queryKey: ['cart', user?.email],

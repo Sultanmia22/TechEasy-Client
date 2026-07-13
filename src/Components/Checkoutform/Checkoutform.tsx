@@ -34,6 +34,8 @@ const Checkoutform = () => {
 
   const cartItems: ICartItem[] = data?.data?.items || [];
 
+  console.log('Cart Items:',cartItems)
+
   // Preview Delivery Charge 
   const district = useWatch({ control, name: "district" });
   let deliveryCharge = 0;
@@ -62,14 +64,17 @@ const Checkoutform = () => {
             name: item.productId.name,
             price: item.productId.price,
             quantity: item.quantity,
-            image: item.productId.image
-        }))
+            image: item.productId.image,
+        }));
+
+        const cartIds = cartItems.map(item => item._id)
 
        const orderPayload = {
         customerEmail : user?.email,
         shippingInfo : formData,
         items : itemPayload,
-        totalPrice: totalPrice
+        totalPrice: totalPrice,
+        allCartId: cartIds
        }
 
     try{
@@ -80,7 +85,7 @@ const Checkoutform = () => {
           window.location.assign(res.data.url);
         }
     }
-    catch (error: unknown) {
+    catch (error: unknown) { 
       console.error(error)
     }
   };
