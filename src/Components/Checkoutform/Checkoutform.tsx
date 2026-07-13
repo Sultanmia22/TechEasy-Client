@@ -17,7 +17,13 @@ type FormData = {
 };
 
 const Checkoutform = () => {
-  const { register, handleSubmit, control, formState: { errors } } = useForm<FormData>();
+  const { register, handleSubmit, control, formState: { errors } } = useForm<FormData>(
+  {
+    defaultValues: {
+    district: "dhaka-city"   // ✅ ডিফল্ট ঢাকা সিটি সেট
+  }
+  }
+  );
 
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
@@ -42,7 +48,7 @@ const Checkoutform = () => {
   if (district === "dhaka-city") deliveryCharge = 80;
   else if (district) deliveryCharge = 120;
 
-  const subTotal = Number(data?.data?.[0]?.subTotal || 0);
+  const subTotal = Number(data?.data?.subTotal || 0);
   const totalPrice = subTotal + deliveryCharge;
 
   // Hadle Payment 

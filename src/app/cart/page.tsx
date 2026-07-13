@@ -29,15 +29,18 @@ const { data, isLoading, refetch } = useQuery({
 //  console.log(data?._id)
 
 const cartItems: ICartItem[] = data?.data?.items || [];
-const totalPrice = data?.data?.[0]?.subTotal || 0;
+const totalPrice = data?.data?.subTotal || 0;
 
-// console.log( 'Cart Items', cartItems)
 
-  if (isLoading) return <TextLoader />
+
+console.log('totalPrice:',totalPrice)
+
 
   if(cartItems.length === 0){
     return <NoCartAvailable />
   }
+
+  if (isLoading) return <TextLoader />
   
 
   return (
@@ -48,7 +51,7 @@ const totalPrice = data?.data?.[0]?.subTotal || 0;
             <div className='w-full flex-1 min-h-24 p-4'>
                  <div className='flex flex-col'>
                 {
-                   cartItems?.map((cartItem) => <CartItem key={cartItem.productId._id}  item={cartItem}  mutate={refetch}></CartItem>)
+                   cartItems?.map((cartItem) => <CartItem key={cartItem._id}   item={cartItem}  mutate={refetch}></CartItem>)
                 }
                 </div> 
             </div>
