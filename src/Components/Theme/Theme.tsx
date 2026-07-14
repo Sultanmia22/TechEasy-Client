@@ -18,7 +18,7 @@ const Theme = ({isDark,setIsDark}:ThemeProps) => {
 
             document.documentElement.setAttribute('data-theme', 'dark')
         }
-    },[isDark])
+    },[])
 
     const handleToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
         const dark = e.target.checked

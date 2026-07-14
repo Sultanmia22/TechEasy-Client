@@ -45,7 +45,7 @@ export default function DashboardLayout({
       setIsDark(false);
       document.documentElement.setAttribute("data-theme", "light");
     }
-  }, []);
+  }, [isDark,setIsDark]);
 
   useEffect(() => {
     const handleResize = () => {

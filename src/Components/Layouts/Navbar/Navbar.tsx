@@ -13,6 +13,7 @@ import { FaUser } from "react-icons/fa";
 import Image from "next/image";
 import UserDropdown from "./UserDropdown";
 import MobileSidebar from "./MobileSidebar";
+import Theme from "@/Components/Theme/Theme";
 
 type NavLinkType = {
   name: string;
@@ -26,6 +27,8 @@ const Navbar = () => {
   const profileMenuRef = useRef<HTMLDivElement>(null);
 
   const { data, status } = useSession();
+
+   const [isDark, setIsDark] = useState<boolean>(false);
 
   const isAuthenticate: boolean = status === "authenticated";
 
@@ -45,6 +48,17 @@ const Navbar = () => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, [openProfileMenu]);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("theme");
+    if (saved === "dark") {
+      setIsDark(true);
+      document.documentElement.setAttribute("data-theme", "dark");
+    } else {
+      setIsDark(false);
+      document.documentElement.setAttribute("data-theme", "light");
+    }
+  }, [isDark,setIsDark]);
 
   // console.log(data)
 
@@ -117,6 +131,12 @@ const Navbar = () => {
         </ul>
 
         <div className="flex items-center gap-6">
+
+          {/* Theme */}
+          <div>
+            <Theme isDark={isDark} setIsDark={setIsDark} />
+          </div>
+
           <div>
             <Link href={"/cart"}>
               {" "}
