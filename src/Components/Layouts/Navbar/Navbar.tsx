@@ -187,6 +187,10 @@ const Navbar = () => {
            navLinks={navLinks} 
         />
       </nav>
+
+      <div className="w-full py-3 bg-[#DBD6E7] text-center mt-4"> 
+        <h5 className="text-[#0F172A] font-medium text-xs sm:text-sm md:text-sm lg:text-base">TechEasy is under active development! New features and updates are being added regularly</h5>
+      </div>
     </div>
   );
 };
