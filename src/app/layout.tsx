@@ -3,6 +3,27 @@ import ClientProviders from "@/Providers/LayoutProvider";
 import "./globals.css"; 
 import type { Metadata } from "next";
 import ConditionalLayout from "@/Components/Layouts/ConditionalLayout";
+import { Inter, Poppins, Hind_Siliguri } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const poppins = Poppins({
+  weight: ["400", "500", "600", "700", "800", "900"],
+  subsets: ["latin"],
+  variable: "--font-poppins",
+  display: "swap",
+});
+
+const hindSiliguri = Hind_Siliguri({
+  weight: ["400", "500", "600", "700"],
+  subsets: ["bengali", "latin"],
+  variable: "--font-hind-siliguri",
+  display: "swap",
+});
 
 // মেটাডেটা এখানেই থাকবে
 export const metadata: Metadata = {
@@ -50,7 +71,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-theme="light" className="scroll-smooth">
-      <body className="antialiased">
+      <body className={`${inter.className} ${poppins.variable} ${hindSiliguri.variable} antialiased`}>
        <ClientProviders>
           <ConditionalLayout>
             {children}

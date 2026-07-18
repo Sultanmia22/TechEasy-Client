@@ -48,7 +48,7 @@ const HeroSection = () => {
 
                 <div>
                     <Link
-                        href="/products"
+                        href="/all-product"
                         className="btn btn-primary px-6 sm:px-7 h-11 sm:h-12 text-sm font-bold shadow-lg shadow-primary/25 w-full sm:w-auto"
                     >
                         Browse Products
